@@ -20,7 +20,7 @@ package
 		public var missInterval : Number = 0.4;
 		public var rightInterval : Number = 0.2;
 		public var bpm : int = 60;
-		public var valsPerBeat : int = 2;
+		public var valsPerBeat : int = 1;
 		public var arNotesInput : Array = [];
 		private var textBox : Entity;
 		private var textField : Text = new Text ("", 20, 20);
@@ -59,14 +59,14 @@ package
 			
 			for (var i : int = 0; i < 12 * valsPerBeat; i++)
 			{
-				if (i % 2 == 0)
-				{
+				//if (i % 2 == 0)
+				//{
 					arNotesInput.push(new Note (i, Note.A));
-				}
-				else
-				{
-					arNotesInput.push(new Note (i, Note.B));
-				}
+				//}
+				//else
+				//{
+					//arNotesInput.push(new Note (i, Note.B));
+				//}
 			}
 			
 			
@@ -75,14 +75,14 @@ package
 				arNotesInput = [];
 				for (var i : int = 0; i < 12 * valsPerBeat; i++)
 				{
-					if (i % 2 == 0)
-					{
+					//if (i % 2 == 0)
+					//{
 						arNotesInput.push(new Note (i, Note.A));
-					}
-					else
-					{
-						arNotesInput.push(new Note (i, Note.B));
-					}
+					//}
+					//else
+					//{
+						//arNotesInput.push(new Note (i, Note.B));
+					//}
 				}
 			}
 		}
@@ -108,31 +108,41 @@ package
 			var arNotesRemoved : Array = [];
 			var instant : Number = channel1.position * bpm * PER_SECOND * valsPerBeat;
 			
-			if (instant % 2 > 1 && bInsert)
+			if (instant % valsPerBeat > (valsPerBeat / 2.0) && bInsert)
 			{
 				bInsert = false;
 			}
 			
-			if (instant % 2 > 0 && instant % 2 < 1 && !bInsert)
+			if (instant % valsPerBeat > 0 && instant % 2 < (valsPerBeat / 2.0) && !bInsert)
 			{
 				bInsert = true;
 				add (new HorizontalSlide());
 			}
 			
+			if (Input.pressed("UP"))
+			{
+				trace (instant);
+			}
+			
 			for (var i : int = 0; i < arNotesInput.length; i++)
 			{
 				var n : Note = arNotesInput[i];
-				if (instant < Math.max(0, n.time - missInterval))
+				if (instant < Math.max(0, n.time - missInterval * valsPerBeat))
 					break;
 				else
 				{
 					if ((!Input.pressed(n.value) && instant < Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat)) 
 							|| (Input.pressed(n.value) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))))
 					{
+						if (Input.pressed("UP"))
+						{
+							trace ("CONTINUE " + n.time);
+						}
 						continue;
 					}
 					else if (!Input.pressed(n.value) && instant >= Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))
 					{
+						//trace ("PASS " + n.time);
 						textField.text = "PASS " + n.time;
 						arNotesRemoved.push (n);
 						timer = 0;
@@ -141,12 +151,14 @@ package
 					{
 						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat, n.time + rightInterval * valsPerBeat)))
 						{
+							trace ("RIGHT " + n.time);
 							textField.text = "RIGHT " + n.time;
 							arNotesRemoved.push (n);
 							timer = 0;
 						}
 						else
 						{
+							trace ("MISS " + n.time);
 							textField.text = "MISS " + n.time;
 							arNotesRemoved.push (n);
 							timer = 0;
