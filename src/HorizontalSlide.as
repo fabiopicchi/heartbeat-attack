@@ -8,7 +8,7 @@ package
 	 * ...
 	 * @author 
 	 */
-	public class HorizontalSlide extends Animation 
+	public class HorizontalSlide extends Entity
 	{
 		public var vx : int = 0;
 		public var vy : int = 0;
@@ -17,8 +17,8 @@ package
 		{
 			addGraphic(Image.createRect(20, 20));
 			y = 100;
-			x = 1.25 * FP.engine.width - 10;
-			vx = -640;
+			x = 1.125 * FP.engine.width - 10;
+			vx = -320;
 		}
 		
 		override public function update():void 
@@ -33,6 +33,12 @@ package
 			}
 		}
 		
+		/* INTERFACE Animation */
+		
+		public function animate():void 
+		{
+			
+		}
 	}
 
 }
