@@ -1,5 +1,6 @@
 package  
 {
+	import Loader.XmlLoader;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
@@ -15,6 +16,7 @@ package
 	 */
 	public class Level extends World 
 	{
+		public var xmlLoader:XmlLoader;
 		public static var channel1 : Sfx;
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public var missInterval : Number = 0.4;
@@ -22,6 +24,7 @@ package
 		public var bpm : int = 60;
 		public var valsPerBeat : int = 2;
 		public var arNotesInput : Array = [];
+		public var arAnim : Array = [];
 		private var textBox : Entity;
 		private var textField : Text = new Text ("", 20, 20);
 		public var timer : Number = 0;
@@ -56,6 +59,8 @@ package
 			boxB.x = 0.25 * FP.engine.width - 10;
 			boxB.y = 100;
 			add (boxB);
+			
+			xmlLoader = new XmlLoader(new FASE_1);
 			
 			for (var i : int = 0; i < 12 * valsPerBeat; i++)
 			{
@@ -97,6 +102,12 @@ package
 					arNotesInput.push(n);
 				}
 			}
+		}
+		
+		override public function begin():void
+		{
+			xmlLoader.load();
+			super.begin();
 		}
 		
 		override public function update():void 

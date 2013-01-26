@@ -1,28 +1,27 @@
 package 
 {
-	import net.flashpunk.FP;
-	import net.flashpunk.Engine;
-	import net.flashpunk.utils.Input;
-	import net.flashpunk.utils.Key;
+	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	/**
 	 * ...
-	 * @author 
+	 * @author Chambers
 	 */
-	public class Main extends Engine 
+	public class Main extends Sprite 
 	{
-		public function Main ()
+		
+		public function Main():void 
 		{
-			super (640, 480);
+			if (stage) init();
+			else addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
-		override public function init():void 
+		private function init(e:Event = null):void 
 		{
-			super.init();
-			Input.define ("UP", Key.UP);
-			Input.define ("DOWN", Key.DOWN);
-			FP.world = new Level();
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			// entry point
 		}
+		
 	}
 	
 }

@@ -7,7 +7,8 @@
 	   <item beat="20" threadmill="0" type="2"/>
 	</items>
 	<story_events>
-	   <story_event type="0" beat="0"/>
-	   <story_event type="1" beat="32"/>
+	   <story_event beat="0" type="0"/>
+	   <story_event beat="12" type="1"/>
+	   <story_event beat="20" type="0"/>
 	</story_events>
 </stage>
