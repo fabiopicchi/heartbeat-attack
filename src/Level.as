@@ -1,6 +1,6 @@
 package  
 {
-	import flash.events.IEventDispatcher;
+	//import Loader.XmlLoader;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
@@ -16,6 +16,7 @@ package
 	 */
 	public class Level extends World 
 	{
+		//public var xmlLoader:XmlLoader;
 		public static var channel1 : Sfx;
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public var missInterval : Number = 0.4;
@@ -95,6 +96,8 @@ package
 		private function loadStage () : void
 		{
 			arNotes = [];
+			//xmlLoader = new XmlLoader(new FASE_1);
+			
 			for (var i : int = 0; i < 12 * valsPerBeat; i++)
 			{
 				var n : Note;
@@ -108,6 +111,12 @@ package
 				}
 				arNotes.push(n);
 			}
+		}
+		
+		override public function begin():void
+		{
+			//xmlLoader.load();
+			super.begin();
 		}
 		
 		override public function update():void 

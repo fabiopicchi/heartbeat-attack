@@ -1,4 +1,4 @@
-package level
+package Loader
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -10,8 +10,12 @@ package level
 	public class XmlLoader
 	{
 		private var xmlFile:XML;
-		private var outPut:String = '';
-		private var itemData:XMLList;
+		
+		public var noteList:Array = [];
+		public var animList:Array = [];
+		//public var effectList:Array = [];
+		
+		public var itemDelay:int = 1;
 		
 		public function XmlLoader(xmlObject:String)
 		{
@@ -25,37 +29,36 @@ package level
 		
 		public function load():void
 		{
-			var noteList:NoteList;
-			//var thread1dir:Boolean = false;
-			//var thread2dir:Boolean = false;
-			//if (xmlFile.child("stage").@direction1 == "right") thread1dir = true;
-			//if (xmlFile.child("stage").@direction2 == "right") thread2dir = true;
-			
 			var lapse:uint = xmlFile.child("stage").@lapse;
-			
 			var firstGuy:uint;
 			var secondGuy:uint;
 			var noteId:uint = 0;
+			var animId:uint = 0;
 			
 			for each (var obj:XML in xmlFile.child("items"))
 			{
 				firstGuy = 1 + obj.@threadmill * 2;
 				secondGuy = firstGuy - 1;
-				if (obj.@type == 4)
+				
+				animList.push(new Animation(obj.@beat - itemDelay, obj.@type, animId++));
+				
+				if (obj.@type == 4) // item "neutro"
 				{
-					//makeNote(obj.@beat, obj.@threadmill, obj.@type);
+					noteList.push(new Note(obj.@beat, firstGuy, noteId++));
+					noteList.push(new Note(obj.@beat + lapse, secondGuy, noteId++));
 				}
+				else
+				{
+					noteList.push(new Note((obj.@type % 2 == 0) ? (obj.@beat + lapse) : (obj.@beat), obj.@type, noteId++));
+				}
+				
 			}
-		}
-		
-		//list.addNote(new Note(obj.@beat, firstGuy, noteId)); //TODO: perguntar se posso colocar um noteId++ dentro do construtor da nota >_>
-		
-		public function getStoryEvents():void
-		{
-			for each (var obj:XML in xmlFile.child("events"))
+			
+			for each (var obj:XML in xmlFile.child("story_events"))
 			{
-				//e.addStoryEvent (new StoryEvent (obj.@type, obj.@beat));
+				animList.push(new Animation(obj.@beat, obj.@type,animId++));
 			}
 		}
+		
 	}
 }

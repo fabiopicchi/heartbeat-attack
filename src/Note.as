@@ -7,8 +7,7 @@ package
 	public class Note 
 	{
 		private var _time : int;
-		private var _helper : Helper
-		
+		private var _helper : Helper;
 		
 		public function Note(time : int, helper : Helper) 
 		{
