@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<stage id = "0" bpm = "120" lapse = "3" direction1 = "left" direction2 = "left">
+<stage id = "0" bpm = "120" npb = '2' lapse = "3" direction1 = "left" direction2 = "left">
 	<items>
 	
 		<!---esq--->
@@ -87,8 +87,9 @@
 
 	</items>
 	<story_events>
-	   <story_event beat="0" type="0"/>
-	   <story_event beat="12" type="1"/>
-	   <story_event beat="20" type="0"/>
+	   <story_event beat="0" type="storyStart"/>
+	   <story_event beat="62" type="storyTwist"/>
+	   <story_event beat="102" type="storyRecover"/>
+	   <story_event beat="114" type="storyEnding"/>
 	</story_events>
 </stage>

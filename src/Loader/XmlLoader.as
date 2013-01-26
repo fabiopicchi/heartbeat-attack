@@ -11,8 +11,8 @@ package Loader
 	{
 		private var xmlFile:XML;
 		
-		public var noteList:Array = [];
-		public var eventList:Array = [];
+		public var noteList:Array = []; //{beat, helper, id}
+		public var eventList:Array = []; //{beat, name, id}
 		
 		public var itemDelay:int = 1;
 		
@@ -26,6 +26,15 @@ package Loader
 			return xmlFile.@bmp;
 		}
 		
+		public function getNPB():uint
+		{
+			return xmlFile.@npb;
+		}
+		public function getLapse():uint
+		{
+			return xmlFile.@lapse;
+		}
+		
 		public function load():void
 		{
 			var lapse:uint = xmlFile.@lapse;
@@ -33,13 +42,23 @@ package Loader
 			var secondGuy:uint;
 			var noteId:uint = 0;
 			var eventId:uint = 0;
+			var eventName:String;
 			
 			for each (var obj:XML in xmlFile.child("items").child("item"))
 			{
 				firstGuy = 1 + obj.@threadmill * 2;
 				secondGuy = firstGuy - 1;
+				if (obj.@type == 0) eventName = "UL";
+				else if (obj.@type == 1) eventName = "UR";
+				else if (obj.@type == 2) eventName = "DL";
+				else if (obj.@type == 3) eventName = "DR";
+				else if (obj.@type == 4) {
+					if (obj.@threadmill == 0) eventName = "URUL";
+					else eventName = "DRDL";
+				}
 				
-				eventList.push({beat: int(obj.@beat) - itemDelay, type: obj.@type, id: eventId++});
+				
+				eventList.push({beat: int(obj.@beat) - itemDelay, name: eventName, id: eventId++});
 				
 				if (obj.@type == 4) // item "neutro"
 				{
@@ -56,7 +75,7 @@ package Loader
 			
 			for each (var ev:XML in xmlFile.child("story_events").child("story_event"))
 			{
-				eventList.push({beat: ev.@beat, type: ev.@type, id: eventId++});
+				eventList.push({beat: ev.@beat, type: ev.@type, threadmill: int(-1) ,id: eventId++});
 			}
 			
 			noteList.sortOn("beat", [Array.NUMERIC]);
