@@ -6,29 +6,24 @@ package
 	 */
 	public class Note 
 	{
-		public var time : int;
-		public var value : String
-		private var _effect : IEffect;
+		private var _time : int;
+		private var _helper : Helper
 		
-		public static const A : String = "UP";
-		public static const B : String = "DOWN";
-		public static const C : String = "LEFT";
-		public static const D : String = "RIGHT";
 		
-		public function Note(time : int, value : String) 
+		public function Note(time : int, helper : Helper) 
 		{
-			this.time = time;
-			this.value = value;
+			this._time = time;
+			this._helper = helper;
 		}
 		
-		public function get effect():IEffect 
+		public function get helper():Helper 
 		{
-			return _effect;
+			return _helper;
 		}
 		
-		public function set effect(value:IEffect):void 
+		public function get time():int 
 		{
-			_effect = value;
+			return _time;
 		}
 		
 	}

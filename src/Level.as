@@ -1,5 +1,6 @@
 package  
 {
+	import flash.events.IEventDispatcher;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
@@ -18,15 +19,20 @@ package
 		public static var channel1 : Sfx;
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public var missInterval : Number = 0.4;
-		public var rightInterval : Number = 0.2;
+		public var rightInterval : Number = 0.1;
 		public var bpm : int = 60;
 		public var valsPerBeat : int = 2;
-		public var arNotesInput : Array = [];
+		public var arNotes : Array = [];
+		public var arEvents : Array = [];
 		private var textBox : Entity;
 		private var textField : Text = new Text ("", 20, 20);
 		public var timer : Number = 0;
-		public var boxA : Entity;
-		public var boxB : Entity;
+		
+		public var helperUR : Helper;
+		public var helperUL : Helper;
+		public var helperDR : Helper;
+		public var helperDL : Helper;
+		
 		public var start : Number = 4;
 		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
@@ -45,57 +51,62 @@ package
 			
 			add (textBox);
 			
-			boxA = new Entity ();
-			boxA.addGraphic(Image.createRect(20, 20, 0xFF0000));
-			boxA.x = 0.75 * FP.engine.width - 10;
-			boxA.y = 100;
-			add (boxA);
+			helperDL = new Helper (Helper.DL);
+			helperDR = new Helper (Helper.DR);
+			helperUR = new Helper (Helper.UR);
+			helperUL = new Helper (Helper.UL);
 			
-			boxB = new Entity ();
-			boxB.addGraphic(Image.createRect(20, 20, 0x00FF00));
-			boxB.x = 0.25 * FP.engine.width - 10;
-			boxB.y = 100;
-			add (boxB);
+			helperDL.y = 300;
+			helperDR.y = 300;
+			helperUR.y = 100;
+			helperUL.y = 100;
 			
-			for (var i : int = 0; i < 12 * valsPerBeat; i++)
-			{
-				var n : Note;
-				var e : IEffect;
-				if (i % 2 == 0)
-				{
-					n = new Note (i, Note.A);
-					e = new TestEffectA (boxA);
-				}
-				else
-				{
-					n = new Note (i, Note.B);
-					e = new TestEffectB (boxB);
-				}
-				n.effect = e;
-				arNotesInput.push(n);
-			}
-			
+			add (helperDL);
+			add (helperDR);
+			add (helperUR);
+			add (helperUL);
 			
 			channel1.complete = function () : void
 			{
-				arNotesInput = [];
-				for (var i : int = 0; i < 12 * valsPerBeat; i++)
+				loadStage();
+			}
+		}
+		
+		private function getHelper (code : String) : Helper
+		{
+			switch (code)
+			{
+				case Helper.DL:
+					return helperDL;
+					break;
+				case Helper.DR:
+					return helperDR;
+					break;
+				case Helper.UR:
+					return helperUR;
+					break;
+				case Helper.UL:
+					return helperUL;
+					break;
+			}
+			return null;
+		}
+		
+		private function loadStage () : void
+		{
+			arNotes = [];
+			for (var i : int = 0; i < 12 * valsPerBeat; i++)
+			{
+				var n : Note;
+				if (i % 2 == 0)
 				{
-					var n : Note;
-					var e : IEffect;
-					if (i % 2 == 0)
-					{
-						n = new Note (i, Note.A);
-						e = new TestEffectA (boxA);
-					}
-					else
-					{
-						n = new Note (i, Note.B);
-						e = new TestEffectB (boxB);
-					}
-					n.effect = e;
-					arNotesInput.push(n);
+					n = new Note (i, getHelper(Helper.DL));
 				}
+				else
+				{
+					n = new Note (i, getHelper(Helper.UL));
+				}
+				arNotes.push(n);
 			}
 		}
 		
@@ -126,54 +137,38 @@ package
 			{
 				bStart = true;
 				bInsert = true;
-				add (new HorizontalSlide());
 				channel1.loop();
 			}
 			
 			super.update();
 			timer += FP.elapsed;
 			
-			var arNotesRemoved : Array = [];
+			var arRemoved : Array = [];
 			var instant : Number = channel1.position * bpm * PER_SECOND * valsPerBeat;
 			
-			if (instant % valsPerBeat > (valsPerBeat / 2.0) && bInsert)
+			for (var j : int = 0; j < arEvents.length; j++)
 			{
-				bInsert = false;
-			}
-			
-			if (instant % valsPerBeat > 0 && instant % valsPerBeat < (valsPerBeat / 2.0) && !bInsert)
-			{
-				bInsert = true;
-				var a : HorizontalSlide = new HorizontalSlide();
-				var nextNote : int = Math.floor(instant) + 1;
-				for (var j : int = 0; j < arNotesInput.length; j++)
+				if (instant > arEvents[j].time)
 				{
-					if (arNotesInput[j].time == nextNote)
-					{
-						arNotesInput[j].effect.animation = a;
-					}
-					else if (arNotesInput[j].time == (nextNote + 1))
-					{
-						arNotesInput[j].effect.animation = a;
-						add (arNotesInput[j].effect.animation);
-					}
+					arEvents[j].trigger();
+					arRemoved.push(arEvents[i]);
 				}
 			}
 			
-			//if (Input.pressed("UP"))
-			//{
-				//trace (instant);
-			//}
-			//
-			for (var i : int = 0; i < arNotesInput.length; i++)
+			for each (var evt : IEvent in arRemoved)
 			{
-				var n : Note = arNotesInput[i];
+				arEvents.splice(arNotes.indexOf(evt), 1);
+			}
+			
+			for (var i : int = 0; i < arNotes.length; i++)
+			{
+				var n : Note = arNotes[i];
 				if (instant < Math.max(0, n.time - missInterval * valsPerBeat))
 					break;
 				else
 				{
-					if ((!Input.pressed(n.value) && instant < Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat)) 
-							|| (Input.pressed(n.value) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))))
+					if ((!Input.pressed(n.helper.code) && instant < Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat)) 
+							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))))
 					{
 						//if (Input.pressed("UP"))
 						//{
@@ -184,12 +179,12 @@ package
 						//}
 						//NADA
 					}
-					else if (!Input.pressed(n.value) && instant >= Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))
+					else if (!Input.pressed(n.helper.code) && instant >= Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))
 					{
 						//trace ("PASS " + n.time);
 						textField.text = "PASS " + n.time;
-						n.effect.wrong();
-						arNotesRemoved.push (n);
+						n.helper.wrong();
+						arRemoved.push (n);
 						timer = 0;
 					}
 					else 
@@ -198,25 +193,25 @@ package
 						{
 							//trace ("RIGHT " + n.time);
 							textField.text = "RIGHT " + n.time;
-							n.effect.right();
-							arNotesRemoved.push (n);
+							n.helper.correct();
+							arRemoved.push (n);
 							timer = 0;
 						}
 						else
 						{
 							//trace ("MISS " + n.time);
 							textField.text = "MISS " + n.time;
-							n.effect.wrong();
-							arNotesRemoved.push (n);
+							n.helper.wrong();
+							arRemoved.push (n);
 							timer = 0;
 						}
 					}
 				}
 			}
 			
-			for each (var note : Note in arNotesRemoved)
+			for each (var note : Note in arRemoved)
 			{
-				arNotesInput.splice(arNotesInput.indexOf(note), 1);
+				arNotes.splice(arNotes.indexOf(note), 1);
 			}
 			
 			if (timer > 0.5)
