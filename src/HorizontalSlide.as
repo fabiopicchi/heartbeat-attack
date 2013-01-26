@@ -8,7 +8,7 @@ package
 	 * ...
 	 * @author 
 	 */
-	public class HorizontalSlide extends Entity 
+	public class HorizontalSlide extends Animation 
 	{
 		public var vx : int;
 		
