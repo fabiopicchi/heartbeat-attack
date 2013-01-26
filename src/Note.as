@@ -7,7 +7,8 @@ package
 	public class Note 
 	{
 		public var time : int;
-		public var value : String;
+		public var value : String
+		private var _effect : IEffect;
 		
 		public static const A : String = "UP";
 		public static const B : String = "DOWN";
@@ -19,5 +20,16 @@ package
 			this.time = time;
 			this.value = value;
 		}
+		
+		public function get effect():IEffect 
+		{
+			return _effect;
+		}
+		
+		public function set effect(value:IEffect):void 
+		{
+			_effect = value;
+		}
+		
 	}
 }

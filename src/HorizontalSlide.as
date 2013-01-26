@@ -10,7 +10,8 @@ package
 	 */
 	public class HorizontalSlide extends Animation 
 	{
-		public var vx : int;
+		public var vx : int = 0;
+		public var vy : int = 0;
 		
 		public function HorizontalSlide() 
 		{
@@ -24,8 +25,9 @@ package
 		{
 			super.update();
 			x += vx * FP.elapsed;
+			y += vy * FP.elapsed;
 			
-			if (x + 20 < 0)
+			if (x + 20 < 0 || y + 20 < 0)
 			{
 				FP.world.remove(this);
 			}

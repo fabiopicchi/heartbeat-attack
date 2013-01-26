@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stage id = "0" bpm = "120" lapse = "2" direction1 = "left" direction2 = "left">
+	<items>
+	   <item beat="4" threadmill="0" type="2"/>
+	   <item beat="12" threadmill="0" type="2"/>
+	   <item beat="16" threadmill="0" type="2"/>
+	   <item beat="20" threadmill="0" type="2"/>
+	</items>
+	<story_events>
+	   <story_event type="0" beat="0"/>
+	   <story_event type="1" beat="32"/>
+	</story_events>
+</stage>

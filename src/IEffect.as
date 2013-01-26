@@ -6,9 +6,7 @@ package
 	 */
 	public interface IEffect 
 	{
-		
-		function get note () : Note;
-		function set animation () : void;
+		function set animation (a : Animation) : void;
 		function get animation () : Animation;
 		function right() : void;
 		function wrong() : void;
