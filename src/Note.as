@@ -8,7 +8,7 @@ package
 	{
 		public var time : int;
 		public var id : int;
-		public var value : String
+		public var value : int
 		private var _effect : IEffect;
 		
 		public static const A : String = "UP";
@@ -20,19 +20,7 @@ package
 		{
 			this.time = time;
 			this.id = id;
-			switch (value)
-			case 0:
-			this.value = A;
-			break;
-			case 1:
-			this.value = B;
-			break;
-			case 2:
-			this.value = C;
-			break;
-			case 3:
-			this.value = D;
-			break;
+			this.value = value;
 		}
 		
 		public function get effect():IEffect 

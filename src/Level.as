@@ -61,6 +61,8 @@ package
 			add (boxB);
 			
 			xmlLoader = new XmlLoader(new FASE_1);
+			trace("preparing to load xml");
+			xmlLoader.load();
 			
 			for (var i : int = 0; i < 12 * valsPerBeat; i++)
 			{
@@ -102,12 +104,6 @@ package
 					arNotesInput.push(n);
 				}
 			}
-		}
-		
-		override public function begin():void
-		{
-			xmlLoader.load();
-			super.begin();
 		}
 		
 		override public function update():void 

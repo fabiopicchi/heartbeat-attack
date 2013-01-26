@@ -12,8 +12,7 @@ package Loader
 		private var xmlFile:XML;
 		
 		public var noteList:Array = [];
-		public var animList:Array = [];
-		//public var effectList:Array = [];
+		public var eventList:Array = [];
 		
 		public var itemDelay:int = 1;
 		
@@ -29,6 +28,8 @@ package Loader
 		
 		public function load():void
 		{
+			trace("loading xml");
+			
 			var lapse:uint = xmlFile.child("stage").@lapse;
 			var firstGuy:uint;
 			var secondGuy:uint;
@@ -40,7 +41,8 @@ package Loader
 				firstGuy = 1 + obj.@threadmill * 2;
 				secondGuy = firstGuy - 1;
 				
-				animList.push(new Animation(obj.@beat - itemDelay, obj.@type, animId++));
+				eventList.push(new Animation(obj.@beat - itemDelay, obj.@type, animId++));
+				println();
 				
 				if (obj.@type == 4) // item "neutro"
 				{
@@ -56,8 +58,11 @@ package Loader
 			
 			for each (var obj:XML in xmlFile.child("story_events"))
 			{
-				animList.push(new Animation(obj.@beat, obj.@type,animId++));
+				eventList.push(new Animation(obj.@beat, obj.@type,animId++));
 			}
+			
+			trace(noteList);
+			//noteList.sortOn();
 		}
 		
 	}
