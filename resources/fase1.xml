@@ -1,10 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<stage id = "0" bpm = "120" lapse = "2" direction1 = "left" direction2 = "left">
+<stage id = "0" bpm = "120" lapse = "3" direction1 = "left" direction2 = "left">
 	<items>
-	   <item beat="4" threadmill="0" type="2"/>
-	   <item beat="12" threadmill="0" type="2"/>
-	   <item beat="16" threadmill="0" type="2"/>
-	   <item beat="20" threadmill="0" type="2"/>
+	
+		<!---esq--->
+	
+	   <item beat="2" threadmill="0" type="4"/>
+	   <item beat="8" threadmill="0" type="4"/>
+	   <item beat="14" threadmill="0" type="4"/>
+	   <item beat="20" threadmill="0" type="4"/>
+	   <item beat="26" threadmill="0" type="4"/>
+	   <item beat="32" threadmill="0" type="1"/>
+	   <item beat="38" threadmill="0" type="4"/>
+	   <item beat="44" threadmill="0" type="4"/>
+	   <item beat="50" threadmill="0" type="4"/>
+	   <item beat="56" threadmill="0" type="4"/>
+	   <item beat="59" threadmill="0" type="1"/>
+	   <item beat="62" threadmill="0" type="1"/>
+	   <item beat="65" threadmill="0" type="1"/>
+	   <item beat="68" threadmill="0" type="1"/>
+	   <item beat="72" threadmill="0" type="1"/>
+	   <item beat="74" threadmill="0" type="1"/>
+	   <item beat="77" threadmill="0" type="1"/>
+	   <item beat="81" threadmill="0" type="1"/>
+	   <item beat="83" threadmill="0" type="1"/>
+	   <item beat="87" threadmill="0" type="1"/>
+	   <item beat="90" threadmill="0" type="1"/>
+	   <item beat="93" threadmill="0" type="4"/>
+	   <item beat="98" threadmill="0" type="4"/>
+	   <item beat="104" threadmill="0" type="4"/>
+	   <item beat="110" threadmill="0" type="4"/>
+	   <item beat="114" threadmill="0" type="1"/>
+	   
+	   <!---dir--->
+	   
+	   <item beat="9" threadmill="1" type="3"/>
+	   <item beat="10" threadmill="1" type="3"/>
+	   <item beat="12" threadmill="1" type="3"/>
+	   <item beat="13" threadmill="1" type="3"/>
+	   <item beat="15" threadmill="1" type="3"/>
+	   <item beat="16" threadmill="1" type="3"/>
+	   <item beat="18" threadmill="1" type="3"/>
+	   <item beat="19" threadmill="1" type="3"/>
+	   <item beat="21" threadmill="1" type="3"/>
+	   <item beat="22" threadmill="1" type="3"/>
+	   <item beat="24" threadmill="1" type="3"/>
+	   <item beat="25" threadmill="1" type="3"/>
+	   <item beat="27" threadmill="1" type="3"/>
+	   <item beat="28" threadmill="1" type="3"/>
+	   <item beat="30" threadmill="1" type="3"/>
+	   <item beat="31" threadmill="1" type="4"/>
+	   <item beat="32" threadmill="1" type="2"/>
+	   <item beat="34" threadmill="1" type="2"/>
+	   <item beat="35" threadmill="1" type="2"/>
+	   <item beat="39" threadmill="1" type="3"/>
+	   <item beat="40" threadmill="1" type="3"/>
+	   <item beat="42" threadmill="1" type="3"/>
+	   <item beat="43" threadmill="1" type="3"/>
+	   <item beat="45" threadmill="1" type="3"/>
+	   <item beat="46" threadmill="1" type="3"/>
+	   <item beat="48" threadmill="1" type="3"/>
+	   <item beat="49" threadmill="1" type="3"/>
+	   <item beat="51" threadmill="1" type="3"/>
+	   <item beat="52" threadmill="1" type="4"/>
+	   <item beat="53" threadmill="1" type="2"/>
+	   <item beat="55" threadmill="1" type="2"/>
+	   <item beat="56" threadmill="1" type="2"/>
+	   <item beat="59" threadmill="1" type="3"/>
+	   <item beat="67" threadmill="1" type="4"/>
+	   <item beat="68" threadmill="1" type="4"/>
+	   <item beat="69" threadmill="1" type="3"/>
+	   <item beat="71" threadmill="1" type="2"/>
+	   <item beat="72" threadmill="1" type="3"/>
+	   <item beat="74" threadmill="1" type="3"/>
+	   <item beat="75" threadmill="1" type="2"/>
+	   <item beat="79" threadmill="1" type="2"/>
+	   <item beat="80" threadmill="1" type="3"/>
+	   <item beat="83" threadmill="1" type="3"/>
+	   <item beat="84" threadmill="1" type="2"/>
+	   <item beat="87" threadmill="1" type="3"/>
+	   <item beat="105" threadmill="1" type="3"/>
+	   <item beat="106" threadmill="1" type="4"/>
+	   <item beat="107" threadmill="1" type="2"/>
+	   <item beat="111" threadmill="1" type="3"/>
+	   <item beat="112" threadmill="1" type="4"/>
+	   <item beat="114" threadmill="1" type="3"/>
+
 	</items>
 	<story_events>
 	   <story_event beat="0" type="0"/>

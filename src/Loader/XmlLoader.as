@@ -23,47 +23,44 @@ package Loader
 		
 		public function getBPM():uint
 		{
-			return xmlFile.child("stage").@bmp;
+			return xmlFile.@bmp;
 		}
 		
 		public function load():void
 		{
-			trace("loading xml");
-			
-			var lapse:uint = xmlFile.child("stage").@lapse;
+			var lapse:uint = xmlFile.@lapse;
 			var firstGuy:uint;
 			var secondGuy:uint;
 			var noteId:uint = 0;
-			var animId:uint = 0;
+			var eventId:uint = 0;
 			
-			for each (var obj:XML in xmlFile.child("items"))
+			for each (var obj:XML in xmlFile.child("items").child("item"))
 			{
 				firstGuy = 1 + obj.@threadmill * 2;
 				secondGuy = firstGuy - 1;
 				
-				eventList.push(new Animation(obj.@beat - itemDelay, obj.@type, animId++));
-				println();
+				eventList.push({beat: int(obj.@beat) - itemDelay, type: obj.@type, id: eventId++});
 				
 				if (obj.@type == 4) // item "neutro"
 				{
-					noteList.push(new Note(obj.@beat, firstGuy, noteId++));
-					noteList.push(new Note(obj.@beat + lapse, secondGuy, noteId++));
+					noteList.push( { beat: obj.@beat, helper: firstGuy, id: noteId++ } )
+					noteList.push({beat: int(obj.@beat) + lapse, helper: secondGuy, id: noteId++})
 				}
-				else
+				
+				else // item colorido
 				{
-					noteList.push(new Note((obj.@type % 2 == 0) ? (obj.@beat + lapse) : (obj.@beat), obj.@type, noteId++));
+					noteList.push( { beat: (obj.@type % 2 == 0) ? (int(obj.@beat) + lapse) : int(obj.@beat), helper: obj.@type, id: noteId++ } );
 				}
 				
 			}
 			
-			for each (var obj:XML in xmlFile.child("story_events"))
+			for each (var ev:XML in xmlFile.child("story_events").child("story_event"))
 			{
-				eventList.push(new Animation(obj.@beat, obj.@type,animId++));
+				eventList.push({beat: ev.@beat, type: ev.@type, id: eventId++});
 			}
 			
-			trace(noteList);
-			//noteList.sortOn();
+			noteList.sortOn("beat", [Array.NUMERIC]);
 		}
-		
+	
 	}
 }
