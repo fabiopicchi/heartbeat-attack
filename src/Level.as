@@ -59,14 +59,14 @@ package
 			
 			for (var i : int = 0; i < 12 * valsPerBeat; i++)
 			{
-				//if (i % 2 == 0)
-				//{
+				if (i % 2 == 0)
+				{
 					arNotesInput.push(new Note (i, Note.A));
-				//}
-				//else
-				//{
-					//arNotesInput.push(new Note (i, Note.B));
-				//}
+				}
+				else
+				{
+					arNotesInput.push(new Note (i, Note.B));
+				}
 			}
 			
 			
@@ -75,14 +75,14 @@ package
 				arNotesInput = [];
 				for (var i : int = 0; i < 12 * valsPerBeat; i++)
 				{
-					//if (i % 2 == 0)
-					//{
+					if (i % 2 == 0)
+					{
 						arNotesInput.push(new Note (i, Note.A));
-					//}
-					//else
-					//{
-						//arNotesInput.push(new Note (i, Note.B));
-					//}
+					}
+					else
+					{
+						arNotesInput.push(new Note (i, Note.B));
+					}
 				}
 			}
 		}
@@ -92,6 +92,22 @@ package
 			if (start > 0)
 			{
 				start -= FP.elapsed;
+				if (start < 1)
+				{
+					textField.text = "START";
+				}
+				else if (start < 2)
+				{
+					textField.text = "1";
+				}
+				else if (start < 3)
+				{
+					textField.text = "2";
+				}
+				else
+				{
+					textField.text = "3";
+				}
 				return;
 			}
 			else if (!bStart)
@@ -113,7 +129,7 @@ package
 				bInsert = false;
 			}
 			
-			if (instant % valsPerBeat > 0 && instant % 2 < (valsPerBeat / 2.0) && !bInsert)
+			if (instant % valsPerBeat > 0 && instant % valsPerBeat < (valsPerBeat / 2.0) && !bInsert)
 			{
 				bInsert = true;
 				add (new HorizontalSlide());
@@ -136,13 +152,16 @@ package
 					{
 						if (Input.pressed("UP"))
 						{
-							trace ("CONTINUE " + n.time);
+							trace (instant);
+							trace (Math.max (0, n.time - missInterval * valsPerBeat));
+							trace (Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat));
+							trace ("CONTINUE " + instant);
 						}
-						continue;
+						//NADA
 					}
 					else if (!Input.pressed(n.value) && instant >= Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))
 					{
-						//trace ("PASS " + n.time);
+						trace ("PASS " + n.time);
 						textField.text = "PASS " + n.time;
 						arNotesRemoved.push (n);
 						timer = 0;
@@ -181,7 +200,7 @@ package
 		
 		public function isInsideInterval (value : Number, min : Number, max : Number) : Boolean
 		{
-			return (value > min && value < max);
+			return (value >= min && value <= max);
 		}
 		
 	}
