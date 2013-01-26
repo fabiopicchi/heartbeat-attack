@@ -1,6 +1,6 @@
 package  
 {
-	//import Loader.XmlLoader;
+	import Loader.XmlLoader;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
@@ -16,7 +16,7 @@ package
 	 */
 	public class Level extends World 
 	{
-		//public var xmlLoader:XmlLoader;
+		public var xmlLoader:XmlLoader;
 		public static var channel1 : Sfx;
 		public static var channel2 : Sfx;
 		public static var channelBase : Sfx;
@@ -93,6 +93,8 @@ package
 				start = 4;
 				bStart = false;
 			}
+			xmlLoader = new XmlLoader(new Assets.FASE_1);
+			xmlLoader.load();
 		}
 		
 		private function getHelper (code : String) : Helper
@@ -118,7 +120,6 @@ package
 		private function loadStage () : void
 		{
 			arNotes = [];
-			//xmlLoader = new XmlLoader(new FASE_1);
 			
 			for (var i : int = 0; i <= bpm * PER_SECOND * valsPerBeat * channel1.length; i++)
 			{
@@ -134,12 +135,6 @@ package
 				}
 				arNotes.push(n);
 			}
-		}
-		
-		override public function begin():void
-		{
-			//xmlLoader.load();
-			super.begin();
 		}
 		
 		override public function update():void 
