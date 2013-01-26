@@ -8,7 +8,7 @@ package
 	 * ...
 	 * @author 
 	 */
-	public class HorizontalSlide extends Entity implements IAnimation
+	public class HorizontalSlide extends Entity
 	{
 		public var vx : int = 0;
 		public var vy : int = 0;
@@ -39,34 +39,6 @@ package
 		{
 			
 		}
-		
-		public function correct(position : String):void 
-		{
-			switch(position)
-			{
-				case Note.A:
-					vx = 0;
-					vy = -100;
-					break;
-				case Note.B:
-					addGraphic(Image.createRect(20, 20, 0xFF00FF));
-					break;
-			}
-		}
-		
-		public function wrong(position : String):void 
-		{
-			switch(position)
-			{
-				case Note.A:
-					FP.world.remove(this);
-					break;
-				case Note.B:
-					addGraphic(Image.createRect(20, 20, 0x0000FF));
-					break;
-			}
-		}
-		
 	}
 
 }

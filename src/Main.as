@@ -2,6 +2,8 @@ package
 {
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
+	import net.flashpunk.utils.Input;
+	import net.flashpunk.utils.Key;
 	
 	/**
 	 * ...
@@ -18,6 +20,8 @@ package
 		override public function init():void 
 		{
 			super.init();
+			Input.define("UP", Key.UP);
+			Input.define("DOWN", Key.DOWN);
 			FP.world = new Level ();
 		}
 		

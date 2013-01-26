@@ -18,11 +18,14 @@ package
 	{
 		//public var xmlLoader:XmlLoader;
 		public static var channel1 : Sfx;
+		public static var channel2 : Sfx;
+		public static var channelBase : Sfx;
+		
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public var missInterval : Number = 0.4;
-		public var rightInterval : Number = 0.1;
-		public var bpm : int = 60;
-		public var valsPerBeat : int = 2;
+		public var rightInterval : Number = 0.15;
+		public var bpm : int = 90;
+		public var valsPerBeat : int = 1;
 		public var arNotes : Array = [];
 		public var arEvents : Array = [];
 		private var textBox : Entity;
@@ -40,7 +43,9 @@ package
 		
 		public function Level() 
 		{
-			channel1 = new Sfx(Assets.METRONOMO);
+			channel1 = new Sfx(Assets.TESTE_1);
+			channel2 = new Sfx(Assets.TESTE_2);
+			channelBase = new Sfx(Assets.TESTE_BASE);
 			textBox = new Entity ();
 			
 			textBox.width = 20;
@@ -58,18 +63,30 @@ package
 			helperUL = new Helper (Helper.UL);
 			
 			helperDL.y = 300;
+			helperDL.x = 300;
 			helperDR.y = 300;
+			helperDR.x = 600;
 			helperUR.y = 100;
+			helperUR.x = 300;
 			helperUL.y = 100;
+			helperUL.x = 600;
 			
 			add (helperDL);
 			add (helperDR);
 			add (helperUR);
 			add (helperUL);
 			
+			loadStage();
+			
+			//trace (channel1.length);
+			//trace (channel2.length);
+			//trace (channelBase.length);
+			
 			channel1.complete = function () : void
 			{
 				loadStage();
+				start = 4;
+				bStart = false;
 			}
 		}
 		
@@ -98,15 +115,16 @@ package
 			arNotes = [];
 			//xmlLoader = new XmlLoader(new FASE_1);
 			
-			for (var i : int = 0; i < 12 * valsPerBeat; i++)
+			for (var i : int = 0; i <= bpm * PER_SECOND * valsPerBeat * channel1.length; i++)
 			{
 				var n : Note;
 				if (i % 2 == 0)
 				{
-					n = new Note (i, getHelper(Helper.DL));
+					n = new Note (i, getHelper(Helper.UR));
 				}
 				else
 				{
+					arEvents.push(new AddHorizontalSlide(i));
 					n = new Note (i, getHelper(Helper.UL));
 				}
 				arNotes.push(n);
@@ -146,7 +164,9 @@ package
 			{
 				bStart = true;
 				bInsert = true;
-				channel1.loop();
+				channel1.play();
+				channel2.play();
+				channelBase.play();
 			}
 			
 			super.update();
@@ -160,26 +180,37 @@ package
 				if (instant > arEvents[j].time)
 				{
 					arEvents[j].trigger();
-					arRemoved.push(arEvents[i]);
+					arRemoved.push(arEvents[j]);
 				}
 			}
-			
 			for each (var evt : IEvent in arRemoved)
 			{
-				arEvents.splice(arNotes.indexOf(evt), 1);
+				arEvents.splice(arEvents.indexOf(evt), 1);
+			}
+			arRemoved = [];
+			
+			if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
+			{
+				//trace (instant);
 			}
 			
 			for (var i : int = 0; i < arNotes.length; i++)
 			{
 				var n : Note = arNotes[i];
+				//if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
+				//{
+					//trace (instant);
+					//trace (Math.max (0, n.time - rightInterval * valsPerBeat));
+					//trace (Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat));
+				//}
 				if (instant < Math.max(0, n.time - missInterval * valsPerBeat))
 					break;
 				else
 				{
-					if ((!Input.pressed(n.helper.code) && instant < Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat)) 
-							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))))
+					if ((!Input.pressed(n.helper.code) && instant < Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + missInterval * valsPerBeat)) 
+							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + missInterval * valsPerBeat))))
 					{
-						//if (Input.pressed("UP"))
+						//if (Input.pressed(n.helper.code))
 						//{
 							//trace (instant);
 							//trace (Math.max (0, n.time - missInterval * valsPerBeat));
@@ -188,7 +219,7 @@ package
 						//}
 						//NADA
 					}
-					else if (!Input.pressed(n.helper.code) && instant >= Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat))
+					else if (!Input.pressed(n.helper.code) && instant >= Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + missInterval * valsPerBeat))
 					{
 						//trace ("PASS " + n.time);
 						textField.text = "PASS " + n.time;
@@ -198,7 +229,7 @@ package
 					}
 					else 
 					{
-						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat, n.time + rightInterval * valsPerBeat)))
+						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat)))
 						{
 							//trace ("RIGHT " + n.time);
 							textField.text = "RIGHT " + n.time;

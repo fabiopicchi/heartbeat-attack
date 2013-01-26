@@ -28,12 +28,12 @@ package
 		
 		public function correct () : void
 		{
-			
+			//trace ("CORRECT " + _code);
 		}
 		
 		public function wrong () : void
 		{
-			
+			//trace ("WRONG " + _code);
 		}
 	}
 

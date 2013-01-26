@@ -9,6 +9,9 @@ package
 	public class Assets 
 	{
 		[Embed(source = '../resources/metronomo bpm 60.mp3')] public static const METRONOMO:Class;
+		[Embed(source = '../resources/teste - camada 1.mp3')] public static const TESTE_1:Class;
+		[Embed(source = '../resources/teste - camada 2.mp3')] public static const TESTE_2:Class;
+		[Embed(source = '../resources/teste - camada base.mp3')] public static const TESTE_BASE:Class;
 		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
 		
 		public static function getHelperAsset (code : String) : Graphic
