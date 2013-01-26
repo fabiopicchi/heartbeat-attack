@@ -31,6 +31,7 @@ package
 		private var textBox : Entity;
 		private var textField : Text = new Text ("", 20, 20);
 		public var timer : Number = 0;
+		private var shade : Entity;
 		
 		public var helperUR : Helper;
 		public var helperUL : Helper;
@@ -40,6 +41,7 @@ package
 		public var start : Number = 4;
 		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
+		public var bPaused : Boolean = false;
 		
 		public function Level() 
 		{
@@ -52,6 +54,9 @@ package
 			textBox.height = 20;
 			textBox.x = (FP.engine.width - textBox.width) / 2;
 			textBox.y = (FP.engine.height - textBox.height) / 2;
+			
+			shade = new Entity();
+			shade.addGraphic (Image.createRect (FP.engine.width, FP.engine.height, 0x000000, 0.7));
 			
 			textBox.addGraphic(textField);
 			
@@ -168,6 +173,27 @@ package
 				channel2.play();
 				channelBase.play();
 			}
+			
+			if (Input.pressed("ESC"))
+			{
+				if (bPaused)
+				{
+					channel1.resume();
+					channel2.resume();
+					channelBase.resume();
+					remove(shade);
+				}
+				else
+				{
+					channel1.stop();
+					channel2.stop();
+					channelBase.stop();
+					add (shade);
+				}
+				bPaused = !bPaused;
+			}
+			
+			if (bPaused) return;
 			
 			super.update();
 			timer += FP.elapsed;

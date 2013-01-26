@@ -22,7 +22,9 @@ package
 			super.init();
 			Input.define("UP", Key.UP);
 			Input.define("DOWN", Key.DOWN);
-			FP.world = new Level ();
+			Input.define("ENTER", Key.ENTER);
+			Input.define("ESC", Key.ESCAPE);
+			FP.world = new MenuScreen ();
 		}
 		
 	}
