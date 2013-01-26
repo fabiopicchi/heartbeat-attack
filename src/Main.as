@@ -1,27 +1,28 @@
 package 
 {
-	import flash.display.Sprite;
-	import flash.events.Event;
+	import net.flashpunk.FP;
+	import net.flashpunk.Engine;
+	import net.flashpunk.utils.Input;
+	import net.flashpunk.utils.Key;
 	
 	/**
 	 * ...
 	 * @author 
 	 */
-	public class Main extends Sprite 
+	public class Main extends Engine 
 	{
-		
-		public function Main():void 
+		public function Main ()
 		{
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+			super (640, 480);
 		}
 		
-		private function init(e:Event = null):void 
+		override public function init():void 
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-			// entry point
+			super.init();
+			Input.define ("UP", Key.UP);
+			Input.define ("DOWN", Key.DOWN);
+			FP.world = new Level();
 		}
-		
 	}
 	
 }
