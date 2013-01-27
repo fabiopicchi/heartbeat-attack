@@ -3,6 +3,7 @@ package
 	import flash.display.*;
 	import flash.text.*;
 	import flash.events.*;
+	import flash.utils.clearInterval;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	import net.flashpunk.graphics.Image;
@@ -63,7 +64,8 @@ package
 		
 		private function startup (): void {
 			stage.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-			removeChild(loader);
+			//clearInterval (1);
+			//removeChild(loader);
 			
 			var mainClass:Class = getDefinitionByName(mainClassName) as Class;
 			stage.addChild(new mainClass as DisplayObject);

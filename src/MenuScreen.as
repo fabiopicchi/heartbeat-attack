@@ -14,11 +14,24 @@ package
 	{
 		private var _menu : Menu;
 		private var creditsScreen : Entity = new Entity(0, 0, new Image(Assets.CREDITS));;
+		private var _splash1 : SkippableScreen;
+		private var _splash2 : SkippableScreen;
 		
 		public function MenuScreen() 
 		{
-			var e : Entity
+			_splash1 = new SkippableScreen (new Image (Assets.FLASHPUNK), function() : void
+			{
+				remove (_splash1);
+				add (_splash2);
+			}, 3);
 			
+			_splash2 = new SkippableScreen (new Image (Assets.CATAVENTO), function() : void
+			{
+				remove (_splash2);
+				_menu.disabled = false;
+			}, 3);
+			
+			var e : Entity;
 			e = new Entity(0, 0, new Image(Assets.MAINMENU_BG));
 			
 			add(e);
@@ -36,6 +49,9 @@ package
 				_menu.disabled = true;
 			});
 			add (_menu);
+			add (_splash1);
+			_menu.disabled = true;
+			
 		}
 		
 		override public function update():void 

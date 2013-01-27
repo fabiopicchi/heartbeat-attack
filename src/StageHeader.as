@@ -61,6 +61,8 @@ package
 					distressedAr.push(new Image(Assets.SLEEPER_DISTRESS05));
 					distressedAr.push(new Image(Assets.SLEEPER_DISTRESS06));
 					
+					clumsyAr = idleAr;
+					
 					endAr.push(new Image(Assets.SLEEPER_END01));
 					endAr.push(new Image(Assets.SLEEPER_END02));
 					endAr.push(new Image(Assets.SLEEPER_END03));
@@ -216,7 +218,7 @@ package
 		{
 			frames = 0;
 			index = 0;
-			graphicAr = distressedAr;
+			graphicAr = clumsyAr;
 		}
 		
 		public function endAnimation():void

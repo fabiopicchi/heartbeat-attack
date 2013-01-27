@@ -75,7 +75,7 @@ package Loader
 			
 			for each (var ev:XML in xmlFile.child("story_events").child("story_event"))
 			{
-				eventList.push({beat: ev.@beat, type: ev.@type, threadmill: int(-1) ,id: eventId++});
+				eventList.push({beat: ev.@beat, name: ev.@type, threadmill: int(-1) ,id: eventId++});
 			}
 			
 			noteList.sortOn("beat", [Array.NUMERIC]);

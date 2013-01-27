@@ -5,6 +5,7 @@ package
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.utils.Draw;
@@ -56,6 +57,7 @@ package
 		public var pLock : Boolean = false;
 		private var _menu : Menu;
 		private var _score : int;
+		private var _story : StageHeader;
 		
 		private static const RIGHT : int = 1;
 		private static const WRONG : int = 2;
@@ -67,31 +69,6 @@ package
 		public function Level() 
 		{
 			loadStage();
-			
-			var e : Entity
-			var level : int = 1;
-			switch (level)
-			{
-				case 1:
-					e = new Entity(0, 0, new Image(Assets.BACKGROUND_SLEEPER));
-					break;
-				case 2:
-					e = new Entity(0, 0, new Image(Assets.BACKGROUND_BROWSER));
-					break;
-				case 3:
-					e = new Entity(0, 0, new Image(Assets.BACKGROUND_LOVER));
-					break;
-			}
-			add(e);
-			
-			e = new StageHeader(level);
-			add(e);
-			
-			e = new Entity(0, 0, new Image(Assets.BACKGROUND_OVER));
-			add(e);
-			
-			e = new Entity(0, 223, new Image(Assets.BACKGROUND));
-			add(e);
 			
 			upperTreadmill_1 = new Treadmill(0, 287, noteSpeed);
 			upperTreadmill_2 = new Treadmill(upperTreadmill_1.tWidth, 287, noteSpeed);
@@ -112,13 +89,13 @@ package
 			});
 			_menu.disabled = true;
 			
-			//channel1 = new Sfx(Assets.DREAMY_1);
-			//channel2 = new Sfx(Assets.DREAMY_2);
-			//channelBase = new Sfx(Assets.DREAMY_BASE);
+			channel1 = new Sfx(Assets.DREAMY_1);
+			channel2 = new Sfx(Assets.DREAMY_2);
+			channelBase = new Sfx(Assets.DREAMY_BASE);
 			
-			channel1 = new Sfx(Assets.TESTE_1);
-			channel2 = new Sfx(Assets.TESTE_2);
-			channelBase = new Sfx(Assets.TESTE_BASE);
+			//channel1 = new Sfx(Assets.TESTE_1);
+			//channel2 = new Sfx(Assets.TESTE_2);
+			//channelBase = new Sfx(Assets.TESTE_BASE);
 			
 			textBox = new Entity ();
 			
@@ -176,6 +153,33 @@ package
 			helperUR = new Helper (Helper.UR);
 			helperUL = new Helper (Helper.UL);
 			
+			var level : int = 1;
+			var e : Entity;
+			
+			switch (level)
+			{
+				case 1:
+					e = new Entity(0, 0, new Image(Assets.BACKGROUND_SLEEPER));
+					break;
+				case 2:
+					e = new Entity(0, 0, new Image(Assets.BACKGROUND_BROWSER));
+					break;
+				case 3:
+					e = new Entity(0, 0, new Image(Assets.BACKGROUND_LOVER));
+					break;
+			}
+			add(e);
+			
+			_story = new StageHeader(level);
+			add(_story);
+			
+			e = new Entity(0, 0, new Image(Assets.BACKGROUND_OVER));
+			add(e);
+			
+			e = new Entity(0, 223, new Image(Assets.BACKGROUND));
+			add(e);
+			
+			
 			arNotes = [];
 			xmlLoader = new XmlLoader(new Assets.FASE_1);
 			xmlLoader.load();
@@ -202,12 +206,34 @@ package
 			
 			for (i = 0; i < length; i++)
 			{
+				var evt : IEvent;
 				if (xmlLoader.eventList[i].name && xmlLoader.eventList[i].name.indexOf("note_") >= 0)
 				{
 					var arCode : Array = xmlLoader.eventList[i].name.split("_");
-					var evt : AddHorizontalSlide = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
-					arEvents.push(evt);
+					evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
+					//arEvents.push(evt);
 				}
+				else if (xmlLoader.eventList[i].name == "storyStart")
+				{
+					evt = new StoryStart (xmlLoader.eventList[i].beat, _story);
+					//arEvents.push(evt);
+				}
+				else if (xmlLoader.eventList[i].name == "storyTwist")
+				{
+					evt = new StoryTwist (xmlLoader.eventList[i].beat, _story);
+					//arEvents.push(evt);
+				}
+				else if (xmlLoader.eventList[i].name == "storyRecover")
+				{
+					evt = new StoryRecover (xmlLoader.eventList[i].beat, _story);
+					//arEvents.push(evt);
+				}
+				else if (xmlLoader.eventList[i].name == "storyEnding")
+				{
+					evt = new StoryEnding (xmlLoader.eventList[i].beat, _story);
+					//arEvents.push(evt);
+				}
+				arEvents.push(evt);
 			}
 		}
 		

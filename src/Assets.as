@@ -21,7 +21,7 @@ package
 		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao direita.mp3')] public static const DREAMY_2:Class;
 		[Embed(source = '../resources/Dreamy Dreamy Waltz - camada base.mp3')] public static const DREAMY_BASE:Class;
 		
-		[Embed(source = '../resources/teste2.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
+		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
 		
 		[Embed(source = '../resources/background.png')] public static const MENU_BACKGROUND:Class;
 		
@@ -34,6 +34,8 @@ package
 		[Embed(source = '../resources/treadmill.png')] public static const TREADMILL:Class;
 		[Embed(source = '../resources/how2play_1.jpg')] public static const HOW_TO_PLAY_1:Class;
 		[Embed(source = '../resources/how2play_2.jpg')] public static const HOW_TO_PLAY_2:Class;
+		[Embed(source = '../resources/catavento_splash.jpg')] public static const CATAVENTO:Class;
+		[Embed(source = '../resources/flashpunk_splash.jpg')] public static const FLASHPUNK:Class;
 		
 		[Embed(source = '../resources/garry.png')] public static const GARRY:Class;
 		[Embed(source = '../resources/larry.png')] public static const LARRY:Class;
