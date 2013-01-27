@@ -19,7 +19,6 @@ package
 		
 		public function trigger():void 
 		{
-			trace ("CLUMSY");
 			_story.clumsy();
 		}
 		

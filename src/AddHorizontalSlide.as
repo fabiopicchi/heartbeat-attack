@@ -16,7 +16,6 @@ package
 			_time = time;
 			_type = type;
 			_xStart = xStart;
-			//trace (_type);
 		}
 		
 		/* INTERFACE IEvent */

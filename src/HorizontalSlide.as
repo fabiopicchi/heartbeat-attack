@@ -51,21 +51,12 @@ package
 			graphic = sprItem;
 			sprItem.add("loop", [0, 1, 0, 2], 10);
 			
-			trace (sprItem.width);
-			
 			x = xStart - sprItem.width / 2;
 			vx = -Level.noteSpeed;
 		}
 		
 		override public function update():void 
 		{
-			
-			//if (degubTimer >= ((2*4)/(Level.bpm * Level.PER_SECOND * Level.valsPerBeat)))
-			//{
-				//return;
-			//}
-			//degubTimer += FP.elapsed;
-			
 			super.update();
 			
 			sprItem.play("loop");

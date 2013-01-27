@@ -19,15 +19,12 @@ package
 	public class Level extends World 
 	{
 		public var xmlLoader:XmlLoader;
-		//public static var channel1 : Sfx;
-		//public static var channel2 : Sfx;
-		//public static var channelBase : Sfx;
 		
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public static const HELPER_RX : int = 519;
 		public static const HELPER_LX : int = 286;
-		public var missInterval : Number = 0.5;
-		public var rightInterval : Number = 0.3; //picchi usava 0.15
+		public var missInterval : Number = 0.7;
+		public var rightInterval : Number = 0.3;
 		public static var bpm : int;
 		public static var valsPerBeat : int;
 		public static var noteSpeed : int;
@@ -46,6 +43,8 @@ package
 		public var upperTreadmill_2 : Treadmill;
 		public var lowerTreadmill_1 : Treadmill;
 		public var lowerTreadmill_2 : Treadmill;
+		
+		public var hp : HeartContainer;
 		
 		public var heart : CountdownHeart;
 		
@@ -71,6 +70,8 @@ package
 			_level = level;
 			loadStage();
 			
+			hp = new HeartContainer();
+			
 			upperTreadmill_1 = new Treadmill(0, 287, noteSpeed);
 			upperTreadmill_2 = new Treadmill(upperTreadmill_1.tWidth, 287, noteSpeed);
 			lowerTreadmill_1 = new Treadmill(-200, 483, noteSpeed);
@@ -82,11 +83,17 @@ package
 			
 			_menu = new Menu (Image.createRect(20, 20), 150, 300, function () : void
 			{
-				FP.world = new Level(_level);
+				Main.screenTransition(2, 0x000000, function () : void
+				{
+					FP.world = new Level(_level);
+				});
 			});
 			_menu.addOption(150, 400, function () : void
 			{
-				FP.world = new MenuScreen;
+				Main.screenTransition(2, 0x000000, function () : void
+				{
+					FP.world = new MenuScreen;
+				});
 			});
 			_menu.disabled = true;
 			
@@ -94,7 +101,10 @@ package
 			{
 				Main.soundChannel.stop();
 				Main.soundChannel.complete = null;
-				FP.world = new EndingScreen( _level, ((_notesRight / _totalNotes) < 0.75 ? 1 : 2));
+				Main.screenTransition(2, 0x000000, function () : void
+				{
+					FP.world = new EndingScreen( _level, ((_notesRight / _totalNotes) < 0.90 ? 1 : 2));
+				});
 			}
 			
 			shade = new Entity();
@@ -128,7 +138,6 @@ package
 					return helperDR;
 					break;
 				default:
-					trace ("RETURN");
 					break;
 			}
 			return null;
@@ -188,7 +197,6 @@ package
 			{
 				n = new Note (xmlLoader.noteList[i].beat, getHelper (xmlLoader.noteList[i].helper));
 				arNotes.push(n);
-				//trace (n.time);
 			}
 			
 			i = 0;
@@ -252,10 +260,9 @@ package
 			else if (!bStart)
 			{
 				remove(heart);
+				add(hp);
 				bStart = true;
 				bInsert = true;
-				//channel1.play();
-				//channel2.play();
 				Main.soundChannel.play();
 			}
 			
@@ -265,8 +272,6 @@ package
 			{
 				if (!bPaused)
 				{
-					//channel1.stop();
-					//channel2.stop();
 					Main.soundChannel.stop();
 					_menu.disabled = false;
 					add (shade);
@@ -323,12 +328,11 @@ package
 					if ((!Input.pressed(n.helper.code) && instant < n.time + missInterval * valsPerBeat) 
 							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), n.time + missInterval * valsPerBeat)))
 					{
-						//NADA
+						//NOTHING
 					}
 					else if (!Input.pressed(n.helper.code) && instant >= n.time + missInterval * valsPerBeat)
 					{
 						balance = Math.max (0, balance - WRONG);
-						//trace (balance);
 						n.helper.wrong();
 						arRemoved.push (n);
 						timer = 0;
@@ -338,7 +342,6 @@ package
 						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), n.time + rightInterval * valsPerBeat))
 						{
 							balance = Math.min (TOP, balance + RIGHT);
-							//trace (balance);
 							_notesRight++;
 							n.helper.correct();
 							arRemoved.push (n);
@@ -347,7 +350,6 @@ package
 						else
 						{
 							balance = Math.max (0, balance - WRONG);
-							//trace (balance);
 							n.helper.wrong();
 							arRemoved.push (n);
 							timer = 0;
@@ -356,10 +358,31 @@ package
 				}
 			}
 			
+			var lifePercentage : Number = balance / TOP;
+			if (lifePercentage <= 1 && lifePercentage >= .75)
+			{
+				hp.good();
+			}
+			else if (lifePercentage < .75 && lifePercentage >= .50)
+			{
+				hp.ok();
+			}
+			else if (lifePercentage < .50 && lifePercentage >= .25)
+			{
+				hp.bad();
+			}
+			else if (lifePercentage < .25)
+			{
+				hp.danger();
+			}
+			
 			if (balance == 0)
 			{
 				Main.soundChannel.stop();
-				FP.world = new EndingScreen (_level, 0);
+				Main.screenTransition(2, 0x000000, function () : void
+				{
+					FP.world = new EndingScreen (_level, 0);
+				});
 			}
 			
 			for each (var note : Note in arRemoved)
