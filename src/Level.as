@@ -51,6 +51,7 @@ package
 		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
 		public var bPaused : Boolean = false;
+		public var pLock : Boolean = false;
 		private var _menu : Menu;
 		
 		
@@ -102,13 +103,13 @@ package
 			});
 			_menu.disabled = true;
 			
-			channel1 = new Sfx(Assets.DREAMY_1);
-			channel2 = new Sfx(Assets.DREAMY_2);
-			channelBase = new Sfx(Assets.DREAMY_BASE);
+			//channel1 = new Sfx(Assets.DREAMY_1);
+			//channel2 = new Sfx(Assets.DREAMY_2);
+			//channelBase = new Sfx(Assets.DREAMY_BASE);
 			
-			//channel1 = new Sfx(Assets.TESTE_1);
-			//channel2 = new Sfx(Assets.TESTE_2);
-			//channelBase = new Sfx(Assets.TESTE_BASE);
+			channel1 = new Sfx(Assets.TESTE_1);
+			channel2 = new Sfx(Assets.TESTE_2);
+			channelBase = new Sfx(Assets.TESTE_BASE);
 			
 			textBox = new Entity ();
 			
@@ -249,8 +250,21 @@ package
 			timer += FP.elapsed;
 			
 			var arRemoved : Array = [];
-			var instant : Number = channel2.position * bpm * PER_SECOND * valsPerBeat;
 			
+			var instant : Number = channel1.position * bpm * PER_SECOND * valsPerBeat;
+			
+			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
+			{
+				helperUL.pulse();
+				helperUR.pulse();
+				helperDL.pulse();
+				helperDR.pulse();
+				pLock = true;
+			}
+			else if (instant % 1 > 0.5)
+			{
+				pLock = false;
+			}
 			for (var j : int = 0; j < arEvents.length; j++)
 			{
 				if (instant > arEvents[j].time && arEvents[j].time >= 0)

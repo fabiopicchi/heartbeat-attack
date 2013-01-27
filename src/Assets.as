@@ -19,7 +19,7 @@ package
 		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao direita.mp3')] public static const DREAMY_2:Class;
 		[Embed(source = '../resources/Dreamy Dreamy Waltz - camada base.mp3')] public static const DREAMY_BASE:Class;
 		
-		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
+		[Embed(source = '../resources/teste2.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
 		
 		[Embed(source = '../resources/background.png')] public static const MENU_BACKGROUND:Class;
 		
@@ -31,10 +31,16 @@ package
 		
 		[Embed(source = '../resources/treadmill.png')] public static const TREADMILL:Class;
 		
-		[Embed(source = '../resources/garry_idle01.png')] public static const GARRY:Class;
-		[Embed(source = '../resources/larry_idle01.png')] public static const LARRY:Class;
-		[Embed(source = '../resources/shaniqua_idle01.png')] public static const SHANIQUA:Class;
-		[Embed(source = '../resources/terry_idle01.png')] public static const TERRY:Class;
+		[Embed(source = '../resources/garry.png')] public static const GARRY:Class;
+		[Embed(source = '../resources/larry.png')] public static const LARRY:Class;
+		[Embed(source = '../resources/shaniqua.png')] public static const SHANIQUA:Class;
+		[Embed(source = '../resources/terry.png')] public static const TERRY:Class;
+		
+		[Embed(source = '../resources/item_A.png')] public static const ITEM_A:Class;
+		[Embed(source = '../resources/item_K.png')] public static const ITEM_K:Class;
+		[Embed(source = '../resources/item_M.png')] public static const ITEM_M:Class;
+		[Embed(source = '../resources/item_Z.png')] public static const ITEM_Z:Class;
+		[Embed(source = '../resources/item_ALL.png')] public static const ITEM_ALL:Class;
 		
 		[Embed(source = '../resources/sleeper_idle01.png')] public static const SLEEPER_IDLE01:Class;
 		[Embed(source = '../resources/sleeper_idle02.png')] public static const SLEEPER_IDLE02:Class;
@@ -92,49 +98,30 @@ package
 		[Embed(source = '../resources/lover_end03.png')] public static const LOVER_END03:Class;
 		[Embed(source = '../resources/lover_end04.png')] public static const LOVER_END04:Class;
 		
-		public static function getHelperAsset (code : String) : Graphic
+		public static function getItemAsset (code : String) : Spritemap
 		{
 			switch (code)
 			{
 				case "UL":
-					return new Image(TERRY);
+					return new Spritemap(ITEM_A, 64, 46);
 					break;
 				case "UR":
-					return new Image(LARRY);
+					return new Spritemap(ITEM_K, 74, 51);
 					break;
 				case "DL":
-					return new Image(GARRY);
+					return new Spritemap(ITEM_Z, 61, 46);
 					break;
 				case "DR":
-					return new Image(SHANIQUA);
+					return new Spritemap(ITEM_M, 71, 57);
+					break;
+				case "DRDL":
+					return new Spritemap(ITEM_ALL, 56, 55);
+					break;
+				case "URUL":
+					return new Spritemap(ITEM_ALL, 56, 55);
 					break;
 			}
 			return null;
-		}
-		
-		public static function getItemAsset (code : String) : Graphic
-		{
-			switch (code)
-			{
-				case "UL":
-					return Image.createRect(20, 20, 0x0000FF);
-					break;
-				case "UR":
-					return Image.createRect(20, 20, 0x00FF00);
-					break;
-				case "DL":
-					return Image.createRect(20, 20, 0x00FFFF);
-					break;
-				case "DR":
-					return Image.createRect(20, 20, 0xFF00FF);
-					break;
-				case "DRDL":
-				case "URUL":
-					trace ("BRANCO");
-					return Image.createRect(20, 20);
-					break;
-			}
-			return new Graphic();
 		}
 		
 		public function Assets() 
