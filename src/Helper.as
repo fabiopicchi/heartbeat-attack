@@ -1,6 +1,8 @@
 package  
 {
 	import net.flashpunk.Entity;
+	import net.flashpunk.graphics.Spritemap;
+	import Assets;
 	
 	/**
 	 * ...
@@ -8,6 +10,7 @@ package
 	 */
 	public class Helper extends Entity 
 	{
+		public var sprHelper : Spritemap;
 		private var _code : String;
 		public static const UR : String = "UR";
 		public static const UL : String = "UL";
@@ -18,26 +21,47 @@ package
 		{
 			this._code = code;
 			
-			addGraphic (Assets.getHelperAsset (_code));
 			switch (_code)
 			{
 				case "UL":
 					this.x = 205;
 					this.y = 164;
+					sprHelper = new Spritemap(Assets.TERRY, 154, 151, idle);
+					sprHelper.add("idle", [0]);
+					sprHelper.add("pulse", [9], 4, false);
+					sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7], 15, false);
+					sprHelper.add("wrong", [8], 3, false);
 					break;
 				case "UR":
 					this.x = 452;
 					this.y = 178;
+					sprHelper = new Spritemap(Assets.LARRY, 126, 130, idle);
+					sprHelper.add("idle", [0]);
+					sprHelper.add("pulse", [9], 4, false);
+					sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7], 15, false);
+					sprHelper.add("wrong", [8], 3, false);
 					break;
 				case "DL":
-					this.x = 202;
-					this.y = 392;
+					this.x = 222;
+					this.y = 393;
+					sprHelper = new Spritemap(Assets.GARRY, 138, 106, idle);
+					sprHelper.add("idle", [0]);
+					sprHelper.add("pulse", [8], 4, false);
+					sprHelper.add("right", [1, 2, 3, 4, 5, 6], 15, false);
+					sprHelper.add("wrong", [7], 3, false);
 					break;
 				case "DR":
-					this.x = 466;
-					this.y = 384;
+					this.x = 457;
+					this.y = 381;
+					sprHelper = new Spritemap(Assets.SHANIQUA, 165, 118, idle);
+					sprHelper.add("idle", [0]);
+					sprHelper.add("pulse", [10], 4, false);
+					sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7, 8], 15, false);
+					sprHelper.add("wrong", [9], 3, false);
 					break;
 			}
+			
+			graphic = sprHelper;
 		}
 		
 		public function get code():String 
@@ -45,14 +69,24 @@ package
 			return _code;
 		}
 		
+		public function idle () : void
+		{
+			sprHelper.play("idle");
+		}
+		
 		public function correct () : void
 		{
-			//trace ("CORRECT " + _code);
+			sprHelper.play("right", true);
 		}
 		
 		public function wrong () : void
 		{
-			//trace ("WRONG " + _code);
+			sprHelper.play("wrong");
+		}
+		
+		public function pulse () : void
+		{
+			sprHelper.play("pulse");
 		}
 	}
 

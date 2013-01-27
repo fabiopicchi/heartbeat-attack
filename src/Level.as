@@ -51,6 +51,7 @@ package
 		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
 		public var bPaused : Boolean = false;
+		public var pLock : Boolean = false;
 		private var _menu : Menu;
 		
 		public function Level() 
@@ -255,6 +256,19 @@ package
 			
 			var arRemoved : Array = [];
 			var instant : Number = channel1.position * bpm * PER_SECOND * valsPerBeat;
+			
+			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
+			{
+				helperUL.pulse();
+				helperUR.pulse();
+				helperDL.pulse();
+				helperDR.pulse();
+				pLock = true;
+			}
+			else if (instant % 1 > 0.5)
+			{
+				pLock = false;
+			}
 			
 			//trace (channel1.position * bpm);
 			
