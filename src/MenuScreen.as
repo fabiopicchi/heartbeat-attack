@@ -13,26 +13,42 @@ package
 	public class MenuScreen extends World 
 	{
 		private var _menu : Menu;
+		private var creditsScreen : Entity = new Entity(0, 0, new Image(Assets.CREDITS));;
 		
 		public function MenuScreen() 
 		{
-			_menu = new Menu (Image.createRect(20, 20), 150, 300, function () : void
+			var e : Entity
+			
+			e = new Entity(0, 0, new Image(Assets.MAINMENU_BG));
+			
+			add(e);
+			
+			_menu = new Menu (new Image(Assets.ARROW), 533, 415, function () : void
 			{
 				Main.screenTransition(2, 0x000000, function () : void
 				{
 					FP.world = new Level;
 				});
 			});
-			_menu.addOption(150, 400, function () : void
+			_menu.addOption(533, 518, function () : void
 			{
-				trace ("credits");
+				add(creditsScreen);
+				_menu.disabled = true;
 			});
 			add (_menu);
 		}
 		
 		override public function update():void 
 		{
+			if (Input.pressed("ENTER") && _menu.selected == 1 && _menu.disabled) {
+				remove(creditsScreen);
+			}
+			
 			super.update();
+			
+			if (Input.pressed("ENTER") && _menu.selected == 1 && _menu.disabled) {
+				_menu.disabled = false;
+			}
 		}
 		
 	}

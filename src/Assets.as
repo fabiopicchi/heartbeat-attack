@@ -49,7 +49,6 @@ package
 		[Embed(source = '../resources/item_M.png')] public static const ITEM_M:Class;
 		[Embed(source = '../resources/item_Z.png')] public static const ITEM_Z:Class;
 		[Embed(source = '../resources/item_ALL.png')] public static const ITEM_ALL:Class;
-		
 		[Embed(source = '../resources/sleeper_idle01.png')] public static const SLEEPER_IDLE01:Class;
 		[Embed(source = '../resources/sleeper_idle02.png')] public static const SLEEPER_IDLE02:Class;
 		[Embed(source = '../resources/sleeper_idle03.png')] public static const SLEEPER_IDLE03:Class;
@@ -105,6 +104,32 @@ package
 		[Embed(source = '../resources/lover_end02.png')] public static const LOVER_END02:Class;
 		[Embed(source = '../resources/lover_end03.png')] public static const LOVER_END03:Class;
 		[Embed(source = '../resources/lover_end04.png')] public static const LOVER_END04:Class;
+		[Embed(source = '../resources/mainmenu_bg.png')] public static const MAINMENU_BG:Class;
+		[Embed(source = '../resources/mainmenu_heart01.png')] public static const MAINMENU_HEART1:Class;
+		[Embed(source = '../resources/mainmenu_heart02.png')] public static const MAINMENU_HEART2:Class;
+		[Embed(source = '../resources/mainmenu_heart03.png')] public static const MAINMENU_HEART3:Class;
+		[Embed(source = '../resources/arrow.png')] public static const ARROW:Class;
+		[Embed(source = '../resources/credits.jpg')] public static const CREDITS:Class;
+		
+		public static function getHelperAsset (code : String) : Graphic
+		{
+			switch (code)
+			{
+				case "UL":
+					return new Image(TERRY);
+					break;
+				case "UR":
+					return new Image(LARRY);
+					break;
+				case "DL":
+					return new Image(GARRY);
+					break;
+				case "DR":
+					return new Image(SHANIQUA);
+					break;
+			}
+			return null;
+		}
 		
 		public static function getItemAsset (code : String) : Spritemap
 		{
