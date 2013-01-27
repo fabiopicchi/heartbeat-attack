@@ -105,23 +105,34 @@ package
 		{
 			if (_level == 1 || _level == 2)
 			{
-				FP.world = new Level(_level + 1);
+				Main.screenTransition(2, 0x000000, function():void
+				{
+					FP.world = new Level(_level + 1);
+				});
 			}
 			else if (_level == 3)
 			{
-				//TELA DE ENDING
-				FP.world = new TheEnd();
+				Main.screenTransition(2, 0x000000, function():void
+				{
+					FP.world = new TheEnd();
+				});
 			}
 		}
 		
 		private function backToMenu():void 
 		{
-			FP.world = new MenuScreen();
+			Main.screenTransition(2, 0x000000, function():void
+			{
+				FP.world = new MenuScreen();
+			});
 		}
 		
 		private function resetLevel():void 
 		{
-			FP.world = new Level(_level);
+			Main.screenTransition(2, 0x000000, function():void
+			{
+				FP.world = new Level(_level);
+			});
 		}
 		
 	}

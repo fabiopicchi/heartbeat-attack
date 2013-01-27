@@ -16,7 +16,7 @@ package
 			x = 256;
 			y = 205;
 			_animation = new Spritemap(Assets.TITLEHEART_SPRITESHEET, 214, 259);
-			_animation.add("pulse", [0, 1, 2, 0, 0, 0, 0, 0], 15);
+			_animation.add("pulse", [0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 15);
 			addGraphic(_animation);
 		}
 		

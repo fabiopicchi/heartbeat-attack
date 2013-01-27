@@ -105,8 +105,6 @@ package
 		
 		private function startup (): void {
 			stage.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-			//clearInterval (1);
-			//removeChild(loader);
 			
 			var mainClass:Class = getDefinitionByName(mainClassName) as Class;
 			stage.addChild(new mainClass as DisplayObject);
