@@ -50,11 +50,23 @@ package
 		[Embed(source = '../resources/heart_spritesheet.png')] public static const HEART:Class;
 		[Embed(source = '../resources/counter_spritesheet.png')] public static const COUNTER:Class;
 		
+		[Embed(source = '../resources/background_endgame.png')] public static const BACKGROUND_ENDGAME:Class;
+		[Embed(source = '../resources/background_gameover.png')] public static const BACKGROUND_GAMEOVER:Class;
+		[Embed(source = '../resources/gameend_great.png')] public static const GAMEEND_GREAT:Class;
+		[Embed(source = '../resources/gameend_well.png')] public static const GAMEEND_WELL:Class;
+		[Embed(source = '../resources/lover_end_great.png')] public static const LOVER_END_GREAT:Class;
+		[Embed(source = '../resources/lover_end_ok.png')] public static const LOVER_END_OK:Class;
+		[Embed(source = '../resources/slacker_end_great.png')] public static const SLACKER_END_GREAT:Class;
+		[Embed(source = '../resources/slacker_end_ok.png')] public static const SLACKER_END_OK:Class;
+		[Embed(source = '../resources/sleeper_end_great.png')] public static const SLEEPER_END_GREAT:Class;
+		[Embed(source = '../resources/sleeper_end_ok.png')] public static const SLEEPER_END_OK:Class;
+		
 		[Embed(source = '../resources/item_A.png')] public static const ITEM_A:Class;
 		[Embed(source = '../resources/item_K.png')] public static const ITEM_K:Class;
 		[Embed(source = '../resources/item_M.png')] public static const ITEM_M:Class;
 		[Embed(source = '../resources/item_Z.png')] public static const ITEM_Z:Class;
 		[Embed(source = '../resources/item_ALL.png')] public static const ITEM_ALL:Class;
+		
 		[Embed(source = '../resources/sleeper_idle01.png')] public static const SLEEPER_IDLE01:Class;
 		[Embed(source = '../resources/sleeper_idle02.png')] public static const SLEEPER_IDLE02:Class;
 		[Embed(source = '../resources/sleeper_idle03.png')] public static const SLEEPER_IDLE03:Class;
@@ -110,10 +122,12 @@ package
 		[Embed(source = '../resources/lover_end02.png')] public static const LOVER_END02:Class;
 		[Embed(source = '../resources/lover_end03.png')] public static const LOVER_END03:Class;
 		[Embed(source = '../resources/lover_end04.png')] public static const LOVER_END04:Class;
+		
 		[Embed(source = '../resources/mainmenu_bg.png')] public static const MAINMENU_BG:Class;
 		[Embed(source = '../resources/mainmenu_heart01.png')] public static const MAINMENU_HEART1:Class;
 		[Embed(source = '../resources/mainmenu_heart02.png')] public static const MAINMENU_HEART2:Class;
 		[Embed(source = '../resources/mainmenu_heart03.png')] public static const MAINMENU_HEART3:Class;
+		
 		[Embed(source = '../resources/arrow.png')] public static const ARROW:Class;
 		[Embed(source = '../resources/credits.jpg')] public static const CREDITS:Class;
 		

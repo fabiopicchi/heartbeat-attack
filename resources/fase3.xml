@@ -31,10 +31,36 @@
 <item beat="59" threadmill="1" type="4"/>
 <item beat="59" threadmill="0" type="4"/>
 
-<item beat="60" threadmill="0" type="4"/>
-<item beat="60" threadmill="0" type="4"/>
+<item beat="64" threadmill="1" type="4"/>
+<item beat="64" threadmill="0" type="4"/>
+<item beat="65" threadmill="1" type="4"/>
+<item beat="65" threadmill="0" type="4"/>
+<item beat="66" threadmill="1" type="4"/>
+<item beat="66" threadmill="0" type="4"/>
+<item beat="67" threadmill="1" type="4"/>
+<item beat="67" threadmill="0" type="4"/>
 
+<item beat="72" threadmill="0" type="4"/>
+<item beat="74" threadmill="1" type="4"/>
+<item beat="80" threadmill="0" type="4"/>
+<item beat="82" threadmill="1" type="4"/>
 
+<!---reprise--->
+<item beat="88" threadmill="0" type="1"/>
+<item beat="92" threadmill="0" type="4"/>
+<item beat="95" threadmill="0" type="0"/>
+<item beat="97" threadmill="0" type="0"/>
+<item beat="98" threadmill="0" type="0"/>
+<item beat="99" threadmill="0" type="0"/>
+<item beat="100" threadmill="0" type="1"/>
+
+<item beat="104" threadmill="1" type="3"/>
+<item beat="108" threadmill="1" type="4"/>
+<item beat="111" threadmill="1" type="2"/>
+<item beat="113" threadmill="1" type="2"/>
+<item beat="114" threadmill="1" type="2"/>
+<item beat="115" threadmill="1" type="2"/>
+<item beat="116" threadmill="1" type="3"/>
 
 	   
 	</items>

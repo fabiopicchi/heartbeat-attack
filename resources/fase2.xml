@@ -88,18 +88,13 @@
 <item beat="117" threadmill="1" type="4"/>
 <item beat="117" threadmill="0" type="4"/>
  <!---brancos--->
-<item beat="122" threadmill="1" type="4"/>
-<item beat="122" threadmill="0" type="4"/>
-<item beat="123" threadmill="1" type="4"/>
-<item beat="123" threadmill="0" type="4"/>
- <!---mais brancos--->
-<item beat="128" threadmill="1" type="4"/>
-<item beat="128" threadmill="0" type="4"/>
-<item beat="129" threadmill="1" type="4"/>
-<item beat="129" threadmill="0" type="4"/>
+<item beat="122" threadmill="1" type="3"/>
+<item beat="122" threadmill="0" type="1"/>
+<item beat="123" threadmill="1" type="3"/>
+<item beat="123" threadmill="0" type="1"/>
  <!---fim--->
-<item beat="130" threadmill="1" type="2"/>
-<item beat="130" threadmill="0" type="0"/>
+<item beat="126" threadmill="1" type="4"/>
+<item beat="126" threadmill="0" type="4"/>
 
 	   
 	</items>

@@ -24,10 +24,10 @@ package
 		public static var channelBase : Sfx;
 		
 		public static const PER_SECOND : Number = 0.016666666666667;
-		public static const HELPER_RX : int = 524;
-		public static const HELPER_LX : int = 271;
+		public static const HELPER_RX : int = 519;
+		public static const HELPER_LX : int = 286;
 		public var missInterval : Number = 0.5;
-		public var rightInterval : Number = 0.2; //picchi usava 0.15
+		public var rightInterval : Number = 0.3; //picchi usava 0.15
 		public static var bpm : int;
 		public static var valsPerBeat : int;
 		public static var noteSpeed : int;
@@ -35,6 +35,7 @@ package
 		public var arEvents : Array = [];
 		public var timer : Number = 0;
 		private var shade : Entity;
+		private var _level : int;
 		
 		public var helperUR : Helper;
 		public var helperUL : Helper;
@@ -61,11 +62,12 @@ package
 		private static const WRONG : int = 2;
 		private static const TOP : int = 14;
 		private var balance : int = TOP;
-		private var _totalNotes : int;
-		private var _notesRight : int;
+		private var _totalNotes : Number;
+		private var _notesRight : Number;
 		
-		public function Level() 
+		public function Level(level : int) 
 		{
+			_level = level;
 			loadStage();
 			
 			upperTreadmill_1 = new Treadmill(0, 287, noteSpeed);
@@ -79,7 +81,7 @@ package
 			
 			_menu = new Menu (Image.createRect(20, 20), 150, 300, function () : void
 			{
-				FP.world = new Level;
+				FP.world = new Level(_level);
 			});
 			_menu.addOption(150, 400, function () : void
 			{
@@ -87,7 +89,11 @@ package
 			});
 			_menu.disabled = true;
 			
-			channelBase = new Sfx(Assets.DREAMY);
+			channelBase.complete = function () : void
+			{
+				channelBase.stop();
+				FP.world = new EndingScreen( _level, ((_notesRight / _totalNotes) < 0.75 ? 1 : 2));
+			}
 			
 			shade = new Entity();
 			shade.addGraphic (Image.createRect (FP.engine.width, FP.engine.height, 0x000000, 0.7));
@@ -133,24 +139,28 @@ package
 			helperUR = new Helper (Helper.UR);
 			helperUL = new Helper (Helper.UL);
 			
-			var level : int = 1;
-			var e : Entity;
-			
-			switch (level)
+			var e : Entity
+			switch (_level)
 			{
 				case 1:
 					e = new Entity(0, 0, new Image(Assets.BACKGROUND_SLEEPER));
+					xmlLoader = new XmlLoader(new Assets.FASE_1);
+					channelBase = new Sfx(Assets.DREAMY);
 					break;
 				case 2:
 					e = new Entity(0, 0, new Image(Assets.BACKGROUND_BROWSER));
+					xmlLoader = new XmlLoader(new Assets.FASE_2);
+					channelBase = new Sfx(Assets.NYAN);
 					break;
 				case 3:
 					e = new Entity(0, 0, new Image(Assets.BACKGROUND_LOVER));
+					xmlLoader = new XmlLoader(new Assets.FASE_3);
+					channelBase = new Sfx(Assets.SPAGHETTI);
 					break;
 			}
 			add(e);
 			
-			_story = new StageHeader(level);
+			_story = new StageHeader(_level);
 			add(_story);
 			
 			e = new Entity(0, 0, new Image(Assets.BACKGROUND_OVER));
@@ -159,9 +169,7 @@ package
 			e = new Entity(0, 223, new Image(Assets.BACKGROUND));
 			add(e);
 			
-			
 			arNotes = [];
-			xmlLoader = new XmlLoader(new Assets.FASE_1);
 			xmlLoader.load();
 			
 			bpm = xmlLoader.bpm;
@@ -344,6 +352,12 @@ package
 						}
 					}
 				}
+			}
+			
+			if (balance == 0)
+			{
+				channelBase.stop();
+				FP.world = new EndingScreen (_level, 0);
 			}
 			
 			for each (var note : Note in arRemoved)
