@@ -19,22 +19,20 @@ package
 	public class Level extends World 
 	{
 		public var xmlLoader:XmlLoader;
-		public static var channel1 : Sfx;
-		public static var channel2 : Sfx;
+		//public static var channel1 : Sfx;
+		//public static var channel2 : Sfx;
 		public static var channelBase : Sfx;
 		
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public static const HELPER_RX : int = 524;
 		public static const HELPER_LX : int = 271;
-		public var missInterval : Number = 0.4;
-		public var rightInterval : Number = 0.15;
+		public var missInterval : Number = 0.5;
+		public var rightInterval : Number = 0.2; //picchi usava 0.15
 		public static var bpm : int;
 		public static var valsPerBeat : int;
 		public static var noteSpeed : int;
 		public var arNotes : Array = [];
 		public var arEvents : Array = [];
-		private var textBox : Entity;
-		private var textField : Text = new Text ("", 20, 20);
 		public var timer : Number = 0;
 		private var shade : Entity;
 		
@@ -89,37 +87,19 @@ package
 			});
 			_menu.disabled = true;
 			
-			channel1 = new Sfx(Assets.DREAMY_1);
-			channel2 = new Sfx(Assets.DREAMY_2);
-			channelBase = new Sfx(Assets.DREAMY_BASE);
-			
-			//channel1 = new Sfx(Assets.TESTE_1);
-			//channel2 = new Sfx(Assets.TESTE_2);
-			//channelBase = new Sfx(Assets.TESTE_BASE);
-			
-			textBox = new Entity ();
-			
-			textBox.width = 20;
-			textBox.height = 20;
-			textBox.x = (FP.engine.width - textBox.width) / 2;
-			textBox.y = (FP.engine.height - textBox.height) / 2;
+			channelBase = new Sfx(Assets.DREAMY);
 			
 			shade = new Entity();
 			shade.addGraphic (Image.createRect (FP.engine.width, FP.engine.height, 0x000000, 0.7));
-			
-			textBox.addGraphic(textField);
 			
 			heart = new CountdownHeart();
 			heart.x = (FP.engine.width / 2) - (heart.halfWidth);
 			heart.y = (FP.engine.height / 2) - (heart.halfHeight);
 			
-			add (textBox);
-			
 			add (helperDL);
 			add (helperDR);
 			add (helperUR);
 			add (helperUL);
-			
 			add(heart);
 		}
 		
@@ -210,28 +190,26 @@ package
 				if (xmlLoader.eventList[i].name && xmlLoader.eventList[i].name.indexOf("note_") >= 0)
 				{
 					var arCode : Array = xmlLoader.eventList[i].name.split("_");
-					evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
-					//arEvents.push(evt);
+					if (arCode[1] == "UL" || arCode[1] == "DL")
+						evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_LX + (3 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
+					else
+						evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
 				}
 				else if (xmlLoader.eventList[i].name == "storyStart")
 				{
 					evt = new StoryStart (xmlLoader.eventList[i].beat, _story);
-					//arEvents.push(evt);
 				}
 				else if (xmlLoader.eventList[i].name == "storyTwist")
 				{
 					evt = new StoryTwist (xmlLoader.eventList[i].beat, _story);
-					//arEvents.push(evt);
 				}
 				else if (xmlLoader.eventList[i].name == "storyRecover")
 				{
 					evt = new StoryRecover (xmlLoader.eventList[i].beat, _story);
-					//arEvents.push(evt);
 				}
 				else if (xmlLoader.eventList[i].name == "storyEnding")
 				{
 					evt = new StoryEnding (xmlLoader.eventList[i].beat, _story);
-					//arEvents.push(evt);
 				}
 				arEvents.push(evt);
 			}
@@ -266,8 +244,8 @@ package
 				remove(heart);
 				bStart = true;
 				bInsert = true;
-				channel1.play();
-				channel2.play();
+				//channel1.play();
+				//channel2.play();
 				channelBase.play();
 			}
 			
@@ -277,8 +255,8 @@ package
 			{
 				if (!bPaused)
 				{
-					channel1.stop();
-					channel2.stop();
+					//channel1.stop();
+					//channel2.stop();
 					channelBase.stop();
 					_menu.disabled = false;
 					add (shade);
@@ -297,8 +275,7 @@ package
 			timer += FP.elapsed;
 			
 			var arRemoved : Array = [];
-			
-			var instant : Number = channel1.position * bpm * PER_SECOND * valsPerBeat;
+			var instant : Number = channelBase.position * bpm * PER_SECOND * valsPerBeat;
 			
 			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
 			{
@@ -340,7 +317,6 @@ package
 					}
 					else if (!Input.pressed(n.helper.code) && instant >= n.time + missInterval * valsPerBeat)
 					{
-						textField.text = "PASS " + n.time;
 						balance = Math.max (0, balance - WRONG);
 						//trace (balance);
 						n.helper.wrong();
@@ -351,7 +327,6 @@ package
 					{
 						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), n.time + rightInterval * valsPerBeat))
 						{
-							textField.text = "RIGHT " + n.time;
 							balance = Math.min (TOP, balance + RIGHT);
 							//trace (balance);
 							_notesRight++;
@@ -361,7 +336,6 @@ package
 						}
 						else
 						{
-							textField.text = "MISS " + n.time;
 							balance = Math.max (0, balance - WRONG);
 							//trace (balance);
 							n.helper.wrong();
@@ -376,12 +350,6 @@ package
 			{
 				arNotes.splice(arNotes.indexOf(note), 1);
 			}
-			
-			if (timer > 0.5)
-			{
-				textField.text = "";
-			}
-			
 		}
 		
 		override public function render():void 

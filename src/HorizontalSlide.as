@@ -19,46 +19,48 @@ package
 		{
 			if (type == Helper.DL)
 			{
-				y = 483;
 				sprItem = Assets.getItemAsset(type);
+				y = 518 - sprItem.height;
 			}
 			else if (type == Helper.DR)
 			{
-				y = 483;
 				sprItem = Assets.getItemAsset(type);
+				y = 518 - sprItem.height;
 			}
 			else if (type == Helper.UR)
 			{
-				y = 287;
 				sprItem = Assets.getItemAsset(type);
+				y = 332 - sprItem.height;
 			}
 			else if (type == Helper.UL)
 			{
-				y = 287;
 				sprItem = Assets.getItemAsset(type);
+				y = 332 - sprItem.height;
 			}
 			else if (type == "URUL")
 			{
-				y = 287;
 				sprItem = Assets.getItemAsset(type);
+				y = 332 - sprItem.height;
 			}
 			else if (type == "DRDL")
 			{
-				y = 483;
 				sprItem = Assets.getItemAsset(type);
+				y = 518 - sprItem.height;
 			}
 			
 			graphic = sprItem;
 			sprItem.add("loop", [0, 1, 0, 2], 10);
 			
-			x = xStart - 10;
+			trace (sprItem.width);
+			
+			x = xStart - sprItem.width / 2;
 			vx = -Level.noteSpeed;
 		}
 		
 		override public function update():void 
 		{
 			
-			//if (degubTimer >= 1.33)
+			//if (degubTimer >= ((2*4)/(Level.bpm * Level.PER_SECOND * Level.valsPerBeat)))
 			//{
 				//return;
 			//}
@@ -71,7 +73,7 @@ package
 			x += vx * FP.elapsed;
 			y += vy * FP.elapsed;
 			
-			if (x + 20 < 0 || y + 20 < 0)
+			if (x + sprItem.width < 0 || y + sprItem.width < 0)
 			{
 				FP.world.remove(this);
 			}

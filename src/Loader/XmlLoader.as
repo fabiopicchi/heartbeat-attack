@@ -14,8 +14,6 @@ package Loader
 		public var noteList:Array = []; //{beat, helper, id}
 		public var eventList:Array = []; //{beat, name, id}
 		
-		public var itemDelay:int = 4;
-		
 		public function XmlLoader(xmlObject:String)
 		{
 			xmlFile = new XML(xmlObject);
@@ -30,6 +28,7 @@ package Loader
 		{
 			return xmlFile.@npb;
 		}
+		
 		public function get lapse():uint
 		{
 			return xmlFile.@lapse;
@@ -48,27 +47,33 @@ package Loader
 			{
 				firstGuy = 1 + obj.@threadmill * 2;
 				secondGuy = firstGuy - 1;
-				if (obj.@type == 0) eventName = "note_UL";
-				else if (obj.@type == 1) eventName = "note_UR";
-				else if (obj.@type == 2) eventName = "note_DL";
-				else if (obj.@type == 3) eventName = "note_DR";
-				else if (obj.@type == 4) {
-					if (obj.@threadmill == 0) eventName = "note_URUL";
-					else eventName = "note_DRDL";
+				if (obj.@type == 0)
+					eventName = "note_UL";
+				else if (obj.@type == 1)
+					eventName = "note_UR";
+				else if (obj.@type == 2)
+					eventName = "note_DL";
+				else if (obj.@type == 3)
+					eventName = "note_DR";
+				else if (obj.@type == 4)
+				{
+					if (obj.@threadmill == 0)
+						eventName = "note_URUL";
+					else
+						eventName = "note_DRDL";
 				}
 				
-				
-				eventList.push({beat: int(obj.@beat) - itemDelay, name: eventName, id: eventId++});
+				eventList.push({beat: int(obj.@beat) - ((obj.@type == 0 || obj.@type == 2) ? (3 * lapse) : (2 * lapse)) , name: eventName, id: eventId++});
 				
 				if (obj.@type == 4) // item "neutro"
 				{
-					noteList.push( { beat: obj.@beat, helper: firstGuy, id: noteId++ } )
+					noteList.push({beat: obj.@beat, helper: firstGuy, id: noteId++})
 					noteList.push({beat: int(obj.@beat) + lapse, helper: secondGuy, id: noteId++})
 				}
 				
 				else // item colorido
 				{
-					noteList.push( { beat: (obj.@type % 2 == 0) ? (int(obj.@beat) + lapse) : int(obj.@beat), helper: obj.@type, id: noteId++ } );
+					noteList.push({beat: obj.@beat, helper: obj.@type, id: noteId++});
 				}
 				
 			}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stage id = "2" bpm = "120" npb = '1' lapse = "4" direction1 = "left" direction2 = "left">
+	<items>
+
+<item beat="8" threadmill="0" type="1"/>
+<item beat="12" threadmill="0" type="4"/>
+<item beat="15" threadmill="0" type="0"/>
+<item beat="20" threadmill="0" type="1"/>
+
+<item beat="24" threadmill="1" type="3"/>
+<item beat="28" threadmill="1" type="4"/>
+<item beat="31" threadmill="1" type="2"/>
+<item beat="36" threadmill="1" type="3"/>
+
+<item beat="40" threadmill="1" type="3"/>
+<item beat="41" threadmill="0" type="1"/>
+<item beat="42" threadmill="1" type="3"/>
+<item beat="43" threadmill="0" type="1"/>
+<item beat="44" threadmill="1" type="3"/>
+<item beat="45" threadmill="0" type="1"/>
+<item beat="46" threadmill="1" type="3"/>
+<item beat="47" threadmill="0" type="1"/>
+
+<!---spag--->
+<item beat="56" threadmill="1" type="4"/>
+<item beat="56" threadmill="0" type="4"/>
+<item beat="57" threadmill="1" type="4"/>
+<item beat="57" threadmill="0" type="4"/>
+<item beat="58" threadmill="1" type="4"/>
+<item beat="58" threadmill="0" type="4"/>
+<item beat="59" threadmill="1" type="4"/>
+<item beat="59" threadmill="0" type="4"/>
+
+<item beat="60" threadmill="0" type="4"/>
+<item beat="60" threadmill="0" type="4"/>
+
+
+
+	   
+	</items>
+	<story_events>
+	   <story_event beat="0" type="storyStart"/>
+	   <story_event beat="56" type="storyTwist"/>
+	   <story_event beat="88" type="storyRecover"/>
+	   <story_event beat="118" type="storyEnding"/>
+	   <story_event beat="121" type="endStage"/>
+	</story_events>
+</stage>

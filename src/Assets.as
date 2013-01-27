@@ -17,11 +17,13 @@ package
 		[Embed(source = '../resources/teste - camada 2.mp3')] public static const TESTE_2:Class;
 		[Embed(source = '../resources/teste - camada base.mp3')] public static const TESTE_BASE:Class;
 		
-		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao esquerda.mp3')] public static const DREAMY_1:Class;
-		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao direita.mp3')] public static const DREAMY_2:Class;
-		[Embed(source = '../resources/Dreamy Dreamy Waltz - camada base.mp3')] public static const DREAMY_BASE:Class;
+		[Embed(source = '../resources/Dreamy Dreamy Waltz.mp3')] public static const DREAMY:Class;
+		[Embed(source = '../resources/Nyan Pazuzu.mp3')] public static const NYAN:Class;
+		[Embed(source = '../resources/Spaghetti on the Dance Floor.mp3')] public static const SPAGHETTI:Class;
 		
 		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
+		[Embed(source = '../resources/fase2.xml', mimeType = 'application/octet-stream')] public static const FASE_2:Class;
+		[Embed(source = '../resources/fase3.xml', mimeType = 'application/octet-stream')] public static const FASE_3:Class;
 		
 		[Embed(source = '../resources/background.png')] public static const MENU_BACKGROUND:Class;
 		
@@ -32,7 +34,7 @@ package
 		[Embed(source = '../resources/background_over.png')] public static const BACKGROUND_OVER:Class;
 		
 		[Embed(source = '../resources/treadmill.png')] public static const TREADMILL:Class;
-		[Embed(source = '../resources/how2play_1.jpg')] public static const HOW_TO_PLAY_1:Class;
+		[Embed(source = '../resources/how2play.png')] public static const HOW_TO_PLAY:Class;
 		[Embed(source = '../resources/how2play_2.jpg')] public static const HOW_TO_PLAY_2:Class;
 		[Embed(source = '../resources/catavento_splash.jpg')] public static const CATAVENTO:Class;
 		[Embed(source = '../resources/flashpunk_splash.jpg')] public static const FLASHPUNK:Class;
