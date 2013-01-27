@@ -105,8 +105,9 @@
 	</items>
 	<story_events>
 	   <story_event beat="0" type="storyStart"/>
-	   <story_event beat="98" type="storyTwist"/>
-	   <story_event beat="999" type="storyRecover"/>
-	   <story_event beat="9999" type="storyEnding"/>
+	   <story_event beat="96" type="storyTwist"/>
+	   <story_event beat="102" type="storyRecover"/>
+	   <story_event beat="130" type="storyEnding"/>
+	   <story_event beat="133" type="endStage"/>
 	</story_events>
 </stage>

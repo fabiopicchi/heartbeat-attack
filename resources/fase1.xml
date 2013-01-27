@@ -88,5 +88,6 @@
 	   <story_event beat="66" type="storyTwist"/>
 	   <story_event beat="96" type="storyRecover"/>
 	   <story_event beat="118" type="storyEnding"/>
+	   <story_event beat="121" type="endStage"/>
 	</story_events>
 </stage>
