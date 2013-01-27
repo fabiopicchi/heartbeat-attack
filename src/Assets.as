@@ -117,16 +117,16 @@ package
 			switch (code)
 			{
 				case "UL":
-					//return Image.createRect(20, 20, 0x0000FF);
+					return Image.createRect(20, 20, 0x0000FF);
 					break;
 				case "UR":
-					//return Image.createRect(20, 20, 0x00FF00);
+					return Image.createRect(20, 20, 0x00FF00);
 					break;
 				case "DL":
-					//return Image.createRect(20, 20, 0xFF00FF);
+					return Image.createRect(20, 20, 0xFF00FF);
 					break;
 				case "DR":
-					//return Image.createRect(20, 20, 0x00FFFF);
+					return Image.createRect(20, 20, 0x00FFFF);
 					break;
 				case "DRDL":
 				case "URUL":
