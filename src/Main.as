@@ -22,9 +22,9 @@ package
 			super.init();
 			
 			Input.define("UL", Key.A);
-			Input.define("UR", Key.A);
-			Input.define("DL", Key.A);
-			Input.define("DR", Key.A);
+			Input.define("UR", Key.K);
+			Input.define("DL", Key.Z);
+			Input.define("DR", Key.M);
 			Input.define("ENTER", Key.ENTER);
 			Input.define("ESC", Key.ESCAPE);
 
