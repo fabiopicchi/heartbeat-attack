@@ -27,8 +27,8 @@ package
 			
 			if (result == 0) //FAIL
 			{
-				_menu = new Menu(new Image (Assets.ARROW), 403, 518, resetLevel);
-				_menu.addOption(137, 518, backToMenu);
+				_menu = new Menu(new Image (Assets.ARROW), 400, 522, resetLevel);
+				_menu.addOption(127, 522, backToMenu);
 				_background = new Image(Assets.BACKGROUND_GAMEOVER);
 				addGraphic(_background);
 				Main.soundChannel = new Sfx (Assets.WRONG);
@@ -37,9 +37,10 @@ package
 			else
 			{
 				_menu = new Menu(new Image (Assets.ARROW), 564, 512, next);
-				_menu.addOption(294, 512, backToMenu);
+				_menu.addOption(300, 512, backToMenu);
 				Main.soundChannel = new Sfx (Assets.RIGHT);
 				Main.soundChannel.play();
+				
 				_background = new Image(Assets.BACKGROUND_ENDGAME);
 				addGraphic(_background);
 				_heart = new Heart(30, 334);
@@ -85,7 +86,7 @@ package
 						case 2:
 							_resultScene = new Image(Assets.SLACKER_END_GREAT);
 							_resultScene.x = 246;
-							_resultScene.y = 50;
+							_resultScene.y = 49;
 						break;
 						case 3:
 							_resultScene = new Image(Assets.LOVER_END_GREAT);

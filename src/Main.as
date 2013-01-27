@@ -36,7 +36,7 @@ package
 			Input.define("ENTER", Key.ENTER);
 			Input.define("ESC", Key.ESCAPE);
 
-			FP.world = new MenuScreen();
+			FP.world = new MenuScreen;
 			
 			
 		}
