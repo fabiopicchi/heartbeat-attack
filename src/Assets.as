@@ -127,6 +127,7 @@ package
 		[Embed(source = '../resources/mainmenu_heart01.png')] public static const MAINMENU_HEART1:Class;
 		[Embed(source = '../resources/mainmenu_heart02.png')] public static const MAINMENU_HEART2:Class;
 		[Embed(source = '../resources/mainmenu_heart03.png')] public static const MAINMENU_HEART3:Class;
+		[Embed(source = '../resources/titleheart_spritesheet.png')] public static const TITLEHEART_SPRITESHEET:Class;
 		
 		[Embed(source = '../resources/arrow.png')] public static const ARROW:Class;
 		[Embed(source = '../resources/credits.jpg')] public static const CREDITS:Class;

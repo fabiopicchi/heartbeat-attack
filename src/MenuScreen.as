@@ -13,7 +13,8 @@ package
 	public class MenuScreen extends World 
 	{
 		private var _menu : Menu;
-		private var creditsScreen : Entity = new Entity(0, 0, new Image(Assets.CREDITS));;
+		private var _heart : TitleHeart;
+		private var creditsScreen : Entity = new Entity(0, 0, new Image(Assets.CREDITS));
 		private var _splash1 : SkippableScreen;
 		private var _splash2 : SkippableScreen;
 		
@@ -35,6 +36,9 @@ package
 			e = new Entity(0, 0, new Image(Assets.MAINMENU_BG));
 			
 			add(e);
+			
+			_heart = new TitleHeart();
+			add(_heart);
 			
 			_menu = new Menu (new Image(Assets.ARROW), 533, 415, function () : void
 			{
