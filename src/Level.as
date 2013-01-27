@@ -47,6 +47,8 @@ package
 		public var lowerTreadmill_1 : Treadmill;
 		public var lowerTreadmill_2 : Treadmill;
 		
+		public var heart : CountdownHeart;
+		
 		public var start : Number = 4;
 		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
@@ -130,12 +132,18 @@ package
 			
 			textBox.addGraphic(textField);
 			
+			heart = new CountdownHeart();
+			heart.x = (FP.engine.width / 2) - (heart.halfWidth);
+			heart.y = (FP.engine.height / 2) - (heart.halfHeight);
+			
 			add (textBox);
 			
 			add (helperDL);
 			add (helperDR);
 			add (helperUR);
 			add (helperUL);
+			
+			add(heart);
 		}
 		
 		private function getHelper (code : int) : Helper
@@ -207,33 +215,37 @@ package
 		{
 			if (start > 0)
 			{
+				super.update();
 				start -= FP.elapsed;
-				if (start < 0)
+				if (start <= 0 && start > -FP.elapsed)
 				{
-					textField.text = "START";
+					heart.count();
 				}
-				else if (start < 1)
+				else if (start <= 1 && start > 1 -FP.elapsed)
 				{
-					textField.text = "1";
+					heart.count();
 				}
-				else if (start < 2)
+				else if (start <= 2 && start > 2 -FP.elapsed)
 				{
-					textField.text = "2";
+					heart.count();
 				}
-				else if (start < 3)
+				else if (start <= 3 && start > 3 -FP.elapsed)
 				{
-					textField.text = "3";
+					heart.count();
 				}
 				return;
 			}
 			else if (!bStart)
 			{
+				remove(heart);
 				bStart = true;
 				bInsert = true;
 				channel1.play();
 				channel2.play();
 				channelBase.play();
 			}
+			
+			
 			
 			if (Input.pressed("ESC"))
 			{
