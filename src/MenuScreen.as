@@ -20,7 +20,7 @@ package
 			{
 				Main.screenTransition(2, 0x000000, function () : void
 				{
-					FP.world = new Level;
+					FP.world = new HowToPlayScreen;
 				});
 			});
 			_menu.addOption(150, 400, function () : void

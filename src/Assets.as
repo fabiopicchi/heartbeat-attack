@@ -30,6 +30,8 @@ package
 		[Embed(source = '../resources/background_over.png')] public static const BACKGROUND_OVER:Class;
 		
 		[Embed(source = '../resources/treadmill.png')] public static const TREADMILL:Class;
+		[Embed(source = '../resources/how2play_1.jpg')] public static const HOW_TO_PLAY_1:Class;
+		[Embed(source = '../resources/how2play_2.jpg')] public static const HOW_TO_PLAY_2:Class;
 		
 		[Embed(source = '../resources/garry.png')] public static const GARRY:Class;
 		[Embed(source = '../resources/larry.png')] public static const LARRY:Class;
