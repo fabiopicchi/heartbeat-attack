@@ -24,7 +24,7 @@ package
 			_skp2 = new SkippableScreen (new Image (Assets.HOW_TO_PLAY_2), function () : void
 			{
 				FP.world.remove (_skp2);
-				FP.world = new Level;
+				FP.world = new Level(1);
 			});
 			
 			add (_skp1);

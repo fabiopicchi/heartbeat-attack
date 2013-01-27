@@ -36,6 +36,7 @@ package
 		private var textField : Text = new Text ("", 20, 20);
 		public var timer : Number = 0;
 		private var shade : Entity;
+		private var _level : int;
 		
 		public var helperUR : Helper;
 		public var helperUL : Helper;
@@ -64,12 +65,12 @@ package
 		private var _totalNotes : int;
 		private var _notesRight : int;
 		
-		public function Level() 
+		public function Level(level : int) 
 		{
 			loadStage();
+			_level = level;
 			
 			var e : Entity
-			var level : int = 1;
 			switch (level)
 			{
 				case 1:
@@ -104,7 +105,7 @@ package
 			
 			_menu = new Menu (Image.createRect(20, 20), 150, 300, function () : void
 			{
-				FP.world = new Level;
+				FP.world = new Level(_level);
 			});
 			_menu.addOption(150, 400, function () : void
 			{
