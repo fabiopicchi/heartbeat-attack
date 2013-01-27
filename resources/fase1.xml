@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<stage id = "0" bpm = "120" npb = '2' lapse = "3" direction1 = "left" direction2 = "left">
+<stage id = "0" bpm = "120" npb = '1' lapse = "2" direction1 = "left" direction2 = "left">
 	<items>
 	
 		<!---esq--->

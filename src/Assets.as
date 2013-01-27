@@ -12,6 +12,11 @@ package
 		[Embed(source = '../resources/teste - camada 1.mp3')] public static const TESTE_1:Class;
 		[Embed(source = '../resources/teste - camada 2.mp3')] public static const TESTE_2:Class;
 		[Embed(source = '../resources/teste - camada base.mp3')] public static const TESTE_BASE:Class;
+		
+		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao esquerda.mp3')] public static const DREAMY_1:Class;
+		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao direita.mp3')] public static const DREAMY_2:Class;
+		[Embed(source = '../resources/Dreamy Dreamy Waltz - camada base.mp3')] public static const DREAMY_BASE:Class;
+		
 		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
 		
 		[Embed(source = '../resources/background.png')] public static const MENU_BACKGROUND:Class;
@@ -71,16 +76,16 @@ package
 		{
 			switch (code)
 			{
-				case "UP":
+				case Helper.UR:
 					return Image.createRect(20, 20, 0xFFFFFF);
 					break;
-				case "DOWN":
+				case Helper.UL:
 					return Image.createRect(20, 20, 0xFF0000);
 					break;
-				case "LEFT":
+				case Helper.DR:
 					return Image.createRect(20, 20, 0x00FF00);
 					break;
-				case "RIGHT":
+				case Helper.DL:
 					return Image.createRect(20, 20, 0x0000FF);
 					break;
 			}

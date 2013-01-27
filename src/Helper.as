@@ -10,15 +10,15 @@ package
 	{
 		private var _code : String;
 		
-		public static const UR : String = "UP";
-		public static const UL : String = "DOWN";
-		public static const DR : String = "LEFT";
-		public static const DL : String = "RIGHT";
+		public static const UR : String = "UR";
+		public static const UL : String = "UL";
+		public static const DR : String = "DR";
+		public static const DL : String = "DL";
 		
 		public function Helper(code : String) 
 		{
 			this._code = code
-			addGraphic (Assets.getHelperAsset (_code));
+			//addGraphic (Assets.getHelperAsset (_code));
 		}
 		
 		public function get code():String 
