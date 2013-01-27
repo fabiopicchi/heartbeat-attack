@@ -10,6 +10,8 @@ package
 	 */
 	public class Assets 
 	{
+		[Embed(source = '../resources/loading.swf')] public static const LOADER:Class;
+		
 		[Embed(source = '../resources/metronomo bpm 60.mp3')] public static const METRONOMO:Class;
 		[Embed(source = '../resources/teste - camada 1.mp3')] public static const TESTE_1:Class;
 		[Embed(source = '../resources/teste - camada 2.mp3')] public static const TESTE_2:Class;
@@ -38,6 +40,9 @@ package
 		
 		[Embed(source = '../resources/success_spritesheet.png')] public static const SUCCESS:Class;
 		[Embed(source = '../resources/fail_spritesheet.png')] public static const FAIL:Class;
+		
+		[Embed(source = '../resources/heart_spritesheet.png')] public static const HEART:Class;
+		[Embed(source = '../resources/counter_spritesheet.png')] public static const COUNTER:Class;
 		
 		[Embed(source = '../resources/item_A.png')] public static const ITEM_A:Class;
 		[Embed(source = '../resources/item_K.png')] public static const ITEM_K:Class;
