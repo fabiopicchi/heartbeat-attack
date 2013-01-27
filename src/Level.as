@@ -47,13 +47,22 @@ package
 		public var lowerTreadmill_1 : Treadmill;
 		public var lowerTreadmill_2 : Treadmill;
 		
+		public var heart : CountdownHeart;
+		
 		public var start : Number = 4;
 		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
 		public var bPaused : Boolean = false;
+		public var pLock : Boolean = false;
 		private var _menu : Menu;
-		private var debugInstant:Boolean;
+		private var _score : int;
 		
+		private static const RIGHT : int = 1;
+		private static const WRONG : int = 2;
+		private static const TOP : int = 14;
+		private var balance : int = TOP;
+		private var _totalNotes : int;
+		private var _notesRight : int;
 		
 		public function Level() 
 		{
@@ -124,24 +133,17 @@ package
 			
 			textBox.addGraphic(textField);
 			
+			heart = new CountdownHeart();
+			heart.x = (FP.engine.width / 2) - (heart.halfWidth);
+			heart.y = (FP.engine.height / 2) - (heart.halfHeight);
+			
 			add (textBox);
 			
 			add (helperDL);
 			add (helperDR);
 			add (helperUR);
 			add (helperUL);
-			
-			//trace (channel1.length);
-			//trace (channel2.length);
-			//trace (channelBase.length);
-			//trace (channelBase.length);
-			
-			//channel1.complete = function () : void
-			//{
-				//loadStage();
-				//start = 4;
-				//bStart = false;
-			//}
+			add(heart);
 		}
 		
 		private function getHelper (code : int) : Helper
@@ -185,6 +187,8 @@ package
 			var i : int = 0;
 			var length : int = xmlLoader.noteList.length;
 			var n : Note;
+			_totalNotes = length;
+			_notesRight = 0;
 			
 			for (i = 0; i < length; i++)
 			{
@@ -215,33 +219,37 @@ package
 		{
 			if (start > 0)
 			{
+				super.update();
 				start -= FP.elapsed;
-				if (start < 0)
+				if (start <= 0 && start > -FP.elapsed)
 				{
-					textField.text = "START";
+					heart.count();
 				}
-				else if (start < 1)
+				else if (start <= 1 && start > 1 -FP.elapsed)
 				{
-					textField.text = "1";
+					heart.count();
 				}
-				else if (start < 2)
+				else if (start <= 2 && start > 2 -FP.elapsed)
 				{
-					textField.text = "2";
+					heart.count();
 				}
-				else if (start < 3)
+				else if (start <= 3 && start > 3 -FP.elapsed)
 				{
-					textField.text = "3";
+					heart.count();
 				}
 				return;
 			}
 			else if (!bStart)
 			{
+				remove(heart);
 				bStart = true;
 				bInsert = true;
 				//channel1.play();
 				//channel2.play();
 				channelBase.play();
 			}
+			
+			
 			
 			if (Input.pressed("ESC"))
 			{
@@ -268,53 +276,36 @@ package
 			
 			var arRemoved : Array = [];
 			var instant : Number = channelBase.position * bpm * PER_SECOND * valsPerBeat;
-			if (arNotes.length == 1)
-					{
-						//trace (instant);
-						//trace (n.time + missInterval * valsPerBeat);
-					}
-			//trace (channel1.position * bpm);
 			
+			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
+			{
+				helperUL.pulse();
+				helperUR.pulse();
+				helperDL.pulse();
+				helperDR.pulse();
+				pLock = true;
+			}
+			else if (instant % 1 > 0.5)
+			{
+				pLock = false;
+			}
 			for (var j : int = 0; j < arEvents.length; j++)
 			{
-				//trace ("ASDASDASDASD");
-				//trace (instant);
-				//trace (arEvents[j].time);
 				if (instant > arEvents[j].time && arEvents[j].time >= 0)
 				{
-					//trace (arEvents[j].time);
 					arEvents[j].trigger();
 					arRemoved.push(arEvents[j]);
 				}
 			}
-			//trace ("asdasd");
 			
 			for each (var evt : IEvent in arRemoved)
 			{
 				arEvents.splice(arEvents.indexOf(evt), 1);
 			}
 			arRemoved = [];
-			
-			//if (instant % 1 >= 0 && instant % 1 <= 0.5 &&!debugInstant)
-			//{
-				//debugInstant = true;
-				//textField.text = "PULSE";
-				//timer = 0;
-			//}
-			//else if (instant % 1 > 0.5)
-			//{
-				//debugInstant = false;
-			//}
-			
 			for (var i : int = 0; i < arNotes.length; i++)
 			{
 				var n : Note = arNotes[i];
-				//if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
-				//{
-					//trace (instant);
-					//trace (Math.max (0, n.time - rightInterval * valsPerBeat));
-					//trace (Math.min(channelBase.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat));
-				//}
 				if (instant < Math.max(0, n.time - missInterval * valsPerBeat))
 					break;
 				else
@@ -322,19 +313,13 @@ package
 					if ((!Input.pressed(n.helper.code) && instant < n.time + missInterval * valsPerBeat) 
 							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), n.time + missInterval * valsPerBeat)))
 					{
-						//if (Input.pressed(n.helper.code))
-						//{
-							//trace (instant);
-							//trace (Math.max (0, n.time - missInterval * valsPerBeat));
-							//trace (Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat));
-							//trace ("CONTINUE " + instant);
-						//}
 						//NADA
 					}
 					else if (!Input.pressed(n.helper.code) && instant >= n.time + missInterval * valsPerBeat)
 					{
-						trace ("PASS " + n.time);
 						textField.text = "PASS " + n.time;
+						balance = Math.max (0, balance - WRONG);
+						//trace (balance);
 						n.helper.wrong();
 						arRemoved.push (n);
 						timer = 0;
@@ -343,16 +328,19 @@ package
 					{
 						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), n.time + rightInterval * valsPerBeat))
 						{
-							trace ("RIGHT " + n.time);
 							textField.text = "RIGHT " + n.time;
+							balance = Math.min (TOP, balance + RIGHT);
+							//trace (balance);
+							_notesRight++;
 							n.helper.correct();
 							arRemoved.push (n);
 							timer = 0;
 						}
 						else
 						{
-							trace ("MISS " + n.time);
 							textField.text = "MISS " + n.time;
+							balance = Math.max (0, balance - WRONG);
+							//trace (balance);
 							n.helper.wrong();
 							arRemoved.push (n);
 							timer = 0;
@@ -364,7 +352,6 @@ package
 			for each (var note : Note in arRemoved)
 			{
 				arNotes.splice(arNotes.indexOf(note), 1);
-				//trace (arNotes.length);
 			}
 			
 			if (timer > 0.05)
@@ -376,8 +363,6 @@ package
 		
 		override public function render():void 
 		{
-			//Draw.line(HELPER_LX, 0, HELPER_LX, 600);
-			//Draw.line(HELPER_RX, 0, HELPER_RX, 600);
 			super.render();
 		}
 		

@@ -4,9 +4,9 @@
 	
 	<!--<item beat="0" threadmill="1" type="2"/>
 	<item beat="2" threadmill="0" type="0"/>-->
-	<!--<item beat="4" threadmill="1" type="1"/>-->
+	<item beat="4" threadmill="1" type="1"/>
 	<item beat="6" threadmill="0" type="4"/>
-	<!--<item beat="7" threadmill="1" type="2"/>
+	<item beat="7" threadmill="1" type="2"/>
 	<item beat="8" threadmill="0" type="0"/>
 	<item beat="9" threadmill="1" type="2"/>
 	<item beat="10" threadmill="0" type="0"/>
@@ -17,7 +17,7 @@
 	<item beat="13" threadmill="1" type="2"/>
 	<item beat="13" threadmill="0" type="0"/>
 	<item beat="14" threadmill="1" type="2"/>
-	<item beat="14" threadmill="0" type="0"/>-->
+	<item beat="14" threadmill="0" type="0"/>
 			   
 	</items>
 	<story_events>

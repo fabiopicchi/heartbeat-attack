@@ -19,7 +19,7 @@ package
 		
 		public function MyStage(level : int, treadmillSpeed : Number) 
 		{
-			var e : Entity
+			var e : Entity;
 			
 			switch (level)
 			{
