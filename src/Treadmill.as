@@ -25,7 +25,7 @@ package
 			this.x -= speed * FP.elapsed;
 			if (this.x <= - (this.graphic as Image).width)
 			{
-				this.x = FP.stage.width;
+				this.x += 2 * (this.graphic as Image).width;
 			}
 			super.update();
 		}

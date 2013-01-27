@@ -19,32 +19,32 @@ package
 		{
 			if (type == Helper.DL)
 			{
-				y = 483 + 69 / 2 - 10;
+				y = 483;
 				sprItem = Assets.getItemAsset(type);
 			}
 			else if (type == Helper.DR)
 			{
-				y = 483 + 69 / 2 - 10;
+				y = 483;
 				sprItem = Assets.getItemAsset(type);
 			}
 			else if (type == Helper.UR)
 			{
-				y = 287 + 69 / 2 - 10;
+				y = 287;
 				sprItem = Assets.getItemAsset(type);
 			}
 			else if (type == Helper.UL)
 			{
-				y = 287 + 69 / 2 - 10;
+				y = 287;
 				sprItem = Assets.getItemAsset(type);
 			}
 			else if (type == "URUL")
 			{
-				y = 287 + 69 / 2 - 10;
+				y = 287;
 				sprItem = Assets.getItemAsset(type);
 			}
 			else if (type == "DRDL")
 			{
-				y = 483 + 69 / 2 - 10;
+				y = 483;
 				sprItem = Assets.getItemAsset(type);
 			}
 			
@@ -57,6 +57,13 @@ package
 		
 		override public function update():void 
 		{
+			
+			//if (degubTimer >= 1.33)
+			//{
+				//return;
+			//}
+			//degubTimer += FP.elapsed;
+			
 			super.update();
 			
 			sprItem.play("loop");

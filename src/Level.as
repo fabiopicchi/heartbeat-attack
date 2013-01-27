@@ -54,6 +54,7 @@ package
 		public var pLock : Boolean = false;
 		private var _menu : Menu;
 		
+		
 		public function Level() 
 		{
 			loadStage();
@@ -102,9 +103,14 @@ package
 			});
 			_menu.disabled = true;
 			
-			channel1 = new Sfx(Assets.DREAMY_1);
-			channel2 = new Sfx(Assets.DREAMY_2);
-			channelBase = new Sfx(Assets.DREAMY_BASE);
+			//channel1 = new Sfx(Assets.DREAMY_1);
+			//channel2 = new Sfx(Assets.DREAMY_2);
+			//channelBase = new Sfx(Assets.DREAMY_BASE);
+			
+			channel1 = new Sfx(Assets.TESTE_1);
+			channel2 = new Sfx(Assets.TESTE_2);
+			channelBase = new Sfx(Assets.TESTE_BASE);
+			
 			textBox = new Entity ();
 			
 			textBox.width = 20;
@@ -124,16 +130,16 @@ package
 			add (helperUR);
 			add (helperUL);
 			
-			//trace (channel1.length);
-			//trace (channel2.length);
-			//trace (channelBase.length);
+			trace (channel1.length);
+			trace (channel2.length);
+			trace (channelBase.length);
 			
-			channel1.complete = function () : void
-			{
-				loadStage();
-				start = 4;
-				bStart = false;
-			}
+			//channel1.complete = function () : void
+			//{
+				//loadStage();
+				//start = 4;
+				//bStart = false;
+			//}
 		}
 		
 		private function getHelper (code : int) : Helper
@@ -193,7 +199,7 @@ package
 				if (xmlLoader.eventList[i].name && xmlLoader.eventList[i].name.indexOf("note_") >= 0)
 				{
 					var arCode : Array = xmlLoader.eventList[i].name.split("_");
-					var evt : AddHorizontalSlide = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (4.0 / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
+					var evt : AddHorizontalSlide = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
 					arEvents.push(evt);
 				}
 			}
@@ -270,20 +276,20 @@ package
 				pLock = false;
 			}
 			
-			//trace (channel1.position * bpm);
-			
 			for (var j : int = 0; j < arEvents.length; j++)
 			{
 				//trace ("ASDASDASDASD");
 				//trace (instant);
 				//trace (arEvents[j].time);
-				if (instant > arEvents[j].time)
+				if (instant > arEvents[j].time && arEvents[j].time >= 0)
 				{
 					//trace (arEvents[j].time);
 					arEvents[j].trigger();
 					arRemoved.push(arEvents[j]);
 				}
 			}
+			//trace ("asdasd");
+			
 			for each (var evt : IEvent in arRemoved)
 			{
 				arEvents.splice(arEvents.indexOf(evt), 1);
@@ -298,18 +304,18 @@ package
 			for (var i : int = 0; i < arNotes.length; i++)
 			{
 				var n : Note = arNotes[i];
-				//if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
-				//{
-					//trace (instant);
-					//trace (Math.max (0, n.time - rightInterval * valsPerBeat));
-					//trace (Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat));
-				//}
+				if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
+				{
+					trace (instant);
+					trace (Math.max (0, n.time - rightInterval * valsPerBeat));
+					trace (Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat));
+				}
 				if (instant < Math.max(0, n.time - missInterval * valsPerBeat))
 					break;
 				else
 				{
-					if ((!Input.pressed(n.helper.code) && instant < Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + missInterval * valsPerBeat)) 
-							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + missInterval * valsPerBeat))))
+					if ((!Input.pressed(n.helper.code) && instant < n.time + missInterval * valsPerBeat) 
+							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), n.time + missInterval * valsPerBeat)))
 					{
 						//if (Input.pressed(n.helper.code))
 						//{
@@ -320,7 +326,7 @@ package
 						//}
 						//NADA
 					}
-					else if (!Input.pressed(n.helper.code) && instant >= Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + missInterval * valsPerBeat))
+					else if (!Input.pressed(n.helper.code) && instant >= n.time + missInterval * valsPerBeat)
 					{
 						//trace ("PASS " + n.time);
 						textField.text = "PASS " + n.time;
@@ -330,7 +336,7 @@ package
 					}
 					else 
 					{
-						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat)))
+						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), n.time + rightInterval * valsPerBeat))
 						{
 							//trace ("RIGHT " + n.time);
 							textField.text = "RIGHT " + n.time;
@@ -353,6 +359,7 @@ package
 			for each (var note : Note in arRemoved)
 			{
 				arNotes.splice(arNotes.indexOf(note), 1);
+				trace (arNotes.length);
 			}
 			
 			if (timer > 0.5)
@@ -364,8 +371,8 @@ package
 		
 		override public function render():void 
 		{
-			Draw.line(HELPER_LX, 0, HELPER_LX, 600);
-			Draw.line(HELPER_RX, 0, HELPER_RX, 600);
+			//Draw.line(HELPER_LX, 0, HELPER_LX, 600);
+			//Draw.line(HELPER_RX, 0, HELPER_RX, 600);
 			super.render();
 		}
 		
