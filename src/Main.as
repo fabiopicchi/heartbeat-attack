@@ -20,11 +20,16 @@ package
 		override public function init():void 
 		{
 			super.init();
-			Input.define("UP", Key.UP);
-			Input.define("DOWN", Key.DOWN);
+			
+			Input.define("UL", Key.A);
+			Input.define("UR", Key.A);
+			Input.define("DL", Key.A);
+			Input.define("DR", Key.A);
 			Input.define("ENTER", Key.ENTER);
 			Input.define("ESC", Key.ESCAPE);
-			FP.world = new MenuScreen ();
+
+			FP.world = new MenuScreen();
+			
 		}
 		
 	}

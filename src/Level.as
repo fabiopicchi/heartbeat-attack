@@ -42,6 +42,11 @@ package
 		public var helperDR : Helper;
 		public var helperDL : Helper;
 		
+		public var upperTreadmill_1 : Treadmill;
+		public var upperTreadmill_2 : Treadmill;
+		public var lowerTreadmill_1 : Treadmill;
+		public var lowerTreadmill_2 : Treadmill;
+		
 		public var start : Number = 4;
 		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
@@ -50,6 +55,42 @@ package
 		
 		public function Level() 
 		{
+			loadStage();
+			
+			var e : Entity
+			var level : int = 1;
+			switch (level)
+			{
+				case 1:
+					e = new Entity(0, 0, new Image(Assets.BACKGROUND_SLEEPER));
+					break;
+				case 2:
+					e = new Entity(0, 0, new Image(Assets.BACKGROUND_BROWSER));
+					break;
+				case 3:
+					e = new Entity(0, 0, new Image(Assets.BACKGROUND_LOVER));
+					break;
+			}
+			add(e);
+			
+			e = new StageHeader(level);
+			add(e);
+			
+			e = new Entity(0, 0, new Image(Assets.BACKGROUND_OVER));
+			add(e);
+			
+			e = new Entity(0, 223, new Image(Assets.BACKGROUND));
+			add(e);
+			
+			upperTreadmill_1 = new Treadmill(0, 287, noteSpeed);
+			upperTreadmill_2 = new Treadmill(upperTreadmill_1.tWidth, 287, noteSpeed);
+			lowerTreadmill_1 = new Treadmill(-200, 483, noteSpeed);
+			lowerTreadmill_2 = new Treadmill(-200 + lowerTreadmill_1.tWidth, 483, noteSpeed);
+			add(upperTreadmill_1);
+			add(upperTreadmill_2);
+			add(lowerTreadmill_1);
+			add(lowerTreadmill_2);
+			
 			_menu = new Menu (Image.createRect(20, 20), 150, 300, function () : void
 			{
 				FP.world = new Level;
@@ -58,7 +99,6 @@ package
 			{
 				FP.world = new MenuScreen;
 			});
-			add (_menu);
 			_menu.disabled = true;
 			
 			channel1 = new Sfx(Assets.DREAMY_1);
@@ -78,26 +118,10 @@ package
 			
 			add (textBox);
 			
-			helperDL = new Helper (Helper.DL);
-			helperDR = new Helper (Helper.DR);
-			helperUR = new Helper (Helper.UR);
-			helperUL = new Helper (Helper.UL);
-			
-			helperDL.y = 300;
-			helperDL.x = 300;
-			helperDR.y = 300;
-			helperDR.x = 600;
-			helperUR.y = 100;
-			helperUR.x = 300;
-			helperUL.y = 100;
-			helperUL.x = 600;
-			
 			add (helperDL);
 			add (helperDR);
 			add (helperUR);
 			add (helperUL);
-			
-			loadStage();
 			
 			//trace (channel1.length);
 			//trace (channel2.length);
@@ -128,6 +152,7 @@ package
 					return helperDR;
 					break;
 				default:
+					trace ("RETURN");
 					break;
 			}
 			return null;
@@ -135,6 +160,11 @@ package
 		
 		private function loadStage () : void
 		{
+			helperDL = new Helper (Helper.DL);
+			helperDR = new Helper (Helper.DR);
+			helperUR = new Helper (Helper.UR);
+			helperUL = new Helper (Helper.UL);
+			
 			arNotes = [];
 			xmlLoader = new XmlLoader(new Assets.FASE_1);
 			xmlLoader.load();
@@ -209,6 +239,7 @@ package
 					channelBase.stop();
 					_menu.disabled = false;
 					add (shade);
+					add (_menu);
 					bPaused = true;
 				}
 			}

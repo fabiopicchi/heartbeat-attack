@@ -1,7 +1,9 @@
 package  
 {
+	import flash.display.SpreadMethod;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Spritemap;
 	/**
 	 * ...
 	 * @author 
@@ -26,6 +28,14 @@ package
 		[Embed(source = '../resources/background_browser.png')] public static const BACKGROUND_BROWSER:Class;
 		[Embed(source = '../resources/background_lover.png')] public static const BACKGROUND_LOVER:Class;
 		[Embed(source = '../resources/background_over.png')] public static const BACKGROUND_OVER:Class;
+		
+		[Embed(source = '../resources/treadmill.png')] public static const TREADMILL:Class;
+		
+		[Embed(source = '../resources/garry_idle01.png')] public static const GARRY:Class;
+		[Embed(source = '../resources/larry_idle01.png')] public static const LARRY:Class;
+		[Embed(source = '../resources/shaniqua_idle01.png')] public static const SHANIQUA:Class;
+		[Embed(source = '../resources/terry_idle01.png')] public static const TERRY:Class;
+		
 		[Embed(source = '../resources/sleeper_idle01.png')] public static const SLEEPER_IDLE01:Class;
 		[Embed(source = '../resources/sleeper_idle02.png')] public static const SLEEPER_IDLE02:Class;
 		[Embed(source = '../resources/sleeper_idle03.png')] public static const SLEEPER_IDLE03:Class;
@@ -51,6 +61,12 @@ package
 		[Embed(source = '../resources/slacker_idle05.png')] public static const SLACKER_IDLE05:Class;
 		[Embed(source = '../resources/slacker_distress01.png')] public static const SLACKER_DISTRESS01:Class;
 		[Embed(source = '../resources/slacker_distress02.png')] public static const SLACKER_DISTRESS02:Class;
+		[Embed(source = '../resources/slacker_clumsy01.png')] public static const SLACKER_CLUMSY01:Class;
+		[Embed(source = '../resources/slacker_clumsy02.png')] public static const SLACKER_CLUMSY02:Class;
+		[Embed(source = '../resources/slacker_clumsy03.png')] public static const SLACKER_CLUMSY03:Class;
+		[Embed(source = '../resources/slacker_clumsy04.png')] public static const SLACKER_CLUMSY04:Class;
+		[Embed(source = '../resources/slacker_clumsy05.png')] public static const SLACKER_CLUMSY05:Class;
+		[Embed(source = '../resources/slacker_clumsy06.png')] public static const SLACKER_CLUMSY06:Class;
 		[Embed(source = '../resources/slacker_end01.png')] public static const SLACKER_END01:Class;
 		[Embed(source = '../resources/slacker_end02.png')] public static const SLACKER_END02:Class;
 		[Embed(source = '../resources/slacker_end03.png')] public static const SLACKER_END03:Class;
@@ -67,6 +83,10 @@ package
 		[Embed(source = '../resources/lover_distress02.png')] public static const LOVER_DISTRESS02:Class;
 		[Embed(source = '../resources/lover_distress03.png')] public static const LOVER_DISTRESS03:Class;
 		[Embed(source = '../resources/lover_distress04.png')] public static const LOVER_DISTRESS04:Class;
+		[Embed(source = '../resources/lover_clumsy01.png')] public static const LOVER_CLUMSY01:Class;
+		[Embed(source = '../resources/lover_clumsy02.png')] public static const LOVER_CLUMSY02:Class;
+		[Embed(source = '../resources/lover_clumsy03.png')] public static const LOVER_CLUMSY03:Class;
+		[Embed(source = '../resources/lover_clumsy04.png')] public static const LOVER_CLUMSY04:Class;
 		[Embed(source = '../resources/lover_end01.png')] public static const LOVER_END01:Class;
 		[Embed(source = '../resources/lover_end02.png')] public static const LOVER_END02:Class;
 		[Embed(source = '../resources/lover_end03.png')] public static const LOVER_END03:Class;
@@ -76,20 +96,44 @@ package
 		{
 			switch (code)
 			{
-				case Helper.UR:
-					return Image.createRect(20, 20, 0xFFFFFF);
+				case "UL":
+					return new Image(TERRY);
 					break;
-				case Helper.UL:
-					return Image.createRect(20, 20, 0xFF0000);
+				case "UR":
+					return new Image(LARRY);
 					break;
-				case Helper.DR:
-					return Image.createRect(20, 20, 0x00FF00);
+				case "DL":
+					return new Image(GARRY);
 					break;
-				case Helper.DL:
-					return Image.createRect(20, 20, 0x0000FF);
+				case "DR":
+					return new Image(SHANIQUA);
 					break;
 			}
 			return null;
+		}
+		
+		public static function getItemAsset (code : String) : Graphic
+		{
+			switch (code)
+			{
+				case "UL":
+					//return Image.createRect(20, 20, 0x0000FF);
+					break;
+				case "UR":
+					//return Image.createRect(20, 20, 0x00FF00);
+					break;
+				case "DL":
+					//return Image.createRect(20, 20, 0xFF00FF);
+					break;
+				case "DR":
+					//return Image.createRect(20, 20, 0x00FFFF);
+					break;
+				case "DRDL":
+				case "URUL":
+					return Image.createRect(20, 20);
+					break;
+			}
+			return new Graphic();
 		}
 		
 		public function Assets() 

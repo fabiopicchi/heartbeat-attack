@@ -17,33 +17,33 @@ package
 		{
 			if (type == Helper.DL)
 			{
-				y = 300;
-				addGraphic(Assets.getHelperAsset(type));
+				y = 483 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
 			}
 			else if (type == Helper.DR)
 			{
-				y = 300;
-				addGraphic(Assets.getHelperAsset(type));
+				y = 483 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
 			}
 			else if (type == Helper.UR)
 			{
-				y = 100;
-				addGraphic(Assets.getHelperAsset(type));
+				y = 287 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
 			}
 			else if (type == Helper.UL)
 			{
-				y = 100;
-				addGraphic(Assets.getHelperAsset(type));
+				y = 287 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
 			}
 			else if (type == "URUL")
 			{
-				y = 100;
-				addGraphic(Image.createRect(20, 20));
+				y = 287 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
 			}
 			else if (type == "DRDL")
 			{
-				y = 300;
-				addGraphic(Image.createRect(20, 20));
+				y = 483 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
 			}
 			
 			x = xStart - 10;
