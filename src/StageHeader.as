@@ -15,13 +15,15 @@ package
 	{
 		public var idleAr : Array;
 		public var distressedAr : Array;
+		public var clumsyAr : Array;
 		public var endAr : Array;
 		public var graphicAr : Array;
 		
 		public var index : int = 0;
 		public var frames : int = 0;
+		public var level : int;
 		
-		public var end : Boolean = true;
+		public var end : Boolean = false;
 		
 		public var frameRate : Number;
 		
@@ -31,9 +33,11 @@ package
 			var yOffset : Number;
 			
 			this.frameRate = frameRate;
+			this.level = level;
 			
 			idleAr = new Array();
 			distressedAr = new Array ();
+			clumsyAr = new Array();
 			endAr = new Array ();
 			
 			switch (level)
@@ -78,6 +82,13 @@ package
 					distressedAr.push(new Image(Assets.SLACKER_DISTRESS01));
 					distressedAr.push(new Image(Assets.SLACKER_DISTRESS02));
 					
+					clumsyAr.push(new Image(Assets.SLACKER_CLUMSY01));
+					clumsyAr.push(new Image(Assets.SLACKER_CLUMSY02));
+					clumsyAr.push(new Image(Assets.SLACKER_CLUMSY03));
+					clumsyAr.push(new Image(Assets.SLACKER_CLUMSY04));
+					clumsyAr.push(new Image(Assets.SLACKER_CLUMSY05));
+					clumsyAr.push(new Image(Assets.SLACKER_CLUMSY06));
+					
 					endAr.push(new Image(Assets.SLACKER_END01));
 					endAr.push(new Image(Assets.SLACKER_END02));
 					endAr.push(new Image(Assets.SLACKER_END03));
@@ -101,6 +112,11 @@ package
 					distressedAr.push(new Image(Assets.LOVER_DISTRESS02));
 					distressedAr.push(new Image(Assets.LOVER_DISTRESS03));
 					distressedAr.push(new Image(Assets.LOVER_DISTRESS04));
+					
+					clumsyAr.push(new Image(Assets.LOVER_CLUMSY01));
+					clumsyAr.push(new Image(Assets.LOVER_CLUMSY02));
+					clumsyAr.push(new Image(Assets.LOVER_CLUMSY03));
+					clumsyAr.push(new Image(Assets.LOVER_CLUMSY04));
 					
 					endAr.push(new Image(Assets.LOVER_END01));
 					endAr.push(new Image(Assets.LOVER_END02));
@@ -133,15 +149,15 @@ package
 			}
 			else
 			{
-				switch (Level)
+				switch (level)
 				{
 					case 1: //Sleeper
-						if (frames >= frameRate && index < graphicAr.length && index != 4)
+						if (frames >= frameRate && index < graphicAr.length - 1 && index != 4)
 						{
 							index++;
 							frames = 0;
 						}
-						else if (index == 4 && frames >= 200)
+						else if (index == 4 && frames >= 120)
 						{
 							index++;
 							frames = 0
@@ -182,13 +198,31 @@ package
 			super.update();
 		}
 		
+		public function idle():void
+		{
+			frames = 0;
+			index = 0;
+			graphicAr = idleAr;
+		}
+		
 		public function distress():void
 		{
+			frames = 0;
+			index = 0;
+			graphicAr = distressedAr;
+		}
+		
+		public function clumsy():void
+		{
+			frames = 0;
+			index = 0;
 			graphicAr = distressedAr;
 		}
 		
 		public function endAnimation():void
 		{
+			frames = 0;
+			index = 0;
 			graphicAr = endAr;
 			end = true;
 		}

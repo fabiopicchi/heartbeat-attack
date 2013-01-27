@@ -14,23 +14,23 @@ package Loader
 		public var noteList:Array = []; //{beat, helper, id}
 		public var eventList:Array = []; //{beat, name, id}
 		
-		public var itemDelay:int = 1;
+		public var itemDelay:int = 4;
 		
 		public function XmlLoader(xmlObject:String)
 		{
 			xmlFile = new XML(xmlObject);
 		}
 		
-		public function getBPM():uint
+		public function get bpm():uint
 		{
-			return xmlFile.@bmp;
+			return xmlFile.@bpm;
 		}
 		
-		public function getNPB():uint
+		public function get npb():uint
 		{
 			return xmlFile.@npb;
 		}
-		public function getLapse():uint
+		public function get lapse():uint
 		{
 			return xmlFile.@lapse;
 		}
@@ -48,13 +48,13 @@ package Loader
 			{
 				firstGuy = 1 + obj.@threadmill * 2;
 				secondGuy = firstGuy - 1;
-				if (obj.@type == 0) eventName = "UL";
-				else if (obj.@type == 1) eventName = "UR";
-				else if (obj.@type == 2) eventName = "DL";
-				else if (obj.@type == 3) eventName = "DR";
+				if (obj.@type == 0) eventName = "note_UL";
+				else if (obj.@type == 1) eventName = "note_UR";
+				else if (obj.@type == 2) eventName = "note_DL";
+				else if (obj.@type == 3) eventName = "note_DR";
 				else if (obj.@type == 4) {
-					if (obj.@threadmill == 0) eventName = "URUL";
-					else eventName = "DRDL";
+					if (obj.@threadmill == 0) eventName = "note_URUL";
+					else eventName = "note_DRDL";
 				}
 				
 				

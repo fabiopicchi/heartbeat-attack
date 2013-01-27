@@ -13,12 +13,41 @@ package
 		public var vx : int = 0;
 		public var vy : int = 0;
 		
-		public function HorizontalSlide() 
+		public function HorizontalSlide(type : String, xStart : Number) 
 		{
-			addGraphic(Image.createRect(20, 20));
-			y = 100;
-			x = 1.125 * FP.engine.width - 10;
-			vx = -320;
+			if (type == Helper.DL)
+			{
+				y = 483 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
+			}
+			else if (type == Helper.DR)
+			{
+				y = 483 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
+			}
+			else if (type == Helper.UR)
+			{
+				y = 287 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
+			}
+			else if (type == Helper.UL)
+			{
+				y = 287 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
+			}
+			else if (type == "URUL")
+			{
+				y = 287 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
+			}
+			else if (type == "DRDL")
+			{
+				y = 483 + 69 / 2 - 10;
+				addGraphic(Assets.getItemAsset(type));
+			}
+			
+			x = xStart - 10;
+			vx = -Level.noteSpeed;
 		}
 		
 		override public function update():void 
@@ -31,13 +60,6 @@ package
 			{
 				FP.world.remove(this);
 			}
-		}
-		
-		/* INTERFACE Animation */
-		
-		public function animate():void 
-		{
-			
 		}
 	}
 
