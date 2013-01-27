@@ -3,6 +3,7 @@ package
 	import flash.display.MovieClip;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
 	
 	/**
@@ -16,6 +17,10 @@ package
 		
 		public function TheEnd() 
 		{
+			Main.soundChannel.stop();
+			Main.soundChannel = new Sfx (Assets.MENU);
+			Main.soundChannel.play();
+			
 			_menu = new Menu(new Image (Assets.ARROW), 0, 0, backToMenu);
 			add(_menu);
 			_menu.visible = false;

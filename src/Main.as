@@ -5,6 +5,7 @@ package
 	import flash.display.Sprite;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	
@@ -14,6 +15,7 @@ package
 	 */
 	public class Main extends Engine 
 	{
+		public static var soundChannel : Sfx;
 		
 		public function Main():void 
 		{

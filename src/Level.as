@@ -21,7 +21,7 @@ package
 		public var xmlLoader:XmlLoader;
 		//public static var channel1 : Sfx;
 		//public static var channel2 : Sfx;
-		public static var channelBase : Sfx;
+		//public static var channelBase : Sfx;
 		
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public static const HELPER_RX : int = 519;
@@ -67,6 +67,7 @@ package
 		
 		public function Level(level : int) 
 		{
+			Main.soundChannel.stop();
 			_level = level;
 			loadStage();
 			
@@ -89,9 +90,10 @@ package
 			});
 			_menu.disabled = true;
 			
-			channelBase.complete = function () : void
+			Main.soundChannel.complete = function () : void
 			{
-				channelBase.stop();
+				Main.soundChannel.stop();
+				Main.soundChannel.complete = null;
 				FP.world = new EndingScreen( _level, ((_notesRight / _totalNotes) < 0.75 ? 1 : 2));
 			}
 			
@@ -145,17 +147,17 @@ package
 				case 1:
 					e = new Entity(0, 0, new Image(Assets.BACKGROUND_SLEEPER));
 					xmlLoader = new XmlLoader(new Assets.FASE_1);
-					channelBase = new Sfx(Assets.DREAMY);
+					Main.soundChannel = new Sfx(Assets.DREAMY);
 					break;
 				case 2:
 					e = new Entity(0, 0, new Image(Assets.BACKGROUND_BROWSER));
 					xmlLoader = new XmlLoader(new Assets.FASE_2);
-					channelBase = new Sfx(Assets.NYAN);
+					Main.soundChannel = new Sfx(Assets.NYAN);
 					break;
 				case 3:
 					e = new Entity(0, 0, new Image(Assets.BACKGROUND_LOVER));
 					xmlLoader = new XmlLoader(new Assets.FASE_3);
-					channelBase = new Sfx(Assets.SPAGHETTI);
+					Main.soundChannel = new Sfx(Assets.SPAGHETTI);
 					break;
 			}
 			add(e);
@@ -254,7 +256,7 @@ package
 				bInsert = true;
 				//channel1.play();
 				//channel2.play();
-				channelBase.play();
+				Main.soundChannel.play();
 			}
 			
 			
@@ -265,7 +267,7 @@ package
 				{
 					//channel1.stop();
 					//channel2.stop();
-					channelBase.stop();
+					Main.soundChannel.stop();
 					_menu.disabled = false;
 					add (shade);
 					add (_menu);
@@ -283,7 +285,7 @@ package
 			timer += FP.elapsed;
 			
 			var arRemoved : Array = [];
-			var instant : Number = channelBase.position * bpm * PER_SECOND * valsPerBeat;
+			var instant : Number = Main.soundChannel.position * bpm * PER_SECOND * valsPerBeat;
 			
 			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
 			{
@@ -356,7 +358,7 @@ package
 			
 			if (balance == 0)
 			{
-				channelBase.stop();
+				Main.soundChannel.stop();
 				FP.world = new EndingScreen (_level, 0);
 			}
 			

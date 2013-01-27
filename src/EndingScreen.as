@@ -3,6 +3,7 @@ package
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
 	import Assets;
 	
@@ -30,11 +31,15 @@ package
 				_menu.addOption(137, 518, backToMenu);
 				_background = new Image(Assets.BACKGROUND_GAMEOVER);
 				addGraphic(_background);
+				Main.soundChannel = new Sfx (Assets.WRONG);
+				Main.soundChannel.play();
 			}
 			else
 			{
 				_menu = new Menu(new Image (Assets.ARROW), 564, 512, next);
 				_menu.addOption(294, 512, backToMenu);
+				Main.soundChannel = new Sfx (Assets.RIGHT);
+				Main.soundChannel.play();
 				_background = new Image(Assets.BACKGROUND_ENDGAME);
 				addGraphic(_background);
 				_heart = new Heart(30, 334);

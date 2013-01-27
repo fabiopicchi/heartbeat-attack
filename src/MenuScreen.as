@@ -3,6 +3,7 @@ package
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.World;
 	
@@ -19,10 +20,14 @@ package
 		
 		public function MenuScreen() 
 		{
+			if (Main.soundChannel) Main.soundChannel.stop();
+			Main.soundChannel = new Sfx (Assets.MENU);
+			
 			_splash1 = new SkippableScreen (new Image (Assets.FLASHPUNK), function() : void
 			{
 				remove (_splash1);
 				add (_splash2);
+				Main.soundChannel.loop();
 			}, 3);
 			
 			_splash2 = new SkippableScreen (new Image (Assets.CATAVENTO), function() : void

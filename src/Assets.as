@@ -10,16 +10,12 @@ package
 	 */
 	public class Assets 
 	{
-		[Embed(source = '../resources/loading.swf')] public static const LOADER:Class;
-		
-		[Embed(source = '../resources/metronomo bpm 60.mp3')] public static const METRONOMO:Class;
-		[Embed(source = '../resources/teste - camada 1.mp3')] public static const TESTE_1:Class;
-		[Embed(source = '../resources/teste - camada 2.mp3')] public static const TESTE_2:Class;
-		[Embed(source = '../resources/teste - camada base.mp3')] public static const TESTE_BASE:Class;
-		
 		[Embed(source = '../resources/Dreamy Dreamy Waltz.mp3')] public static const DREAMY:Class;
 		[Embed(source = '../resources/Nyan Pazuzu.mp3')] public static const NYAN:Class;
 		[Embed(source = '../resources/Spaghetti on the Dance Floor.mp3')] public static const SPAGHETTI:Class;
+		[Embed(source = '../resources/Música Perder.mp3')] public static const WRONG:Class;
+		[Embed(source = '../resources/Música Vencer.mp3')] public static const RIGHT:Class;
+		[Embed(source = '../resources/Heart Beat Attack - Menu.mp3')] public static const MENU:Class;
 		
 		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
 		[Embed(source = '../resources/fase2.xml', mimeType = 'application/octet-stream')] public static const FASE_2:Class;
