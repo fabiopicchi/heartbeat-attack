@@ -19,7 +19,7 @@ package
 		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao direita.mp3')] public static const DREAMY_2:Class;
 		[Embed(source = '../resources/Dreamy Dreamy Waltz - camada base.mp3')] public static const DREAMY_BASE:Class;
 		
-		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
+		[Embed(source = '../resources/teste2.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
 		
 		[Embed(source = '../resources/background.png')] public static const MENU_BACKGROUND:Class;
 		
@@ -123,13 +123,14 @@ package
 					return Image.createRect(20, 20, 0x00FF00);
 					break;
 				case "DL":
-					return Image.createRect(20, 20, 0xFF00FF);
+					return Image.createRect(20, 20, 0x00FFFF);
 					break;
 				case "DR":
-					return Image.createRect(20, 20, 0x00FFFF);
+					return Image.createRect(20, 20, 0xFF00FF);
 					break;
 				case "DRDL":
 				case "URUL":
+					trace ("BRANCO");
 					return Image.createRect(20, 20);
 					break;
 			}

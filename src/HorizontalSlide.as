@@ -12,6 +12,7 @@ package
 	{
 		public var vx : int = 0;
 		public var vy : int = 0;
+		private var degubTimer : Number = 0;
 		
 		public function HorizontalSlide(type : String, xStart : Number) 
 		{
@@ -52,6 +53,13 @@ package
 		
 		override public function update():void 
 		{
+			
+			//if (degubTimer >= 1.33)
+			//{
+				//return;
+			//}
+			//degubTimer += FP.elapsed;
+			
 			super.update();
 			x += vx * FP.elapsed;
 			y += vy * FP.elapsed;
