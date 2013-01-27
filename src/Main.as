@@ -20,9 +20,12 @@ package
 		override public function init():void 
 		{
 			super.init();
-			Input.define("UP", Key.UP);
-			Input.define("DOWN", Key.DOWN);
-			FP.world = new Level ();
+			Input.define("UL", Key.A);
+			Input.define("UR", Key.K);
+			Input.define("DL", Key.Z);
+			Input.define("DR", Key.M);
+
+			FP.world = new MyStage(1, 3);
 		}
 		
 	}
