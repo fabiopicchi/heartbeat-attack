@@ -18,15 +18,15 @@ package
 	public class Level extends World 
 	{
 		public var xmlLoader:XmlLoader;
-		public static var channel1 : Sfx;
-		public static var channel2 : Sfx;
+		//public static var channel1 : Sfx;
+		//public static var channel2 : Sfx;
 		public static var channelBase : Sfx;
 		
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public static const HELPER_RX : int = 524;
 		public static const HELPER_LX : int = 271;
-		public var missInterval : Number = 0.4;
-		public var rightInterval : Number = 0.15;
+		public var missInterval : Number = 0.5;
+		public var rightInterval : Number = 0.2; //picchi usava 0.15
 		public static var bpm : int;
 		public static var valsPerBeat : int;
 		public static var noteSpeed : int;
@@ -115,11 +115,12 @@ package
 			
 			//channel1 = new Sfx(Assets.DREAMY_1);
 			//channel2 = new Sfx(Assets.DREAMY_2);
-			//channelBase = new Sfx(Assets.DREAMY_BASE);
 			
-			channel1 = new Sfx(Assets.TESTE_1);
-			channel2 = new Sfx(Assets.TESTE_2);
-			channelBase = new Sfx(Assets.TESTE_BASE);
+			//channelBase = new Sfx(Assets.DREAMY);
+			
+			channelBase = new Sfx(Assets.SPAGHETTI);
+			
+			//channelBase = new Sfx(Assets.SPAGHETTI);
 			
 			textBox = new Entity ();
 			
@@ -143,7 +144,6 @@ package
 			add (helperDR);
 			add (helperUR);
 			add (helperUL);
-			
 			add(heart);
 		}
 		
@@ -178,7 +178,7 @@ package
 			helperUL = new Helper (Helper.UL);
 			
 			arNotes = [];
-			xmlLoader = new XmlLoader(new Assets.FASE_1);
+			xmlLoader = new XmlLoader(new Assets.FASE_3);
 			xmlLoader.load();
 			
 			bpm = xmlLoader.bpm;
@@ -206,7 +206,11 @@ package
 				if (xmlLoader.eventList[i].name && xmlLoader.eventList[i].name.indexOf("note_") >= 0)
 				{
 					var arCode : Array = xmlLoader.eventList[i].name.split("_");
-					var evt : AddHorizontalSlide = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
+					var evt : AddHorizontalSlide;
+					if (arCode[1] == "UL" || arCode[1] == "DL")
+						evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_LX + (3 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
+					else
+						evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
 					arEvents.push(evt);
 				}
 			}
@@ -241,8 +245,8 @@ package
 				remove(heart);
 				bStart = true;
 				bInsert = true;
-				channel1.play();
-				channel2.play();
+				//channel1.play();
+				//channel2.play();
 				channelBase.play();
 			}
 			
@@ -252,8 +256,8 @@ package
 			{
 				if (!bPaused)
 				{
-					channel1.stop();
-					channel2.stop();
+					//channel1.stop();
+					//channel2.stop();
 					channelBase.stop();
 					_menu.disabled = false;
 					add (shade);
@@ -272,8 +276,7 @@ package
 			timer += FP.elapsed;
 			
 			var arRemoved : Array = [];
-			
-			var instant : Number = channel1.position * bpm * PER_SECOND * valsPerBeat;
+			var instant : Number = channelBase.position * bpm * PER_SECOND * valsPerBeat;
 			
 			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
 			{
@@ -352,7 +355,7 @@ package
 				arNotes.splice(arNotes.indexOf(note), 1);
 			}
 			
-			if (timer > 0.5)
+			if (timer > 0.05)
 			{
 				textField.text = "";
 			}

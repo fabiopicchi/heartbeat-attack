@@ -58,7 +58,7 @@ package
 		override public function update():void 
 		{
 			
-			//if (degubTimer >= 1.33)
+			//if (degubTimer >= ((2*4)/(Level.bpm * Level.PER_SECOND * Level.valsPerBeat)))
 			//{
 				//return;
 			//}
