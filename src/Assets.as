@@ -36,6 +36,9 @@ package
 		[Embed(source = '../resources/shaniqua.png')] public static const SHANIQUA:Class;
 		[Embed(source = '../resources/terry.png')] public static const TERRY:Class;
 		
+		[Embed(source = '../resources/success_spritesheet.png')] public static const SUCCESS:Class;
+		[Embed(source = '../resources/fail_spritesheet.png')] public static const FAIL:Class;
+		
 		[Embed(source = '../resources/item_A.png')] public static const ITEM_A:Class;
 		[Embed(source = '../resources/item_K.png')] public static const ITEM_K:Class;
 		[Embed(source = '../resources/item_M.png')] public static const ITEM_M:Class;

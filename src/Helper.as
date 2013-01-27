@@ -11,6 +11,14 @@ package
 	public class Helper extends Entity 
 	{
 		public var sprHelper : Spritemap;
+		public var sprSuccess : Spritemap;
+		public var sprFail : Spritemap;
+		
+		public var xSuccess : Number;
+		public var ySuccess : Number;
+		public var xFail : Number;
+		public var yFail : Number;
+		
 		private var _code : String;
 		public static const UR : String = "UR";
 		public static const UL : String = "UL";
@@ -31,6 +39,10 @@ package
 					sprHelper.add("pulse", [9], 4, false);
 					sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7], 15, false);
 					sprHelper.add("wrong", [8], 3, false);
+					xSuccess = ;
+					ySuccess = ;
+					xFail = ;
+					yFail = ;
 					break;
 				case "UR":
 					this.x = 452;
@@ -40,6 +52,10 @@ package
 					sprHelper.add("pulse", [9], 4, false);
 					sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7], 15, false);
 					sprHelper.add("wrong", [8], 3, false);
+					xSuccess = ;
+					ySuccess = ;
+					xFail = ;
+					yFail = ;
 					break;
 				case "DL":
 					this.x = 222;
@@ -49,6 +65,10 @@ package
 					sprHelper.add("pulse", [8], 4, false);
 					sprHelper.add("right", [1, 2, 3, 4, 5, 6], 15, false);
 					sprHelper.add("wrong", [7], 3, false);
+					xSuccess = ;
+					ySuccess = ;
+					xFail = ;
+					yFail = ;
 					break;
 				case "DR":
 					this.x = 457;
@@ -58,6 +78,10 @@ package
 					sprHelper.add("pulse", [10], 4, false);
 					sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7, 8], 15, false);
 					sprHelper.add("wrong", [9], 3, false);
+					xSuccess = ;
+					ySuccess = ;
+					xFail = ;
+					yFail = ;
 					break;
 			}
 			
