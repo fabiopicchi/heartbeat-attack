@@ -11,9 +11,8 @@ package Loader
 	{
 		private var xmlFile:XML;
 		
-		public var noteList:Array = [];
-		public var animList:Array = [];
-		//public var effectList:Array = [];
+		public var noteList:Array = []; //{beat, helper, id}
+		public var eventList:Array = []; //{beat, name, id}
 		
 		public var itemDelay:int = 1;
 		
@@ -24,41 +23,63 @@ package Loader
 		
 		public function getBPM():uint
 		{
-			return xmlFile.child("stage").@bmp;
+			return xmlFile.@bmp;
+		}
+		
+		public function getNPB():uint
+		{
+			return xmlFile.@npb;
+		}
+		public function getLapse():uint
+		{
+			return xmlFile.@lapse;
 		}
 		
 		public function load():void
 		{
-			var lapse:uint = xmlFile.child("stage").@lapse;
+			var lapse:uint = xmlFile.@lapse;
 			var firstGuy:uint;
 			var secondGuy:uint;
 			var noteId:uint = 0;
-			var animId:uint = 0;
+			var eventId:uint = 0;
+			var eventName:String;
 			
-			for each (var obj:XML in xmlFile.child("items"))
+			for each (var obj:XML in xmlFile.child("items").child("item"))
 			{
 				firstGuy = 1 + obj.@threadmill * 2;
 				secondGuy = firstGuy - 1;
+				if (obj.@type == 0) eventName = "UL";
+				else if (obj.@type == 1) eventName = "UR";
+				else if (obj.@type == 2) eventName = "DL";
+				else if (obj.@type == 3) eventName = "DR";
+				else if (obj.@type == 4) {
+					if (obj.@threadmill == 0) eventName = "URUL";
+					else eventName = "DRDL";
+				}
 				
-				animList.push(new Animation(obj.@beat - itemDelay, obj.@type, animId++));
+				
+				eventList.push({beat: int(obj.@beat) - itemDelay, name: eventName, id: eventId++});
 				
 				if (obj.@type == 4) // item "neutro"
 				{
-					noteList.push(new Note(obj.@beat, firstGuy, noteId++));
-					noteList.push(new Note(obj.@beat + lapse, secondGuy, noteId++));
+					noteList.push( { beat: obj.@beat, helper: firstGuy, id: noteId++ } )
+					noteList.push({beat: int(obj.@beat) + lapse, helper: secondGuy, id: noteId++})
 				}
-				else
+				
+				else // item colorido
 				{
-					noteList.push(new Note((obj.@type % 2 == 0) ? (obj.@beat + lapse) : (obj.@beat), obj.@type, noteId++));
+					noteList.push( { beat: (obj.@type % 2 == 0) ? (int(obj.@beat) + lapse) : int(obj.@beat), helper: obj.@type, id: noteId++ } );
 				}
 				
 			}
 			
-			for each (var obj:XML in xmlFile.child("story_events"))
+			for each (var ev:XML in xmlFile.child("story_events").child("story_event"))
 			{
-				animList.push(new Animation(obj.@beat, obj.@type,animId++));
+				eventList.push({beat: ev.@beat, type: ev.@type, threadmill: int(-1) ,id: eventId++});
 			}
+			
+			noteList.sortOn("beat", [Array.NUMERIC]);
 		}
-		
+	
 	}
 }

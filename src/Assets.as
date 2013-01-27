@@ -16,6 +16,8 @@ package
 		[Embed(source = '../resources/teste - camada base.mp3')] public static const TESTE_BASE:Class;
 		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
 		
+		[Embed(source = '../resources/background.png')] public static const MENU_BACKGROUND:Class;
+		
 		[Embed(source = '../resources/background.png')] public static const BACKGROUND:Class;
 		[Embed(source = '../resources/background_sleeper.png')] public static const BACKGROUND_SLEEPER:Class;
 		[Embed(source = '../resources/background_browser.png')] public static const BACKGROUND_BROWSER:Class;

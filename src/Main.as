@@ -20,12 +20,16 @@ package
 		override public function init():void 
 		{
 			super.init();
+			
 			Input.define("UL", Key.A);
 			Input.define("UR", Key.K);
 			Input.define("DL", Key.Z);
 			Input.define("DR", Key.M);
+			Input.define("ENTER", Key.ENTER);
+			Input.define("ESC", Key.ESCAPE);
 
 			FP.world = new MyStage(1, 3);
+			
 		}
 		
 	}
