@@ -31,10 +31,10 @@ package
 		
 		[Embed(source = '../resources/treadmill.png')] public static const TREADMILL:Class;
 		
-		[Embed(source = '../resources/garry_idle01.png')] public static const GARRY:Class;
-		[Embed(source = '../resources/larry_idle01.png')] public static const LARRY:Class;
-		[Embed(source = '../resources/shaniqua_idle01.png')] public static const SHANIQUA:Class;
-		[Embed(source = '../resources/terry_idle01.png')] public static const TERRY:Class;
+		[Embed(source = '../resources/garry.png')] public static const GARRY:Class;
+		[Embed(source = '../resources/larry.png')] public static const LARRY:Class;
+		[Embed(source = '../resources/shaniqua.png')] public static const SHANIQUA:Class;
+		[Embed(source = '../resources/terry.png')] public static const TERRY:Class;
 		
 		[Embed(source = '../resources/sleeper_idle01.png')] public static const SLEEPER_IDLE01:Class;
 		[Embed(source = '../resources/sleeper_idle02.png')] public static const SLEEPER_IDLE02:Class;
@@ -91,6 +91,13 @@ package
 		[Embed(source = '../resources/lover_end02.png')] public static const LOVER_END02:Class;
 		[Embed(source = '../resources/lover_end03.png')] public static const LOVER_END03:Class;
 		[Embed(source = '../resources/lover_end04.png')] public static const LOVER_END04:Class;
+		
+		[Embed(source = '../resources/mainmenu_bg.png')] public static const MAINMENU_BG:Class;
+		[Embed(source = '../resources/mainmenu_heart01.png')] public static const MAINMENU_HEART1:Class;
+		[Embed(source = '../resources/mainmenu_heart02.png')] public static const MAINMENU_HEART2:Class;
+		[Embed(source = '../resources/mainmenu_heart03.png')] public static const MAINMENU_HEART3:Class;
+		[Embed(source = '../resources/arrow.png')] public static const ARROW:Class;
+		[Embed(source = '../resources/credits.jpg')] public static const CREDITS:Class;
 		
 		public static function getHelperAsset (code : String) : Graphic
 		{

@@ -25,6 +25,9 @@ package
 			Input.define("UR", Key.K);
 			Input.define("DL", Key.Z);
 			Input.define("DR", Key.M);
+			
+			Input.define("UP", Key.UP);
+			Input.define("DOWN", Key.DOWN);
 			Input.define("ENTER", Key.ENTER);
 			Input.define("ESC", Key.ESCAPE);
 
