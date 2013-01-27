@@ -18,15 +18,15 @@ package
 	public class Level extends World 
 	{
 		public var xmlLoader:XmlLoader;
-		public static var channel1 : Sfx;
-		public static var channel2 : Sfx;
+		//public static var channel1 : Sfx;
+		//public static var channel2 : Sfx;
 		public static var channelBase : Sfx;
 		
 		public static const PER_SECOND : Number = 0.016666666666667;
 		public static const HELPER_RX : int = 524;
 		public static const HELPER_LX : int = 271;
-		public var missInterval : Number = 0.4;
-		public var rightInterval : Number = 0.15;
+		public var missInterval : Number = 0.5;
+		public var rightInterval : Number = 0.2; //picchi usava 0.15
 		public static var bpm : int;
 		public static var valsPerBeat : int;
 		public static var noteSpeed : int;
@@ -52,6 +52,7 @@ package
 		public var bStart : Boolean = false;
 		public var bPaused : Boolean = false;
 		private var _menu : Menu;
+		private var debugInstant:Boolean;
 		
 		
 		public function Level() 
@@ -104,11 +105,12 @@ package
 			
 			//channel1 = new Sfx(Assets.DREAMY_1);
 			//channel2 = new Sfx(Assets.DREAMY_2);
-			//channelBase = new Sfx(Assets.DREAMY_BASE);
 			
-			channel1 = new Sfx(Assets.TESTE_1);
-			channel2 = new Sfx(Assets.TESTE_2);
-			channelBase = new Sfx(Assets.TESTE_BASE);
+			//channelBase = new Sfx(Assets.DREAMY);
+			
+			channelBase = new Sfx(Assets.SPAGHETTI);
+			
+			//channelBase = new Sfx(Assets.SPAGHETTI);
 			
 			textBox = new Entity ();
 			
@@ -129,9 +131,10 @@ package
 			add (helperUR);
 			add (helperUL);
 			
-			trace (channel1.length);
-			trace (channel2.length);
-			trace (channelBase.length);
+			//trace (channel1.length);
+			//trace (channel2.length);
+			//trace (channelBase.length);
+			//trace (channelBase.length);
 			
 			//channel1.complete = function () : void
 			//{
@@ -172,7 +175,7 @@ package
 			helperUL = new Helper (Helper.UL);
 			
 			arNotes = [];
-			xmlLoader = new XmlLoader(new Assets.FASE_1);
+			xmlLoader = new XmlLoader(new Assets.FASE_3);
 			xmlLoader.load();
 			
 			bpm = xmlLoader.bpm;
@@ -198,7 +201,11 @@ package
 				if (xmlLoader.eventList[i].name && xmlLoader.eventList[i].name.indexOf("note_") >= 0)
 				{
 					var arCode : Array = xmlLoader.eventList[i].name.split("_");
-					var evt : AddHorizontalSlide = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
+					var evt : AddHorizontalSlide;
+					if (arCode[1] == "UL" || arCode[1] == "DL")
+						evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_LX + (3 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
+					else
+						evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
 					arEvents.push(evt);
 				}
 			}
@@ -231,8 +238,8 @@ package
 			{
 				bStart = true;
 				bInsert = true;
-				channel1.play();
-				channel2.play();
+				//channel1.play();
+				//channel2.play();
 				channelBase.play();
 			}
 			
@@ -240,8 +247,8 @@ package
 			{
 				if (!bPaused)
 				{
-					channel1.stop();
-					channel2.stop();
+					//channel1.stop();
+					//channel2.stop();
 					channelBase.stop();
 					_menu.disabled = false;
 					add (shade);
@@ -260,10 +267,10 @@ package
 			timer += FP.elapsed;
 			
 			var arRemoved : Array = [];
-			var instant : Number = channel2.position * bpm * PER_SECOND * valsPerBeat;
+			var instant : Number = channelBase.position * bpm * PER_SECOND * valsPerBeat;
 			if (arNotes.length == 1)
 					{
-						trace (instant);
+						//trace (instant);
 						//trace (n.time + missInterval * valsPerBeat);
 					}
 			//trace (channel1.position * bpm);
@@ -288,20 +295,26 @@ package
 			}
 			arRemoved = [];
 			
-			if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
-			{
-				//trace (instant);
-			}
+			//if (instant % 1 >= 0 && instant % 1 <= 0.5 &&!debugInstant)
+			//{
+				//debugInstant = true;
+				//textField.text = "PULSE";
+				//timer = 0;
+			//}
+			//else if (instant % 1 > 0.5)
+			//{
+				//debugInstant = false;
+			//}
 			
 			for (var i : int = 0; i < arNotes.length; i++)
 			{
 				var n : Note = arNotes[i];
-				if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
-				{
-					trace (instant);
-					trace (Math.max (0, n.time - rightInterval * valsPerBeat));
-					trace (Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat));
-				}
+				//if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
+				//{
+					//trace (instant);
+					//trace (Math.max (0, n.time - rightInterval * valsPerBeat));
+					//trace (Math.min(channelBase.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat));
+				//}
 				if (instant < Math.max(0, n.time - missInterval * valsPerBeat))
 					break;
 				else
@@ -320,7 +333,7 @@ package
 					}
 					else if (!Input.pressed(n.helper.code) && instant >= n.time + missInterval * valsPerBeat)
 					{
-						//trace ("PASS " + n.time);
+						trace ("PASS " + n.time);
 						textField.text = "PASS " + n.time;
 						n.helper.wrong();
 						arRemoved.push (n);
@@ -330,7 +343,7 @@ package
 					{
 						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), n.time + rightInterval * valsPerBeat))
 						{
-							//trace ("RIGHT " + n.time);
+							trace ("RIGHT " + n.time);
 							textField.text = "RIGHT " + n.time;
 							n.helper.correct();
 							arRemoved.push (n);
@@ -338,7 +351,7 @@ package
 						}
 						else
 						{
-							//trace ("MISS " + n.time);
+							trace ("MISS " + n.time);
 							textField.text = "MISS " + n.time;
 							n.helper.wrong();
 							arRemoved.push (n);
@@ -351,10 +364,10 @@ package
 			for each (var note : Note in arRemoved)
 			{
 				arNotes.splice(arNotes.indexOf(note), 1);
-				trace (arNotes.length);
+				//trace (arNotes.length);
 			}
 			
-			if (timer > 0.5)
+			if (timer > 0.05)
 			{
 				textField.text = "";
 			}

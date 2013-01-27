@@ -15,11 +15,13 @@ package
 		[Embed(source = '../resources/teste - camada 2.mp3')] public static const TESTE_2:Class;
 		[Embed(source = '../resources/teste - camada base.mp3')] public static const TESTE_BASE:Class;
 		
-		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao esquerda.mp3')] public static const DREAMY_1:Class;
-		[Embed(source = '../resources/Dreamy Dreamy Waltz - mao direita.mp3')] public static const DREAMY_2:Class;
-		[Embed(source = '../resources/Dreamy Dreamy Waltz - camada base.mp3')] public static const DREAMY_BASE:Class;
+		[Embed(source = '../resources/Dreamy Dreamy Waltz.mp3')] public static const DREAMY:Class;
+		[Embed(source = '../resources/Nyan Pazuzu.mp3')] public static const NYAN:Class;
+		[Embed(source = '../resources/Spaghetti on the Dance Floor.mp3')] public static const SPAGHETTI:Class;
 		
-		[Embed(source = '../resources/teste2.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
+		[Embed(source = '../resources/fase1.xml', mimeType = 'application/octet-stream')] public static const FASE_1:Class;
+		[Embed(source = '../resources/fase2.xml', mimeType = 'application/octet-stream')] public static const FASE_2:Class;
+		[Embed(source = '../resources/fase3.xml', mimeType = 'application/octet-stream')] public static const FASE_3:Class;
 		
 		[Embed(source = '../resources/background.png')] public static const MENU_BACKGROUND:Class;
 		

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stage id = "1" bpm = "121" npb = '1' lapse = "4" direction1 = "left" direction2 = "left">
+	<items>
+		
+<item beat="12" threadmill="1" type="3"/>
+<item beat="13" threadmill="0" type="1"/>
+<item beat="14" threadmill="1" type="3"/>
+<item beat="16" threadmill="1" type="3"/>
+<item beat="17" threadmill="0" type="1"/>
+<item beat="18" threadmill="1" type="3"/>
+<item beat="20" threadmill="1" type="3"/>
+<item beat="21" threadmill="0" type="1"/>
+<item beat="22" threadmill="1" type="3"/>
+<item beat="24" threadmill="1" type="3"/>
+<item beat="25" threadmill="0" type="1"/>
+<item beat="26" threadmill="1" type="3"/>
+<item beat="32" threadmill="1" type="2"/>
+<item beat="33" threadmill="0" type="0"/>
+<item beat="34" threadmill="1" type="2"/>
+<item beat="35" threadmill="0" type="0"/>
+<item beat="36" threadmill="1" type="2"/>
+<item beat="37" threadmill="0" type="0"/>
+<item beat="38" threadmill="1" type="2"/>
+<item beat="39" threadmill="1" type="2"/>
+<item beat="40" threadmill="1" type="2"/>
+<item beat="41" threadmill="0" type="0"/>
+<item beat="42" threadmill="1" type="2"/>
+<item beat="43" threadmill="0" type="0"/>
+<item beat="44" threadmill="1" type="2"/>
+<item beat="45" threadmill="0" type="0"/>
+<item beat="46" threadmill="1" type="2"/>
+<item beat="47" threadmill="1" type="2"/>
+
+<item beat="48" threadmill="1" type="3"/>
+<item beat="49" threadmill="0" type="1"/>
+<item beat="50" threadmill="1" type="3"/>
+<item beat="51" threadmill="0" type="1"/>
+<item beat="52" threadmill="1" type="3"/>
+<item beat="53" threadmill="0" type="1"/>
+<item beat="54" threadmill="1" type="3"/>
+<item beat="55" threadmill="1" type="3"/>
+<item beat="56" threadmill="1" type="3"/>
+<item beat="57" threadmill="0" type="1"/>
+<item beat="58" threadmill="1" type="3"/>
+<item beat="59" threadmill="0" type="1"/>
+<item beat="60" threadmill="1" type="3"/>
+<item beat="61" threadmill="0" type="1"/>
+<item beat="62" threadmill="1" type="3"/>
+<item beat="63" threadmill="1" type="3"/>
+
+<!---brancos--->
+
+<item beat="64" threadmill="1" type="4"/> 
+<item beat="65" threadmill="0" type="4"/>
+<item beat="66" threadmill="1" type="4"/>
+<item beat="72" threadmill="1" type="4"/>
+<item beat="73" threadmill="0" type="4"/>
+<item beat="74" threadmill="1" type="4"/>
+
+<!---susto--->
+
+<item beat="98" threadmill="1" type="3"/>
+<item beat="98" threadmill="0" type="1"/>
+<item beat="99" threadmill="1" type="3"/>
+<item beat="99" threadmill="0" type="1"/>
+<item beat="100" threadmill="1" type="3"/>
+<item beat="100" threadmill="0" type="1"/>
+<item beat="101" threadmill="1" type="3"/>
+<item beat="101" threadmill="0" type="1"/>
+ <!---zigzag--->
+<item beat="102" threadmill="1" type="3"/>
+<item beat="103" threadmill="0" type="1"/>
+<item beat="104" threadmill="1" type="3"/>
+<item beat="105" threadmill="0" type="1"/>
+<!---pulsa--->
+<item beat="106" threadmill="1" type="3"/>
+<item beat="106" threadmill="0" type="1"/>
+<item beat="107" threadmill="1" type="3"/>
+<item beat="107" threadmill="0" type="1"/>
+ <!---zigzag branco--->
+<item beat="108" threadmill="1" type="4"/>
+<item beat="109" threadmill="0" type="4"/>
+<item beat="110" threadmill="1" type="4"/>
+<item beat="111" threadmill="0" type="4"/>
+ <!---batida pos-branco--->
+<item beat="116" threadmill="1" type="4"/>
+<item beat="116" threadmill="0" type="4"/>
+<item beat="117" threadmill="1" type="4"/>
+<item beat="117" threadmill="0" type="4"/>
+ <!---brancos--->
+<item beat="122" threadmill="1" type="4"/>
+<item beat="122" threadmill="0" type="4"/>
+<item beat="123" threadmill="1" type="4"/>
+<item beat="123" threadmill="0" type="4"/>
+ <!---mais brancos--->
+<item beat="128" threadmill="1" type="4"/>
+<item beat="128" threadmill="0" type="4"/>
+<item beat="129" threadmill="1" type="4"/>
+<item beat="129" threadmill="0" type="4"/>
+ <!---fim--->
+<item beat="130" threadmill="1" type="2"/>
+<item beat="130" threadmill="0" type="0"/>
+
+	   
+	</items>
+	<story_events>
+	   <story_event beat="0" type="storyStart"/>
+	   <story_event beat="98" type="storyTwist"/>
+	   <story_event beat="999" type="storyRecover"/>
+	   <story_event beat="9999" type="storyEnding"/>
+	</story_events>
+</stage>
