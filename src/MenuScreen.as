@@ -42,13 +42,10 @@ package
 		{
 			if (Input.pressed("ENTER") && _menu.selected == 1 && _menu.disabled) {
 				remove(creditsScreen);
+				_menu.disabled = false;
 			}
 			
 			super.update();
-			
-			if (Input.pressed("ENTER") && _menu.selected == 1 && _menu.disabled) {
-				_menu.disabled = false;
-			}
 		}
 		
 	}

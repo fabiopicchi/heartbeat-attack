@@ -53,7 +53,14 @@ package
 		public var bPaused : Boolean = false;
 		public var pLock : Boolean = false;
 		private var _menu : Menu;
+		private var _score : int;
 		
+		private static const RIGHT : int = 1;
+		private static const WRONG : int = 2;
+		private static const TOP : int = 14;
+		private var balance : int = TOP;
+		private var _totalNotes : int;
+		private var _notesRight : int;
 		
 		public function Level() 
 		{
@@ -172,6 +179,8 @@ package
 			var i : int = 0;
 			var length : int = xmlLoader.noteList.length;
 			var n : Note;
+			_totalNotes = length;
+			_notesRight = 0;
 			
 			for (i = 0; i < length; i++)
 			{
@@ -294,6 +303,8 @@ package
 					else if (!Input.pressed(n.helper.code) && instant >= n.time + missInterval * valsPerBeat)
 					{
 						textField.text = "PASS " + n.time;
+						balance = Math.max (0, balance - WRONG);
+						//trace (balance);
 						n.helper.wrong();
 						arRemoved.push (n);
 						timer = 0;
@@ -303,6 +314,9 @@ package
 						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), n.time + rightInterval * valsPerBeat))
 						{
 							textField.text = "RIGHT " + n.time;
+							balance = Math.min (TOP, balance + RIGHT);
+							//trace (balance);
+							_notesRight++;
 							n.helper.correct();
 							arRemoved.push (n);
 							timer = 0;
@@ -310,6 +324,8 @@ package
 						else
 						{
 							textField.text = "MISS " + n.time;
+							balance = Math.max (0, balance - WRONG);
+							//trace (balance);
 							n.helper.wrong();
 							arRemoved.push (n);
 							timer = 0;
