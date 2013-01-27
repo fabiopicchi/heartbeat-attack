@@ -3,6 +3,7 @@ package
 	import com.greensock.easing.Linear;
 	import com.greensock.TweenLite;
 	import flash.display.Sprite;
+	import flash.utils.getQualifiedClassName;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
 	import net.flashpunk.Sfx;
@@ -13,6 +14,9 @@ package
 	 * ...
 	 * @author Chambers
 	 */
+	
+	[SWF(width = "800", height = "600")]
+	[Frame(factoryClass = "Preloader")]
 	public class Main extends Engine 
 	{
 		public static var soundChannel : Sfx;

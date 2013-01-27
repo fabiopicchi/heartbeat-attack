@@ -8,10 +8,9 @@ package
 	import flash.utils.getQualifiedClassName;
 	import net.flashpunk.graphics.Image;
  
-	[SWF(width = "800", height = "600")]
 	public class Preloader extends Sprite
 	{
-		private static const mainClassName: String = getQualifiedClassName(Main);
+		private static const mainClassName: String = "Main";
 		private static const mustClick: Boolean = false;
 		
 		private var loader : MovieClip;
