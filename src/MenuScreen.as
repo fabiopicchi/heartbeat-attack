@@ -25,7 +25,10 @@ package
 			
 			_menu = new Menu (new Image(Assets.ARROW), 533, 415, function () : void
 			{
-				FP.world = new Level;
+				Main.screenTransition(2, 0x000000, function () : void
+				{
+					FP.world = new Level;
+				});
 			});
 			_menu.addOption(533, 518, function () : void
 			{

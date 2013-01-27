@@ -51,6 +51,7 @@ package
 		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
 		public var bPaused : Boolean = false;
+		public var pLock : Boolean = false;
 		private var _menu : Menu;
 		
 		
@@ -128,17 +129,6 @@ package
 			add (helperDR);
 			add (helperUR);
 			add (helperUL);
-			
-			trace (channel1.length);
-			trace (channel2.length);
-			trace (channelBase.length);
-			
-			//channel1.complete = function () : void
-			//{
-				//loadStage();
-				//start = 4;
-				//bStart = false;
-			//}
 		}
 		
 		private function getHelper (code : int) : Helper
@@ -260,48 +250,38 @@ package
 			timer += FP.elapsed;
 			
 			var arRemoved : Array = [];
-			var instant : Number = channel2.position * bpm * PER_SECOND * valsPerBeat;
-			if (arNotes.length == 1)
-					{
-						trace (instant);
-						//trace (n.time + missInterval * valsPerBeat);
-					}
-			//trace (channel1.position * bpm);
 			
+			var instant : Number = channel1.position * bpm * PER_SECOND * valsPerBeat;
+			
+			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
+			{
+				helperUL.pulse();
+				helperUR.pulse();
+				helperDL.pulse();
+				helperDR.pulse();
+				pLock = true;
+			}
+			else if (instant % 1 > 0.5)
+			{
+				pLock = false;
+			}
 			for (var j : int = 0; j < arEvents.length; j++)
 			{
-				//trace ("ASDASDASDASD");
-				//trace (instant);
-				//trace (arEvents[j].time);
 				if (instant > arEvents[j].time && arEvents[j].time >= 0)
 				{
-					//trace (arEvents[j].time);
 					arEvents[j].trigger();
 					arRemoved.push(arEvents[j]);
 				}
 			}
-			//trace ("asdasd");
 			
 			for each (var evt : IEvent in arRemoved)
 			{
 				arEvents.splice(arEvents.indexOf(evt), 1);
 			}
 			arRemoved = [];
-			
-			if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
-			{
-				//trace (instant);
-			}
-			
 			for (var i : int = 0; i < arNotes.length; i++)
 			{
 				var n : Note = arNotes[i];
-				if (Input.pressed(Key.UP) || Input.pressed(Key.DOWN))
-				{
-					trace (instant);
-					trace (Math.max (0, n.time - rightInterval * valsPerBeat));
-					trace (Math.min(channel1.length * valsPerBeat * bpm * PER_SECOND, n.time + rightInterval * valsPerBeat));
-				}
 				if (instant < Math.max(0, n.time - missInterval * valsPerBeat))
 					break;
 				else
@@ -309,18 +289,10 @@ package
 					if ((!Input.pressed(n.helper.code) && instant < n.time + missInterval * valsPerBeat) 
 							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), n.time + missInterval * valsPerBeat)))
 					{
-						//if (Input.pressed(n.helper.code))
-						//{
-							//trace (instant);
-							//trace (Math.max (0, n.time - missInterval * valsPerBeat));
-							//trace (Math.min(channel1.length * valsPerBeat, n.time + missInterval * valsPerBeat));
-							//trace ("CONTINUE " + instant);
-						//}
 						//NADA
 					}
 					else if (!Input.pressed(n.helper.code) && instant >= n.time + missInterval * valsPerBeat)
 					{
-						//trace ("PASS " + n.time);
 						textField.text = "PASS " + n.time;
 						n.helper.wrong();
 						arRemoved.push (n);
@@ -330,7 +302,6 @@ package
 					{
 						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), n.time + rightInterval * valsPerBeat))
 						{
-							//trace ("RIGHT " + n.time);
 							textField.text = "RIGHT " + n.time;
 							n.helper.correct();
 							arRemoved.push (n);
@@ -338,7 +309,6 @@ package
 						}
 						else
 						{
-							//trace ("MISS " + n.time);
 							textField.text = "MISS " + n.time;
 							n.helper.wrong();
 							arRemoved.push (n);
@@ -351,7 +321,6 @@ package
 			for each (var note : Note in arRemoved)
 			{
 				arNotes.splice(arNotes.indexOf(note), 1);
-				trace (arNotes.length);
 			}
 			
 			if (timer > 0.5)
@@ -363,8 +332,6 @@ package
 		
 		override public function render():void 
 		{
-			//Draw.line(HELPER_LX, 0, HELPER_LX, 600);
-			//Draw.line(HELPER_RX, 0, HELPER_RX, 600);
 			super.render();
 		}
 		

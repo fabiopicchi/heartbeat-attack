@@ -1,5 +1,8 @@
 package 
 {
+	import com.greensock.easing.Linear;
+	import com.greensock.TweenLite;
+	import flash.display.Sprite;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
 	import net.flashpunk.utils.Input;
@@ -33,6 +36,38 @@ package
 
 			FP.world = new MenuScreen();
 			
+			
+		}
+		
+		private static var bTransition : Boolean = false;
+		private static var whiteScreen : Sprite;
+		public static function screenTransition (time : Number, color : uint = 0xffffff, callbackFoward : Function = null, callbackBackward : Function = null, bForce : Boolean = false) : void
+		{
+			if (whiteScreen == null)
+			{
+				whiteScreen = new Sprite();
+				whiteScreen.alpha = 0;
+			}
+			if (!bTransition || bForce)
+			{
+				if (bForce)
+				{
+					TweenLite.killTweensOf(whiteScreen);
+				}
+				whiteScreen.graphics.clear();
+				whiteScreen.graphics.beginFill(color);
+				whiteScreen.graphics.drawRect(0, 0, FP.engine.width, FP.engine.height);
+				FP.stage.addChild(whiteScreen);
+				TweenLite.to (whiteScreen, (time / 2) * (1 - whiteScreen.alpha), { alpha : 1, ease : Linear.easeInOut, onComplete : function () : void {
+					if (callbackFoward != null) callbackFoward();
+					TweenLite.to (whiteScreen, time / 2, { alpha : 0, ease : Linear.easeInOut, onComplete : function () :void {
+						if (callbackBackward != null) callbackBackward();
+						FP.stage.removeChild(whiteScreen);
+						bTransition = false;
+					}});
+				}});
+			}
+			bTransition = true;
 		}
 		
 	}

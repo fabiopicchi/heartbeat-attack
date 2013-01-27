@@ -35,7 +35,11 @@ package
 		[Embed(source = '../resources/larry.png')] public static const LARRY:Class;
 		[Embed(source = '../resources/shaniqua.png')] public static const SHANIQUA:Class;
 		[Embed(source = '../resources/terry.png')] public static const TERRY:Class;
-		
+		[Embed(source = '../resources/item_A.png')] public static const ITEM_A:Class;
+		[Embed(source = '../resources/item_K.png')] public static const ITEM_K:Class;
+		[Embed(source = '../resources/item_M.png')] public static const ITEM_M:Class;
+		[Embed(source = '../resources/item_Z.png')] public static const ITEM_Z:Class;
+		[Embed(source = '../resources/item_ALL.png')] public static const ITEM_ALL:Class;
 		[Embed(source = '../resources/sleeper_idle01.png')] public static const SLEEPER_IDLE01:Class;
 		[Embed(source = '../resources/sleeper_idle02.png')] public static const SLEEPER_IDLE02:Class;
 		[Embed(source = '../resources/sleeper_idle03.png')] public static const SLEEPER_IDLE03:Class;
@@ -91,7 +95,6 @@ package
 		[Embed(source = '../resources/lover_end02.png')] public static const LOVER_END02:Class;
 		[Embed(source = '../resources/lover_end03.png')] public static const LOVER_END03:Class;
 		[Embed(source = '../resources/lover_end04.png')] public static const LOVER_END04:Class;
-		
 		[Embed(source = '../resources/mainmenu_bg.png')] public static const MAINMENU_BG:Class;
 		[Embed(source = '../resources/mainmenu_heart01.png')] public static const MAINMENU_HEART1:Class;
 		[Embed(source = '../resources/mainmenu_heart02.png')] public static const MAINMENU_HEART2:Class;
@@ -119,29 +122,30 @@ package
 			return null;
 		}
 		
-		public static function getItemAsset (code : String) : Graphic
+		public static function getItemAsset (code : String) : Spritemap
 		{
 			switch (code)
 			{
 				case "UL":
-					return Image.createRect(20, 20, 0x0000FF);
+					return new Spritemap(ITEM_A, 64, 46);
 					break;
 				case "UR":
-					return Image.createRect(20, 20, 0x00FF00);
+					return new Spritemap(ITEM_K, 74, 51);
 					break;
 				case "DL":
-					return Image.createRect(20, 20, 0x00FFFF);
+					return new Spritemap(ITEM_Z, 61, 46);
 					break;
 				case "DR":
-					return Image.createRect(20, 20, 0xFF00FF);
+					return new Spritemap(ITEM_M, 71, 57);
 					break;
 				case "DRDL":
+					return new Spritemap(ITEM_ALL, 56, 55);
+					break;
 				case "URUL":
-					trace ("BRANCO");
-					return Image.createRect(20, 20);
+					return new Spritemap(ITEM_ALL, 56, 55);
 					break;
 			}
-			return new Graphic();
+			return null;
 		}
 		
 		public function Assets() 
