@@ -18,7 +18,10 @@ package
 		{
 			_menu = new Menu (Image.createRect(20, 20), 150, 300, function () : void
 			{
-				FP.world = new Level;
+				Main.screenTransition(2, 0x000000, function () : void
+				{
+					FP.world = new Level;
+				});
 			});
 			_menu.addOption(150, 400, function () : void
 			{
