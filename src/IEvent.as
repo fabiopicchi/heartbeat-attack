@@ -8,7 +8,7 @@ package
 	 */
 	public interface IEvent
 	{
-		function trigger () : void;
+		function trigger (instant : Number) : void;
 	}
 	
 }

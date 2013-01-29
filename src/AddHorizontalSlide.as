@@ -19,9 +19,9 @@ package
 		}
 		
 		/* INTERFACE IEvent */
-		public function trigger():void 
+		public function trigger(instant : Number):void 
 		{
-			FP.world.add (new HorizontalSlide(_type, _xStart));
+			FP.world.add (new HorizontalSlide(_type, _xStart + (instant - _time) * Level.noteSpeed));
 		}
 		
 		public function get time():int 

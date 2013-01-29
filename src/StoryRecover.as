@@ -17,7 +17,7 @@ package
 		
 		/* INTERFACE IEvent */
 		
-		public function trigger():void 
+		public function trigger(instant : Number):void 
 		{
 			_story.clumsy();
 		}

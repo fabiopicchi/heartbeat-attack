@@ -308,7 +308,7 @@ package
 			{
 				if (instant > arEvents[j].time && arEvents[j].time >= 0)
 				{
-					arEvents[j].trigger();
+					arEvents[j].trigger(instant);
 					arRemoved.push(arEvents[j]);
 				}
 			}
