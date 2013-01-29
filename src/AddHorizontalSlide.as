@@ -21,7 +21,7 @@ package
 		/* INTERFACE IEvent */
 		public function trigger(instant : Number):void 
 		{
-			FP.world.add (new HorizontalSlide(_type, _xStart + (instant - _time) * Level.noteSpeed));
+			FP.world.add (new HorizontalSlide(_type, _xStart - ((instant - _time) / (Level.bpm * Level.valsPerBeat / 60)) * Level.noteSpeed));
 		}
 		
 		public function get time():int 

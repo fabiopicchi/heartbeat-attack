@@ -266,8 +266,6 @@ package
 				Main.soundChannel.play();
 			}
 			
-			
-			
 			if (Input.pressed("ESC"))
 			{
 				if (!bPaused)
@@ -290,7 +288,7 @@ package
 			timer += FP.elapsed;
 			
 			var arRemoved : Array = [];
-			var instant : Number = Main.soundChannel.position * bpm * PER_SECOND * valsPerBeat;
+			var instant : Number = Main.soundChannel.position * bpm * valsPerBeat / 60;
 			
 			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
 			{
@@ -306,7 +304,7 @@ package
 			}
 			for (var j : int = 0; j < arEvents.length; j++)
 			{
-				if (instant > arEvents[j].time && arEvents[j].time >= 0)
+				if (instant >= arEvents[j].time && arEvents[j].time >= 0)
 				{
 					arEvents[j].trigger(instant);
 					arRemoved.push(arEvents[j]);
