@@ -159,7 +159,7 @@ package
 							index++;
 							frames = 0;
 						}
-						else if (index == 4 && frames >= 120)
+						else if (index == 4 && frames >= 50)
 						{
 							index++;
 							frames = 0

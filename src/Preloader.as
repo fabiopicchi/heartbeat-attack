@@ -11,7 +11,6 @@ package
 	public class Preloader extends Sprite
 	{
 		private static const mainClassName: String = "Main";
-		private static const mustClick: Boolean = false;
 		
 		private var loader : MovieClip;
 		
@@ -50,30 +49,14 @@ package
 			progressBar = new Shape();
 			addChild(progressBar);
 			
-			//addChild (text);
-			
-			
 			stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-			
-			if (mustClick) {
-
-				stage.addEventListener(KeyboardEvent.KEY_DOWN, onMouseDown);
-
-			}
 		}
  
 		public function onEnterFrame (e:Event): void
 		{
 			if (hasLoaded())
 			{
-				if (! mustClick) {
-					startup();
-				} else {
-					text.scaleX = 2.0;
-					text.scaleY = 2.0;
-					text.text = "Press any key to start";
-					text.y = py + (h - text.height) / 2;
-				}
+				startup();
 			} 
 			else
 			{
@@ -83,18 +66,6 @@ package
 				progressBar.graphics.beginFill(0xff571f);
 				progressBar.graphics.drawRect(px, py, p * w, h);
 				progressBar.graphics.endFill();
-				
-				text.text = int(p * 100) + "%";
-			}
-			
-			text.x = (sw - text.width) * 0.5;
-		}
-		
-		private function onMouseDown(e:MouseEvent):void {
-			if (hasLoaded())
-			{
-				stage.removeEventListener(KeyboardEvent.KEY_DOWN, onMouseDown);
-				startup();
 			}
 		}
 		

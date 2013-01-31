@@ -38,8 +38,8 @@ package
 			Input.define("UP", Key.UP, Key.LEFT);
 			Input.define("DOWN", Key.DOWN, Key.RIGHT);
 			Input.define("ENTER", Key.ENTER);
-			Input.define("ESC", Key.ESCAPE);
-
+			Input.define("ESC", Key.ESCAPE, Key.P);
+			
 			FP.world = new MenuScreen;
 			
 			

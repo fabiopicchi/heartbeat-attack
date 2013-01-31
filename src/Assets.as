@@ -29,6 +29,7 @@ package
 		[Embed(source = '../resources/background_lover.png')] public static const BACKGROUND_LOVER:Class;
 		[Embed(source = '../resources/background_over.png')] public static const BACKGROUND_OVER:Class;
 		[Embed(source = '../resources/hp_spritesheet.png')] public static const HP_SPRITESHEET:Class;
+		[Embed(source = '../resources/pause_options.png')] public static const PAUSE_OPTIONS:Class;
 		
 		[Embed(source = '../resources/treadmill.png')] public static const TREADMILL:Class;
 		

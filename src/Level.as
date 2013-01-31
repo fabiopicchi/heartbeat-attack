@@ -1,5 +1,6 @@
 package  
 {
+	import flash.display.Graphics;
 	import Loader.XmlLoader;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -31,7 +32,8 @@ package
 		public var arNotes : Array = [];
 		public var arEvents : Array = [];
 		public var timer : Number = 0;
-		private var shade : Entity;
+		private var _shade : Entity;
+		private var _pauseScreen : Entity;
 		private var _level : int;
 		
 		public var helperUR : Helper;
@@ -81,14 +83,14 @@ package
 			add(lowerTreadmill_1);
 			add(lowerTreadmill_2);
 			
-			_menu = new Menu (Image.createRect(20, 20), 150, 300, function () : void
+			_menu = new Menu (new Image(Assets.ARROW), 255, 220, function () : void
 			{
 				Main.screenTransition(2, 0x000000, function () : void
 				{
 					FP.world = new Level(_level);
 				});
 			});
-			_menu.addOption(150, 400, function () : void
+			_menu.addOption(255, 325, function () : void
 			{
 				Main.screenTransition(2, 0x000000, function () : void
 				{
@@ -107,8 +109,11 @@ package
 				});
 			}
 			
-			shade = new Entity();
-			shade.addGraphic (Image.createRect (FP.engine.width, FP.engine.height, 0x000000, 0.7));
+			_shade = new Entity();
+			_shade.addGraphic (Image.createRect (FP.engine.width, FP.engine.height, 0x000000, 0.7));
+			
+			_pauseScreen = new Entity();
+			_pauseScreen.addGraphic(new Image(Assets.PAUSE_OPTIONS));
 			
 			heart = new CountdownHeart();
 			heart.x = (FP.engine.width / 2) - (heart.halfWidth);
@@ -272,7 +277,8 @@ package
 				{
 					Main.soundChannel.stop();
 					_menu.disabled = false;
-					add (shade);
+					add (_shade);
+					add (_pauseScreen);
 					add (_menu);
 					bPaused = true;
 				}
