@@ -10,9 +10,12 @@ package Loader
 	public class XmlLoader
 	{
 		private var xmlFile:XML;
+		private var _numEvents : int = -1;
+		private var _numNotes : int = -1;
+		private var _noteSpeed:int;
 		
-		public var noteList:Array = []; //{beat, helper, id}
-		public var eventList:Array = []; //{beat, name, id}
+		public var eventList:Vector.<SongEvent>;
+		public var noteList:Vector.<SongEvent>;
 		
 		public function XmlLoader(xmlObject:String)
 		{
@@ -21,69 +24,154 @@ package Loader
 		
 		public function get bpm():uint
 		{
-			return xmlFile.@bpm;
+			return int(xmlFile.@bpm);
 		}
 		
 		public function get npb():uint
 		{
-			return xmlFile.@npb;
+			return int(xmlFile.@npb);
 		}
 		
 		public function get lapse():uint
 		{
-			return xmlFile.@lapse;
+			return int(xmlFile.@lapse);
+		}
+		
+		public function get numEvents():int
+		{
+			if (_numEvents == -1)
+			{
+				var obj:XML;
+				var i : int = 0;
+				var j : int = 0;
+				
+				for each (obj in xmlFile.child("items").child("item"))
+				{
+					i++;
+					if (obj.@type == 4) // item "neutro"
+					{
+						j += 2;
+					}
+					
+					else // item colorido
+					{
+						j++;
+					}	
+				}
+				
+				for each (obj in xmlFile.child("story_events").child("story_event"))
+				{
+					i++;
+				}
+				_numEvents = i;
+				_numNotes = j;
+			}
+			return _numEvents;
+		}
+		
+		public function get numNotes():int
+		{
+			if (_numNotes == -1)
+			{
+				var obj:XML;
+				var i : int = 0;
+				
+				for each (obj in xmlFile.child("items").child("item"))
+				{
+					if (obj.@type == 4) // item "neutro"
+					{
+						i += 2;
+					}
+					
+					else // item colorido
+					{
+						i++;
+					}	
+				}
+				_numNotes = i;
+			}
+			return _numNotes;
+		}
+		
+		public function get noteSpeed():int 
+		{
+			return _noteSpeed;
 		}
 		
 		public function load():void
 		{
-			var lapse:uint = xmlFile.@lapse;
-			var firstGuy:uint;
-			var secondGuy:uint;
-			var noteId:uint = 0;
-			var eventId:uint = 0;
-			var eventName:String;
+			eventList = new Vector.<SongEvent> (numEvents, true);
+			noteList = new Vector.<SongEvent> (numNotes, true);
+			_noteSpeed = (Level.HELPER_RX - Level.HELPER_LX) / (lapse / (bpm * Level.PER_SECOND * npb));
 			
-			for each (var obj:XML in xmlFile.child("items").child("item"))
+			var i : int = 0;
+			var j : int = 0;
+			var evtArgs : Object;
+			var obj:XML;
+			
+			for each (obj in xmlFile.child("items").child("item"))
 			{
-				firstGuy = 1 + obj.@threadmill * 2;
-				secondGuy = firstGuy - 1;
+				evtArgs = { };
 				if (obj.@type == 0)
-					eventName = "note_UL";
+				{
+					evtArgs.code = "UL";
+				}
 				else if (obj.@type == 1)
-					eventName = "note_UR";
+				{
+					evtArgs.code = "UR";
+				}
 				else if (obj.@type == 2)
-					eventName = "note_DL";
+				{
+					evtArgs.code = "DL";
+				}
 				else if (obj.@type == 3)
-					eventName = "note_DR";
+				{
+					evtArgs.code = "DR";
+				}
 				else if (obj.@type == 4)
 				{
 					if (obj.@threadmill == 0)
-						eventName = "note_URUL";
+					{
+						evtArgs.code = "URUL";
+					}
 					else
-						eventName = "note_DRDL";
+					{
+						evtArgs.code = "DRDL";
+					}
 				}
 				
-				eventList.push({beat: int(obj.@beat) - ((obj.@type == 0 || obj.@type == 2) ? (3 * lapse) : (2 * lapse)) , name: eventName, id: eventId++});
+				if (evtArgs.code == "UL" || evtArgs.code == "DL")
+				{
+					
+					evtArgs.xStart = Level.HELPER_LX + (3 * lapse / (bpm * Level.PER_SECOND * npb)) * noteSpeed;
+				}
+				else
+				{
+					evtArgs.xStart = Level.HELPER_RX + (2 * lapse / (bpm * Level.PER_SECOND * npb)) * noteSpeed;
+				}
+				
+				eventList[i++] = new SongEvent (SongEvent.NOTE_ENTRY, int(obj.@beat) - ((obj.@type == 0 || obj.@type == 2) ? (3 * lapse) : (2 * lapse)), evtArgs);
 				
 				if (obj.@type == 4) // item "neutro"
 				{
-					noteList.push({beat: obj.@beat, helper: firstGuy, id: noteId++})
-					noteList.push({beat: int(obj.@beat) + lapse, helper: secondGuy, id: noteId++})
+					noteList[j++] = new SongEvent (SongEvent.NOTE, int(obj.@beat), { helper: 1 + int(obj.@threadmill) * 2 });
+					noteList[j++] = new SongEvent (SongEvent.NOTE, int(obj.@beat) + lapse, { helper: int(obj.@threadmill) * 2 } );
 				}
 				
 				else // item colorido
 				{
-					noteList.push({beat: obj.@beat, helper: obj.@type, id: noteId++});
-				}
-				
+					noteList[j++] = new SongEvent (SongEvent.NOTE, int(obj.@beat), { helper: obj.@type } );
+					trace (1 + int(obj.@threadmill) * 2 );
+				}	
 			}
 			
-			for each (var ev:XML in xmlFile.child("story_events").child("story_event"))
+			for each (obj in xmlFile.child("story_events").child("story_event"))
 			{
-				eventList.push({beat: ev.@beat, name: ev.@type, threadmill: int(-1) ,id: eventId++});
+				eventList[i++] = new SongEvent (obj.@type, int(obj.@beat));
 			}
 			
-			noteList.sortOn("beat", [Array.NUMERIC]);
+			eventList.sort(SongEvent.compare);
+			noteList.sort(SongEvent.compare);
 		}
 	
 	}

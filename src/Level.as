@@ -13,6 +13,7 @@ package
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.World;
+	import StageAnimation.StageHeader;
 	/**
 	 * ...
 	 * @author 
@@ -22,16 +23,12 @@ package
 		public var xmlLoader:XmlLoader;
 		
 		public static const PER_SECOND : Number = 0.016666666666667;
-		public static const HELPER_RX : int = 519;
+		public static const HELPER_RX : int = 525;
 		public static const HELPER_LX : int = 286;
+		
 		public var missInterval : Number = 0.7;
 		public var rightInterval : Number = 0.3;
-		public static var bpm : int;
-		public static var valsPerBeat : int;
-		public static var noteSpeed : int;
-		public var arNotes : Array = [];
-		public var arEvents : Array = [];
-		public var timer : Number = 0;
+		
 		private var _shade : Entity;
 		private var _pauseScreen : Entity;
 		private var _level : int;
@@ -41,30 +38,18 @@ package
 		public var helperDR : Helper;
 		public var helperDL : Helper;
 		
-		public var upperTreadmill_1 : Treadmill;
-		public var upperTreadmill_2 : Treadmill;
-		public var lowerTreadmill_1 : Treadmill;
-		public var lowerTreadmill_2 : Treadmill;
-		
-		public var hp : HeartContainer;
-		
 		public var heart : CountdownHeart;
 		
 		public var start : Number = 4;
-		public var bInsert : Boolean = false;
 		public var bStart : Boolean = false;
 		public var bPaused : Boolean = false;
-		public var pLock : Boolean = false;
+		public var pulseLock : Boolean = false;
 		private var _menu : Menu;
 		private var _score : int;
 		private var _story : StageHeader;
 		
-		private static const RIGHT : int = 1;
-		private static const WRONG : int = 2;
-		private static const TOP : int = 14;
-		private var balance : int = TOP;
-		private var _totalNotes : Number;
-		private var _notesRight : Number;
+		private var _notesRight : Number = 0;
+		private var instant:Number;
 		
 		public function Level(level : int) 
 		{
@@ -72,16 +57,8 @@ package
 			_level = level;
 			loadStage();
 			
-			hp = new HeartContainer();
-			
-			upperTreadmill_1 = new Treadmill(0, 287, noteSpeed);
-			upperTreadmill_2 = new Treadmill(upperTreadmill_1.tWidth, 287, noteSpeed);
-			lowerTreadmill_1 = new Treadmill(-200, 483, noteSpeed);
-			lowerTreadmill_2 = new Treadmill(-200 + lowerTreadmill_1.tWidth, 483, noteSpeed);
-			add(upperTreadmill_1);
-			add(upperTreadmill_2);
-			add(lowerTreadmill_1);
-			add(lowerTreadmill_2);
+			add(new Treadmill(0, 287, xmlLoader.noteSpeed));
+			add(new Treadmill(-200, 483, xmlLoader.noteSpeed));
 			
 			_menu = new Menu (new Image(Assets.ARROW), 255, 220, function () : void
 			{
@@ -105,7 +82,14 @@ package
 				Main.soundChannel.complete = null;
 				Main.screenTransition(2, 0x000000, function () : void
 				{
-					FP.world = new EndingScreen( _level, ((_notesRight / _totalNotes) < 0.90 ? 1 : 2));
+					if ((_notesRight / xmlLoader.numNotes) < 0.50)
+						FP.world = new EndingScreen( _level, 0);
+					
+					else if ((_notesRight / xmlLoader.numNotes) < 0.90)
+						FP.world = new EndingScreen( _level, 1);
+					
+					else
+						FP.world = new EndingScreen( _level, 2);
 				});
 			}
 			
@@ -185,57 +169,8 @@ package
 			e = new Entity(0, 223, new Image(Assets.BACKGROUND));
 			add(e);
 			
-			arNotes = [];
 			xmlLoader.load();
-			
-			bpm = xmlLoader.bpm;
-			valsPerBeat = xmlLoader.npb;
-			noteSpeed = (HELPER_RX - HELPER_LX) / (xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat));
-			
-			var i : int = 0;
-			var length : int = xmlLoader.noteList.length;
-			var n : Note;
-			_totalNotes = length;
 			_notesRight = 0;
-			
-			for (i = 0; i < length; i++)
-			{
-				n = new Note (xmlLoader.noteList[i].beat, getHelper (xmlLoader.noteList[i].helper));
-				arNotes.push(n);
-			}
-			
-			i = 0;
-			length = xmlLoader.eventList.length;
-			
-			for (i = 0; i < length; i++)
-			{
-				var evt : IEvent;
-				if (xmlLoader.eventList[i].name && xmlLoader.eventList[i].name.indexOf("note_") >= 0)
-				{
-					var arCode : Array = xmlLoader.eventList[i].name.split("_");
-					if (arCode[1] == "UL" || arCode[1] == "DL")
-						evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_LX + (3 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
-					else
-						evt = new AddHorizontalSlide (xmlLoader.eventList[i].beat, arCode[1], HELPER_RX + (2 * xmlLoader.lapse / (bpm * PER_SECOND * valsPerBeat)) * noteSpeed);
-				}
-				else if (xmlLoader.eventList[i].name == "storyStart")
-				{
-					evt = new StoryStart (xmlLoader.eventList[i].beat, _story);
-				}
-				else if (xmlLoader.eventList[i].name == "storyTwist")
-				{
-					evt = new StoryTwist (xmlLoader.eventList[i].beat, _story);
-				}
-				else if (xmlLoader.eventList[i].name == "storyRecover")
-				{
-					evt = new StoryRecover (xmlLoader.eventList[i].beat, _story);
-				}
-				else if (xmlLoader.eventList[i].name == "storyEnding")
-				{
-					evt = new StoryEnding (xmlLoader.eventList[i].beat, _story);
-				}
-				arEvents.push(evt);
-			}
 		}
 		
 		override public function update():void 
@@ -265,9 +200,7 @@ package
 			else if (!bStart)
 			{
 				remove(heart);
-				add(hp);
 				bStart = true;
-				bInsert = true;
 				Main.soundChannel.play();
 			}
 			
@@ -291,108 +224,90 @@ package
 			}
 			
 			super.update();
-			timer += FP.elapsed;
+			instant = Main.soundChannel.position * xmlLoader.bpm * xmlLoader.npb * PER_SECOND;
 			
-			var arRemoved : Array = [];
-			var instant : Number = Main.soundChannel.position * bpm * valsPerBeat / 60;
-			
-			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pLock)
+			if (instant % 1 >= 0 && instant % 1 <= 0.5 && !pulseLock)
 			{
 				helperUL.pulse();
 				helperUR.pulse();
 				helperDL.pulse();
 				helperDR.pulse();
-				pLock = true;
+				pulseLock = true;
 			}
 			else if (instant % 1 > 0.5)
 			{
-				pLock = false;
-			}
-			for (var j : int = 0; j < arEvents.length; j++)
-			{
-				if (instant >= arEvents[j].time && arEvents[j].time >= 0)
-				{
-					arEvents[j].trigger(instant);
-					arRemoved.push(arEvents[j]);
-				}
+				pulseLock = false;
 			}
 			
-			for each (var evt : IEvent in arRemoved)
+			var i : int = 0;
+			
+			for (i = 0; i < xmlLoader.numEvents; i++)
 			{
-				arEvents.splice(arEvents.indexOf(evt), 1);
+				if (!xmlLoader.eventList[i].checked && instant > xmlLoader.eventList[i].beat)
+					handleEvent(xmlLoader.eventList[i]);
 			}
-			arRemoved = [];
-			for (var i : int = 0; i < arNotes.length; i++)
+			
+			for (i = 0; i < xmlLoader.numNotes; i++)
 			{
-				var n : Note = arNotes[i];
-				if (instant < Math.max(0, n.time - missInterval * valsPerBeat))
+				var e : SongEvent = xmlLoader.noteList[i];
+				if (!e.checked)
+				{
+					if (instant < Math.max(0, e.beat - missInterval * xmlLoader.npb))
+						break;
+					else
+					{
+						var helper : Helper = getHelper(e.args.helper);
+						if ((!Input.pressed(helper.code) && instant < e.beat + missInterval * xmlLoader.npb) 
+								|| (Input.pressed(helper.code) && !isInsideInterval(instant, Math.max (0, e.beat - missInterval * xmlLoader.npb), e.beat + missInterval * xmlLoader.npb)))
+						{
+							//NOTHING
+						}
+						else if (!Input.pressed(helper.code) && instant >= e.beat + missInterval * xmlLoader.npb)
+						{
+							helper.wrong();
+							e.checked = true;
+						}
+						else 
+						{
+							if (isInsideInterval(instant, Math.max (0, e.beat - rightInterval * xmlLoader.npb), e.beat + rightInterval * xmlLoader.npb))
+							{
+								_notesRight++;
+								helper.correct();
+								e.checked = true;
+							}
+							else
+							{
+								helper.wrong();
+								e.checked = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		private function handleEvent(e : SongEvent):void 
+		{
+			switch (e.type)
+			{
+				case SongEvent.NOTE_ENTRY:
+					add (new HorizontalSlide(e.args.code, e.args.xStart - ((instant - e.beat) / (xmlLoader.bpm * xmlLoader.npb / 60)) * xmlLoader.noteSpeed, xmlLoader.noteSpeed));
 					break;
-				else
-				{
-					if ((!Input.pressed(n.helper.code) && instant < n.time + missInterval * valsPerBeat) 
-							|| (Input.pressed(n.helper.code) && !isInsideInterval(instant, Math.max (0, n.time - missInterval * valsPerBeat), n.time + missInterval * valsPerBeat)))
-					{
-						//NOTHING
-					}
-					else if (!Input.pressed(n.helper.code) && instant >= n.time + missInterval * valsPerBeat)
-					{
-						balance = Math.max (0, balance - WRONG);
-						n.helper.wrong();
-						arRemoved.push (n);
-						timer = 0;
-					}
-					else 
-					{
-						if (isInsideInterval(instant, Math.max (0, n.time - rightInterval * valsPerBeat), n.time + rightInterval * valsPerBeat))
-						{
-							balance = Math.min (TOP, balance + RIGHT);
-							_notesRight++;
-							n.helper.correct();
-							arRemoved.push (n);
-							timer = 0;
-						}
-						else
-						{
-							balance = Math.max (0, balance - WRONG);
-							n.helper.wrong();
-							arRemoved.push (n);
-							timer = 0;
-						}
-					}
-				}
+				case SongEvent.STORY_START:
+					_story.start();
+					break;
+				case SongEvent.STORY_TWIST:
+					_story.twist();
+					break;
+				case SongEvent.STORY_RECOVER:
+					_story.recover();
+					break;
+				case SongEvent.STORY_ENDING:
+					_story.ending();
+					break;
 			}
 			
-			var lifePercentage : Number = balance / TOP;
-			if (lifePercentage <= 1 && lifePercentage >= .75)
-			{
-				hp.good();
-			}
-			else if (lifePercentage < .75 && lifePercentage >= .50)
-			{
-				hp.ok();
-			}
-			else if (lifePercentage < .50 && lifePercentage >= .25)
-			{
-				hp.bad();
-			}
-			else if (lifePercentage < .25)
-			{
-				hp.danger();
-			}
-			
-			if (balance == 0)
-			{
-				Main.soundChannel.stop();
-				Main.screenTransition(2, 0x000000, function () : void
-				{
-					FP.world = new EndingScreen (_level, 0);
-				});
-			}
-			
-			for each (var note : Note in arRemoved)
-			{
-				arNotes.splice(arNotes.indexOf(note), 1);
-			}
+			e.checked = true;
 		}
 		
 		override public function render():void 

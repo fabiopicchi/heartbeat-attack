@@ -1,8 +1,10 @@
 package  
 {
 	import net.flashpunk.Entity;
+	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
 	import Assets;
+	import Level;
 	
 	/**
 	 * ...
@@ -13,11 +15,6 @@ package
 		private var _sprHelper : Spritemap;
 		private var _sprSuccess : Spritemap;
 		private var _sprFail : Spritemap;
-		
-		public var xSuccess : Number;
-		public var ySuccess : Number;
-		public var xFail : Number;
-		public var yFail : Number;
 		
 		private var _code : String;
 		private var _animationLock : Boolean = false;
@@ -30,6 +27,8 @@ package
 		{
 			this._code = code;
 			
+			var bar : Image;
+			
 			switch (_code)
 			{
 				case "UL":
@@ -40,10 +39,9 @@ package
 					_sprHelper.add("pulse", [9], 4, false);
 					_sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7], 15, false);
 					_sprHelper.add("wrong", [8], 3, false);
-					xSuccess = 274;
-					ySuccess = 294;
-					xFail = 278;
-					yFail = 199;
+					bar = new Image(Assets.BAR_BLUE);
+					bar.x = Level.HELPER_LX - bar.width / 2;
+					bar.y = 272
 					break;
 				case "UR":
 					this.x = 452;
@@ -53,10 +51,9 @@ package
 					_sprHelper.add("pulse", [9], 4, false);
 					_sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7], 15, false);
 					_sprHelper.add("wrong", [8], 3, false);
-					xSuccess = 519;
-					ySuccess = 297;
-					xFail = 516;
-					yFail = 199;
+					bar = new Image(Assets.BAR_GREEN);
+					bar.x = Level.HELPER_RX - bar.width / 2;
+					bar.y = 272
 					break;
 				case "DL":
 					this.x = 222;
@@ -66,10 +63,9 @@ package
 					_sprHelper.add("pulse", [8], 4, false);
 					_sprHelper.add("right", [1, 2, 3, 4, 5, 6], 15, false);
 					_sprHelper.add("wrong", [7], 3, false);
-					xSuccess = 274;
-					ySuccess = 494;
-					xFail = 278;
-					yFail = 397;
+					bar = new Image(Assets.BAR_TEAL);
+					bar.x = Level.HELPER_LX - bar.width / 2;
+					bar.y = 464;
 					break;
 				case "DR":
 					this.x = 457;
@@ -79,10 +75,9 @@ package
 					_sprHelper.add("pulse", [10], 4, false);
 					_sprHelper.add("right", [1, 2, 3, 4, 5, 6, 7, 8], 15, false);
 					_sprHelper.add("wrong", [9], 3, false);
-					xSuccess = 516;
-					ySuccess = 397;
-					xFail = 519;
-					yFail = 494;
+					bar = new Image(Assets.BAR_PINK);
+					bar.x = Level.HELPER_RX - bar.width / 2;
+					bar.y = 464;
 					break;
 			}
 			
@@ -92,9 +87,13 @@ package
 			_sprFail = new Spritemap(Assets.FAIL, 67, 69);
 			_sprFail.add("anim", [1, 2, 3, 4, 5, 6, 7, 0], 15, false);
 			
-			graphic = _sprHelper;
+			bar.x -= this.x;
+			bar.y -= this.y;
+			
+			addGraphic(_sprHelper);
 			addGraphic(_sprSuccess);
 			addGraphic(_sprFail);
+			addGraphic(bar);
 		}
 		
 		public function get code():String 

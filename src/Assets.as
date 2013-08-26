@@ -28,7 +28,6 @@ package
 		[Embed(source = '../resources/background_browser.png')] public static const BACKGROUND_BROWSER:Class;
 		[Embed(source = '../resources/background_lover.png')] public static const BACKGROUND_LOVER:Class;
 		[Embed(source = '../resources/background_over.png')] public static const BACKGROUND_OVER:Class;
-		[Embed(source = '../resources/hp_spritesheet.png')] public static const HP_SPRITESHEET:Class;
 		[Embed(source = '../resources/pause_options.png')] public static const PAUSE_OPTIONS:Class;
 		
 		[Embed(source = '../resources/treadmill.png')] public static const TREADMILL:Class;
@@ -43,6 +42,11 @@ package
 		[Embed(source = '../resources/larry.png')] public static const LARRY:Class;
 		[Embed(source = '../resources/shaniqua.png')] public static const SHANIQUA:Class;
 		[Embed(source = '../resources/terry.png')] public static const TERRY:Class;
+		
+		[Embed(source = '../resources/bar-blue.png')] public static const BAR_BLUE:Class;
+		[Embed(source = '../resources/bar-green.png')] public static const BAR_GREEN:Class;
+		[Embed(source = '../resources/bar-pink.png')] public static const BAR_PINK:Class;
+		[Embed(source = '../resources/bar-teal.png')] public static const BAR_TEAL:Class;
 		
 		[Embed(source = '../resources/success_spritesheet.png')] public static const SUCCESS:Class;
 		[Embed(source = '../resources/fail_spritesheet.png')] public static const FAIL:Class;

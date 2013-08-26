@@ -15,7 +15,7 @@ package
 		public var vy : int = 0;
 		public var sprItem : Spritemap;
 		
-		public function HorizontalSlide(type : String, xStart : Number) 
+		public function HorizontalSlide(type : String, xStart : Number, speed : Number) 
 		{
 			if (type == Helper.DL)
 			{
@@ -52,7 +52,7 @@ package
 			sprItem.add("loop", [0, 1, 0, 2], 10);
 			
 			x = xStart - sprItem.width / 2;
-			vx = -Level.noteSpeed;
+			vx = -speed;
 		}
 		
 		override public function update():void 
